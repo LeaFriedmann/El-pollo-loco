@@ -8,7 +8,11 @@ class MovableObject {
 
     //#region methods
     moveRight(){
-        
+
+    }
+
+    moveLeft(){
+
     }
     //#endregion
 }

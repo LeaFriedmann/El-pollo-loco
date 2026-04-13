@@ -7,6 +7,11 @@ class MovableObject {
     //#endregion
 
     //#region methods
+    lodadImage(path){
+        this.img = new Image();
+        this.img.src = path;
+    }
+
     moveRight(){
 
     }

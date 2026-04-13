@@ -4,4 +4,8 @@ class Chicken extends MovableObject {
     x;
     y;
     //#endregion
+
+    constructor(){
+        super().lodadImage(ImgHub.ENEMIES.CHICKEN_NORMAL.WALK[0])
+    }
 }

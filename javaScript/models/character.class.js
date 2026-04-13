@@ -5,6 +5,9 @@ class Character extends MovableObject {
     y;
     //#endregion
 
+    constructor(){
+        super().lodadImage(ImgHub.PEPE.DEAD[0])
+    }
 
     //#region methods
     jump(){

@@ -1,8 +1,6 @@
 class Character extends MovableObject {
     
     //#region properties
-    x;
-    y;
     //#endregion
 
     constructor(){

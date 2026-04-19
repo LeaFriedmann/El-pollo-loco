@@ -12,7 +12,7 @@ class Character extends MovableObject {
         super();
         this.loadImage(ImgHub.PEPE.WALK[0]);
         this.loadImages(ImgHub.PEPE.WALK);
-        IntervalHub.startInterval(this.animate, 100);
+        IntervalHub.startInterval(this.animate, 150);
     }
 
     //#region methods

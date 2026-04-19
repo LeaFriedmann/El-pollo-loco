@@ -5,22 +5,26 @@ class MovableObject {
     img;
     height;
     width;
-
+    imgCache = {};
 
     //#endregion
 
     //#region methods
-    loadImage(path){
+    loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
-    moveRight(){
-
+    loadImages(arr){
+        arr.forEach(path => {
+            const img = new Image();
+            img.src = path;
+            this.imgCache[path] = img;
+        });
     }
 
-    moveLeft(){
+    moveRight() {}
 
-    }
+    moveLeft() {}
     //#endregion
 }

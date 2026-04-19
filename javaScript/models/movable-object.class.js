@@ -1,16 +1,16 @@
 class MovableObject {
     //#region properties
-    x = 120;
-    y = 250;
+    x;
+    y;
     img;
-    height = 150;
-    width = 100;
+    height;
+    width;
 
 
     //#endregion
 
     //#region methods
-    lodadImage(path){
+    loadImage(path){
         this.img = new Image();
         this.img.src = path;
     }

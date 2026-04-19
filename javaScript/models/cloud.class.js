@@ -8,7 +8,7 @@ class Cloud extends MovableObject {
 
     constructor(){
         super();
-        this.lodadImage(ImgHub.BACKGROUND.CLOUDS[0])
+        this.loadImage(ImgHub.BACKGROUND.CLOUDS[0])
 
         this.x = Math.random() * 500;
     }

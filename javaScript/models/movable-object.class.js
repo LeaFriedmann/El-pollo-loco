@@ -7,6 +7,7 @@ class MovableObject {
     width;
     imgCache = {};
     currentImg = 0;
+    speed;
 
     //#endregion
 
@@ -16,6 +17,7 @@ class MovableObject {
         this.img.src = path;
     }
 
+    // lädt alle bilder des entsprechenden arays in variable imgCache
     loadImages(arr){
         arr.forEach(path => {
             const img = new Image();
@@ -26,6 +28,9 @@ class MovableObject {
 
     moveRight() {}
 
-    moveLeft() {}
+    // verringert x koordinate des objekts um die geschwindigkeit (speed) des objekts
+    moveLeft(){
+        this.x -= this.speed;
+    }
     //#endregion
 }

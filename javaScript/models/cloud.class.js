@@ -3,6 +3,7 @@ class Cloud extends MovableObject {
     y = 20;
     height = 250;
     width = 500;
+    speed = 0.15;
     //#endregion
 
     constructor() {
@@ -13,9 +14,8 @@ class Cloud extends MovableObject {
 
     }
 
-    // zieht 0.15 px von x koordinate ab (für interval)
     animate = () => {
-        this.x -= 0.15;
+        this.moveLeft();
     }
 
 }

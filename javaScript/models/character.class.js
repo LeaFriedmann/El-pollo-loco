@@ -23,17 +23,17 @@ class Character extends MovableObject {
 
     animate = () => {
 
-        if (Keyboard.RIGHT) {
+        if (Keyboard.RIGHT && this.x < level1.level_end_x) {
             this.x += this.speed;
             this.otherDirection = false;
         }
 
-        if (Keyboard.LEFT) {
+        if (Keyboard.LEFT && this.x > 0) {
             this.x -= this.speed;
             this.otherDirection = true;
         }
 
-        World.CAMERA_X = - this.x;
+        World.CAMERA_X = - this.x + 100;
 
         if (Keyboard.RIGHT || Keyboard.LEFT) {
             

@@ -36,11 +36,7 @@ class Character extends MovableObject {
         World.CAMERA_X = - this.x + 100;
 
         if (Keyboard.RIGHT || Keyboard.LEFT) {
-            
-            const i = this.currentImg % ImgHub.PEPE.WALK.length;
-            const path = ImgHub.PEPE.WALK[i];
-            this.img = this.imgCache[path];
-            this.currentImg++;
+            this.playAnimation(ImgHub.PEPE.WALK)
         }
     };
 

@@ -1,29 +1,9 @@
 class World {
     //#region properties
     character = new Character();
-    enemies = [new Chicken(), new Chicken(), new Chicken()];
-    clouds = [new Cloud()];
-    backgroundObjects = [
-        new BackgroundObject(ImgHub.BACKGROUND.AIR, -719),
-        new BackgroundObject(ImgHub.BACKGROUND.THIRD_LAYER[1], -719),
-        new BackgroundObject(ImgHub.BACKGROUND.SECOND_LAYER[1], -719),
-        new BackgroundObject(ImgHub.BACKGROUND.FIRST_LAYER[1], -719),
-
-        new BackgroundObject(ImgHub.BACKGROUND.AIR, 0),
-        new BackgroundObject(ImgHub.BACKGROUND.THIRD_LAYER[0], 0),
-        new BackgroundObject(ImgHub.BACKGROUND.SECOND_LAYER[0], 0),
-        new BackgroundObject(ImgHub.BACKGROUND.FIRST_LAYER[0], 0),
-
-        new BackgroundObject(ImgHub.BACKGROUND.AIR, 719),
-        new BackgroundObject(ImgHub.BACKGROUND.THIRD_LAYER[1], 719),
-        new BackgroundObject(ImgHub.BACKGROUND.SECOND_LAYER[1], 719),
-        new BackgroundObject(ImgHub.BACKGROUND.FIRST_LAYER[1], 719),
-
-        new BackgroundObject(ImgHub.BACKGROUND.AIR, 719 * 2),
-        new BackgroundObject(ImgHub.BACKGROUND.THIRD_LAYER[0], 719 * 2),
-        new BackgroundObject(ImgHub.BACKGROUND.SECOND_LAYER[0], 719 * 2),
-        new BackgroundObject(ImgHub.BACKGROUND.FIRST_LAYER[0], 719 * 2),
-    ];
+    enemies = level1.enemies;
+    clouds = level1.clouds;
+    backgroundObjects = level1.backgroundObjects;
     canvas;
     ctx;
     static CAMERA_X = 0;

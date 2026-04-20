@@ -8,6 +8,7 @@ class MovableObject {
     imgCache = {};
     currentImg = 0;
     speed;
+    otherDirection = false;
 
     //#endregion
 

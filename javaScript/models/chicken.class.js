@@ -15,7 +15,7 @@ class Chicken extends MovableObject {
         this.x = 200 + Math.random() * 500;
         this.speed = 0.5 + Math.random();
 
-        IntervalHub.startInterval(this.animate, 100);
+        // IntervalHub.startInterval(this.animate, 100);
     }
 
     animate = () => {

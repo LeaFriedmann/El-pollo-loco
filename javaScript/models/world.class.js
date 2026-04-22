@@ -12,16 +12,29 @@ class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.draw();
+        IntervalHub.startInterval(this.checkCollisions, 200);
     }
 
     //#region methods
+
+    // checkt für jeden enemy ob kollision mit character
+    checkCollisions = () => {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.energy -= 5;
+                console.log(this.character.energy);
+            }
+        });
+    }
 
     draw() {
         // canvas leeren
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // TODO erklärung suchen
+        // erster wert x achse, zweiter wert y achse
         this.ctx.translate(World.CAMERA_X, 0);
-        
+
         // objekte hinzufügen
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
@@ -34,10 +47,10 @@ class World {
     }
 
     // for each durch array von img der objekte
-    addObjectsToMap(objects){
-        objects.forEach(o => {
+    addObjectsToMap(objects) {
+        objects.forEach((o) => {
             this.addToMap(o);
-        })
+        });
     }
 
     // zeigt objekte auf canvas an
@@ -45,16 +58,29 @@ class World {
     // TODO erklärung googlen
     addToMap(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.width, 0);
-            this.ctx.scale(-1, 1);
-            mo.x = mo.x * -1;
+            this.flipImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+        // gemeint ist draw methode in movable object class
+        mo.draw(this.ctx);
+
+        mo.drawFrame(this.ctx);
+
         if (mo.otherDirection) {
-            mo.x = mo.x * -1;
-            this.ctx.restore();
+            this.flipImageBack(mo);
         }
+    }
+
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+    }
+
+    flipImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
     //#endregion
 }

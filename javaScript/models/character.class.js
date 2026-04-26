@@ -55,13 +55,14 @@ class Character extends MovableObject {
 
     animate = () => {
         // spielt sprung animation wenn character über dem boden
-        if (this.isDead()) {
-            this.playAnimation(ImgHub.PEPE.DEAD);
-        }
         if (!this.isAboveGround()) {
             this.currentJumpImg = 0;
         }
-        if (this.isAboveGround()) {
+        if (this.isDead()) {
+            this.playAnimation(ImgHub.PEPE.DEAD);
+        } else if(this.isHurt()){
+            this.playAnimation(ImgHub.PEPE.HURT)
+        } else if (this.isAboveGround()) {
             this.playJumpAnimation(ImgHub.PEPE.JUMP);
         } else {
             // spielt laufanimation wenn rechte oder linke pfeiltaste gedrückt

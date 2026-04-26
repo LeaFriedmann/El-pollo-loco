@@ -17,6 +17,7 @@ class MovableObject {
     rY;
     rW;
     rH;
+    lastHit = 0;
 
     //#endregion
 
@@ -86,7 +87,16 @@ class MovableObject {
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
         }
+    }
+
+    // gibt true zurück, wenn letzter hit weniger als 5 sec her war
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit;
+        timePassed = timePassed / 1000;
+        return timePassed < 0.5;
     }
 
     isDead() {

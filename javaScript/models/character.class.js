@@ -1,38 +1,44 @@
 class Character extends MovableObject {
     //#region properties
-    // height = 280;
-    // width = 120;
-    // y = 155;
-    // x = 120;
+
     currentImg = 0;
-    // speed = 10;
+    offset = {
+        top: 130,
+        right: 30,
+        bottom: 20,
+        left: 30,
+    };
 
     //#endregion
 
     constructor() {
-        super(120, 80, 280, 120, 10);
+        super(120, 150, 280, 120, 10);
 
+        this.getFrameValues();
         this.loadImage(ImgHub.PEPE.WALK[0]);
         this.loadImages(ImgHub.PEPE.WALK);
         this.loadImages(ImgHub.PEPE.JUMP);
+        this.loadImages(ImgHub.PEPE.DEAD);
+        this.loadImages(ImgHub.PEPE.HURT);
 
-        IntervalHub.startInterval(this.animate, 50); // laufanimation
+        IntervalHub.startInterval(this.movement, 1000 / 25);
+        IntervalHub.startInterval(this.animate, 70); // laufanimation
         IntervalHub.startInterval(this.applyGravity, 1000 / 25); // fall animation
     }
 
     //#region methods
 
     // TODO geschwindigkeit animation anpassen
-    animate = () => {
 
-        // bewegt objekt wenn pfeiltaste rechts gedrückt 
+    movement = () => {
+        // bewegt objekt wenn pfeiltaste rechts gedrückt
         // und objekt noch nicht am ende der level_end_x koordinate angekommen
         if (Keyboard.RIGHT && this.x < level1.level_end_x) {
             this.moveRight();
             this.otherDirection = false;
         }
 
-        // bewegt objekt wenn pfeiltaste links gedrückt 
+        // bewegt objekt wenn pfeiltaste links gedrückt
         // und x koordinate größer als 0
         if (Keyboard.LEFT && this.x > 0) {
             this.moveLeft();
@@ -44,19 +50,25 @@ class Character extends MovableObject {
             this.jump();
         }
 
-        World.CAMERA_X = - this.x + 100;
+        World.CAMERA_X = -this.x + 100;
+    };
 
+    animate = () => {
         // spielt sprung animation wenn character über dem boden
+        if (this.isDead()) {
+            this.playAnimation(ImgHub.PEPE.DEAD);
+        }
+        if (!this.isAboveGround()) {
+            this.currentJumpImg = 0;
+        }
         if (this.isAboveGround()) {
-            this.playAnimation(ImgHub.PEPE.JUMP)
+            this.playJumpAnimation(ImgHub.PEPE.JUMP);
         } else {
-
             // spielt laufanimation wenn rechte oder linke pfeiltaste gedrückt
             if (Keyboard.RIGHT || Keyboard.LEFT) {
-                this.playAnimation(ImgHub.PEPE.WALK)
+                this.playAnimation(ImgHub.PEPE.WALK);
             }
         }
-
     };
     //#endregion
 }

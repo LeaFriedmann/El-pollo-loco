@@ -21,17 +21,16 @@ class World {
     checkCollisions = () => {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.energy -= 5;
+                this.character.hit();
                 console.log(this.character.energy);
             }
         });
-    }
+    };
 
     draw() {
         // canvas leeren
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // TODO erklärung suchen
         // erster wert x achse, zweiter wert y achse
         this.ctx.translate(World.CAMERA_X, 0);
 
@@ -55,7 +54,6 @@ class World {
 
     // zeigt objekte auf canvas an
     // dreht objekt bei laufen in andere richtung
-    // TODO erklärung googlen
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -64,7 +62,12 @@ class World {
         // gemeint ist draw methode in movable object class
         mo.draw(this.ctx);
 
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
+
+        
+            // mo.getFrameValues();
+        
+        // mo.drawRealFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

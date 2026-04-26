@@ -7,11 +7,16 @@ class MovableObject {
     width;
     imgCache = {};
     currentImg = 0;
+    currentJumpImg = 0;
     speed;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    rX;
+    rY;
+    rW;
+    rH;
 
     //#endregion
 
@@ -21,6 +26,9 @@ class MovableObject {
         this.height = height_;
         this.width = width_;
         this.speed = speed_;
+        if (this instanceof Character || this instanceof Endboss || this instanceof Chicken) {
+            IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
+        }
     }
     //#region methods
     loadImage(path) {
@@ -42,7 +50,7 @@ class MovableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "blue";
@@ -51,9 +59,38 @@ class MovableObject {
         }
     }
 
+    drawRealFrame(ctx) {
+        if (this instanceof Character || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "blue";
+            ctx.rect(this.rX, this.rY, this.rW, this.rH);
+            ctx.stroke();
+        }
+    }
+
+    // berechnet frame mit offset werten des jeweiligen objekts
+    getFrameValues = () => {
+        this.rX = this.x + this.offset.left;
+        this.rY = this.y + this.offset.top;
+        this.rW = this.width - this.offset.left - this.offset.right;
+        this.rH = this.height - this.offset.top - this.offset.bottom;
+    };
+
     // gibt zurück, ob zwei objekte miteinander kollidieren
     isColliding(mo) {
-        return this.x + this.width > mo.x && this.y + this.height > mo.y && this.x < mo.x + mo.width && this.y < mo.y + mo.height;
+        return this.rX + this.rW > mo.rX && this.rY + this.rH > mo.rY && this.rX < mo.rX + mo.rW && this.rY < mo.rY + mo.rH;
+    }
+
+    hit() {
+        this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+    }
+
+    isDead() {
+        return this.energy == 0;
     }
 
     // vorlage für animation des jeweiligen objects. arr mit images muss übergeben werden
@@ -62,6 +99,27 @@ class MovableObject {
         const path = images[i];
         this.img = this.imgCache[path];
         this.currentImg++;
+    }
+
+    // speilt jump animation ein mal pro sprung
+    playJumpAnimation(images) {
+        if (this.currentJumpImg < images.length) {
+            this.nextJumpImg(images);
+        }
+        if (!this.isAboveGround()) {
+            this.resetJumpAnimation();
+        }
+    }
+
+    nextJumpImg(images) {
+        const i = this.currentJumpImg;
+        const path = images[i];
+        this.img = this.imgCache[path];
+        this.currentJumpImg++;
+    }
+
+    resetJumpAnimation() {
+        this.currentJumpImg = 0;
     }
 
     moveRight() {
@@ -83,11 +141,11 @@ class MovableObject {
 
     // gibt zurück ob objekt eine geringere y koordinate hat, als wenn es auf dem boden stehen würde
     isAboveGround() {
-        return this.y < 155;
+        return this.y < 140;
     }
 
     jump() {
-        this.speedY = 30;
+        this.speedY = 25;
     }
     //#endregion
 }

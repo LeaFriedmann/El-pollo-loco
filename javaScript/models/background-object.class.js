@@ -1,15 +1,18 @@
+
 class BackgroundObject extends MovableObject {
 
     //#region properties
-    // x;
-    // y = 0;
-    // width = 720;
-    // height = 480;
+    static xPos = -719;
+    static turn = 0;
     //#endregion
 
-    constructor(imagePath, x){
-        super(x, 0, 480, 720, 0);
+    constructor(imagePath){
+        if (BackgroundObject.turn == 4) {
+            BackgroundObject.xPos += 719;
+            BackgroundObject.turn = 0;
+        }
+        super(BackgroundObject.xPos, 0, 480, 720, 0);
         this.loadImage(imagePath);
-        // this.x = x;
+        BackgroundObject.turn++;
     }
 }

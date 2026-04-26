@@ -14,8 +14,9 @@ class MovableObject extends DrawableObject {
 
     //#endregion
 
+    // TODO so richtig?
     constructor(x_, y_, height_, width_, speed_) {
-        super();
+        super(x_, y_, height_, width_);
         this.x = x_;
         this.y = y_;
         this.height = height_;

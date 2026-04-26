@@ -10,6 +10,13 @@ class DrawableObject {
     currentImg = 0;
     //#endregion
 
+    constructor(x_, y_, height_, width_){
+        this.x = x_;
+        this.y = y_;
+        this.height = height_;
+        this.width = width_;
+    }
+
     //#region methods
     loadImage(path) {
         this.img = new Image();

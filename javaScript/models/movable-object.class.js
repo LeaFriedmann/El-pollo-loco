@@ -1,12 +1,5 @@
-class MovableObject {
+class MovableObject extends DrawableObject {
     //#region properties
-    x;
-    y;
-    img;
-    height;
-    width;
-    imgCache = {};
-    currentImg = 0;
     currentJumpImg = 0;
     speed;
     otherDirection = false;
@@ -22,6 +15,7 @@ class MovableObject {
     //#endregion
 
     constructor(x_, y_, height_, width_, speed_) {
+        super();
         this.x = x_;
         this.y = y_;
         this.height = height_;
@@ -32,23 +26,6 @@ class MovableObject {
         }
     }
     //#region methods
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    // lädt alle bilder des entsprechenden arays in variable imgCache
-    loadImages(arr) {
-        arr.forEach((path) => {
-            const img = new Image();
-            img.src = path;
-            this.imgCache[path] = img;
-        });
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
 
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {

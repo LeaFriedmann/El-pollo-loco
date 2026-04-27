@@ -1,4 +1,7 @@
-class StatusBar extends DrawableObject {
+import { ImgHub } from "../manager/imgHub.class.js";
+import { DrawableObject } from "./drawable-objects.class.js";
+
+export class StatusBar extends DrawableObject {
 
     //#region properties
     percentage = 100;

@@ -1,5 +1,6 @@
+import { MovableObject } from "./movable-object.class.js";
 
-class BackgroundObject extends MovableObject {
+export class BackgroundObject extends MovableObject {
 
     //#region properties
     static xPos = -719;

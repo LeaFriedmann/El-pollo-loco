@@ -1,4 +1,11 @@
-class Character extends MovableObject {
+import { ImgHub } from "../manager/imgHub.class.js";
+import { IntervalHub } from "../manager/intervalHub.class.js";
+import { Keyboard } from "../manager/keyboard.class.js";
+import { Level } from "./level.class.js";
+import { MovableObject } from "./movable-object.class.js";
+import { World } from "./world.class.js";
+
+export class Character extends MovableObject {
     //#region properties
 
     currentImg = 0;
@@ -8,22 +15,26 @@ class Character extends MovableObject {
         bottom: 20,
         left: 30,
     };
+    idleCounter = 0;
 
     //#endregion
 
     constructor() {
         super(120, 150, 280, 120, 10);
 
-        this.getFrameValues();
+        // this.getFrameValues();
         this.loadImage(ImgHub.PEPE.WALK[0]);
         this.loadImages(ImgHub.PEPE.WALK);
         this.loadImages(ImgHub.PEPE.JUMP);
         this.loadImages(ImgHub.PEPE.DEAD);
         this.loadImages(ImgHub.PEPE.HURT);
+        this.loadImages(ImgHub.PEPE.IDLE);
+        this.loadImages(ImgHub.PEPE.SLEEPING);
 
         IntervalHub.startInterval(this.movement, 1000 / 25);
         IntervalHub.startInterval(this.animate, 70); // laufanimation
         IntervalHub.startInterval(this.applyGravity, 1000 / 25); // fall animation
+        IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
     }
 
     //#region methods
@@ -54,22 +65,47 @@ class Character extends MovableObject {
     };
 
     animate = () => {
-        // spielt sprung animation wenn character über dem boden
         if (!this.isAboveGround()) {
+            // jump img auf index 0 wenn sprung vorbei
             this.currentJumpImg = 0;
         }
         if (this.isDead()) {
+            // deat animation wenn health = 0
             this.playAnimation(ImgHub.PEPE.DEAD);
-        } else if(this.isHurt()){
-            this.playAnimation(ImgHub.PEPE.HURT)
+        } else if (this.isHurt()) {
+            // hurt animation wenn letzter hit mehl als 0.5 sec her war
+            this.playAnimation(ImgHub.PEPE.HURT);
         } else if (this.isAboveGround()) {
+            // jump animation bei sprung
             this.playJumpAnimation(ImgHub.PEPE.JUMP);
+            this.idleCounter = 0;
+        } else if (Keyboard.RIGHT || Keyboard.LEFT) {
+            // laufanimation wenn pfeil rechts oder links gedrückt
+            this.playAnimation(ImgHub.PEPE.WALK);
+            this.idleCounter = 0;
         } else {
-            // spielt laufanimation wenn rechte oder linke pfeiltaste gedrückt
-            if (Keyboard.RIGHT || Keyboard.LEFT) {
-                this.playAnimation(ImgHub.PEPE.WALK);
+            // idle animation wenn keine tasten gedrückt
+            this.playAnimation(ImgHub.PEPE.IDLE);
+            if (this.idleCounter == 0) { // idle counter starten, wird  auf 0 gesetzt wenn character sich bewegt
+                this.startIdleCounter();
+            }
+            if (this.sleepTime()) { // wenn idle counter über 8 sleep animation
+                this.playAnimation(ImgHub.PEPE.SLEEPING);
             }
         }
     };
+
+    // berechnet wie lange schon idle, true wenn länger als 8 sec
+    sleepTime() {
+        let timePassed = new Date().getTime() - this.idleCounter;
+        timePassed = timePassed / 1000;
+        // console.log(timePassed);
+        return timePassed > 8;
+    }
+
+    startIdleCounter() {
+        this.idleCounter = new Date().getTime();
+    }
+
     //#endregion
 }

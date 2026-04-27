@@ -1,4 +1,8 @@
-class Chicken extends MovableObject {
+import { ImgHub } from "../manager/imgHub.class.js";
+import { IntervalHub } from "../manager/intervalHub.class.js";
+import { MovableObject } from "./movable-object.class.js";
+
+export class Chicken extends MovableObject {
 
     //#region properties
     offset = {
@@ -15,6 +19,7 @@ class Chicken extends MovableObject {
         this.loadImages(ImgHub.ENEMIES.CHICKEN_NORMAL.WALK);
 
         IntervalHub.startInterval(this.animate, 50);
+        IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
     }
 
     // für interval, laufanimation + laufen nach links

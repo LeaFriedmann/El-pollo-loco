@@ -1,4 +1,8 @@
-class Endboss extends MovableObject {
+import { ImgHub } from "../manager/imgHub.class.js";
+import { IntervalHub } from "../manager/intervalHub.class.js";
+import { MovableObject } from "./movable-object.class.js";
+
+export class Endboss extends MovableObject {
 
     offset = {
         top: 80,
@@ -13,7 +17,8 @@ class Endboss extends MovableObject {
         this.loadImage(ImgHub.ENEMIES.ENDBOSS.ALERT[0]);
         this.loadImages(ImgHub.ENEMIES.ENDBOSS.ALERT);
 
-        IntervalHub.startInterval(this.animate, 100)
+        IntervalHub.startInterval(this.animate, 100);
+        IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
     }
 
     // animation endboss für interval

@@ -1,4 +1,10 @@
-class Level {
+import { ImgHub } from "../manager/imgHub.class.js";
+import { BackgroundObject } from "./background-object.class.js";
+import { Chicken } from "./chicken.class.js";
+import { Cloud } from "./cloud.class.js";
+import { Endboss } from "./endboss.class.js";
+
+export class Level {
     //#region properties
     levelConfig = {
         repetition : {
@@ -19,8 +25,9 @@ class Level {
     clouds = [];
     backgroundObjects = [];
     static END_X;
-    //#endregion
 
+    //#endregion
+    
     constructor(levelNumber_) {
         this.levelNumber = levelNumber_;
         this.setLevelConfig();

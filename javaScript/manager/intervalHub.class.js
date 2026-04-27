@@ -1,4 +1,4 @@
-class IntervalHub {
+export class IntervalHub {
 
     // array für alle Interval-IDs
     static allIntervals = [];

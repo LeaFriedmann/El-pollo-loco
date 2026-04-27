@@ -1,3 +1,7 @@
+import { Keyboard } from "./manager/keyboard.class.js";
+import { Level } from "./models/level.class.js";
+import { World } from "./models/world.class.js";
+
 class StartGame {
     //#region properties
     canvas;
@@ -6,7 +10,7 @@ class StartGame {
 
     constructor() {
         this.canvas = document.getElementById("canvas");
-        this.world = new World(canvas, new Level(20));
+        this.world = new World(canvas, new Level(1));
 
         window.addEventListener("keydown", (e) => {
             if (e.key == "ArrowUp") {

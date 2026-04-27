@@ -1,4 +1,10 @@
-class World {
+import { IntervalHub } from "../manager/intervalHub.class.js";
+import { Keyboard } from "../manager/keyboard.class.js";
+import { Character } from "./character.class.js";
+import { StatusBar } from "./status-bar.class.js";
+import { ThrowableObject } from "./throwable-object.class.js";
+
+export class World {
     //#region properties
     character = new Character();
     level;

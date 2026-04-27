@@ -1,4 +1,8 @@
-class Cloud extends MovableObject {
+import { ImgHub } from "../manager/imgHub.class.js";
+import { IntervalHub } from "../manager/intervalHub.class.js";
+import { MovableObject } from "./movable-object.class.js";
+
+export class Cloud extends MovableObject {
 
     constructor(x_) {
         super(x_, 20, 250, 500, 0.15);

@@ -5,6 +5,7 @@ class World {
     canvas;
     ctx;
     statusbar = new StatusBar();
+    throwableObjects = [];
     static CAMERA_X = 0;
 
     //#endregion
@@ -14,6 +15,7 @@ class World {
         this.canvas = canvas;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
+        IntervalHub.startInterval(this.checkThrowObjects, 200)
     }
 
     //#region methods
@@ -28,6 +30,13 @@ class World {
             }
         });
     };
+
+    checkThrowObjects = () => {
+        if (Keyboard.D) {
+            const bottle = new ThrowableObject(this.character.x, this.character.y);
+            this.throwableObjects.push(bottle);
+        }
+    }
 
     draw() {
         // canvas leeren
@@ -46,6 +55,7 @@ class World {
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-World.CAMERA_X, 0);
 
@@ -69,12 +79,10 @@ class World {
         // gemeint ist draw methode in movable object class
         mo.draw(this.ctx);
 
-        // mo.drawFrame(this.ctx);
-
-        
-            // mo.getFrameValues();
-        
-        // mo.drawRealFrame(this.ctx);
+        // if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof ThrowableObject) {
+        //     mo.drawFrame(this.ctx);
+        //     mo.drawRealFrame(this.ctx);
+        // }
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

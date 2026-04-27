@@ -22,30 +22,26 @@ class MovableObject extends DrawableObject {
         this.height = height_;
         this.width = width_;
         this.speed = speed_;
-        if (this instanceof Character || this instanceof Endboss || this instanceof Chicken) {
+        if (this instanceof Character || this instanceof Endboss || this instanceof Chicken || this instanceof ThrowableObject) {
             IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
         }
     }
     //#region methods
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "blue";
             ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
+            ctx.stroke();   
     }
 
     drawRealFrame(ctx) {
-        if (this instanceof Character || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "blue";
             ctx.rect(this.rX, this.rY, this.rW, this.rH);
             ctx.stroke();
-        }
     }
 
     // berechnet frame mit offset werten des jeweiligen objekts
@@ -62,7 +58,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 5;
+        this.energy -= 10;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -129,7 +125,11 @@ class MovableObject extends DrawableObject {
 
     // gibt zurück ob objekt eine geringere y koordinate hat, als wenn es auf dem boden stehen würde
     isAboveGround() {
-        return this.y < 140;
+        if (this instanceof ThrowableObject) {
+            return true;
+        } else {
+            return this.y < 140;
+        }
     }
 
     jump() {

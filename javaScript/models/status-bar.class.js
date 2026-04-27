@@ -19,7 +19,7 @@ class StatusBar extends DrawableObject {
     }
 
     resolveImageIndex(){
-        const imgIndex = Math.round(this.percentage / 20);
+        const imgIndex = this.percentage / 10;
         return imgIndex;
     }
 }

@@ -164,11 +164,16 @@ class ImgHub {
         ],
         HEALTH: [
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png",
+            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/10.png",
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png",
+            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/30.png",
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png",
+            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/50.png",
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/60.png",
+            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/70.png",
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png",
-            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
+            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/90.png",
+            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png"
         ],
         BOTTLE: [
             "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",

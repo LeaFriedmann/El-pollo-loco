@@ -18,7 +18,7 @@ class Level {
     enemies = [];
     clouds = [];
     backgroundObjects = [];
-    level_end_x;
+    static END_X;
     //#endregion
 
     constructor(levelNumber_) {
@@ -66,7 +66,7 @@ class Level {
 
     // weist x koordinate zu, bis zu welcher character laufen kann
     getLevelEnd(){
-        this.level_end_x = (this.levelConfig.repetition.background * 719 * 2) -719 - 650;
+        Level.END_X = (this.levelConfig.repetition.background * 719 * 2) -719 - 650;
     }
 
     // iteriert durch arr mit allen hintergrund layern und pusht instanzen von BackgroundObject
@@ -90,13 +90,13 @@ class Level {
         for (let i = 0; i < this.levelConfig.repetition.chicken; i++) {
             this.enemies.push(this.createChicken());
         }
-        this.enemies.push(new Endboss(this.level_end_x));
+        this.enemies.push(new Endboss(Level.END_X));
     }
 
     // gibt instanz von Chicken zurück
     createChicken() {
         // speed und x koordinate übergeben
-        return new Chicken(200 + Math.random() * this.level_end_x , this.levelConfig.speed.chicken);
+        return new Chicken(200 + Math.random() * Level.END_X , this.levelConfig.speed.chicken);
     }
 
     // pusht je nach level andere anzahl an instanzen von Cloud in property clouds
@@ -108,7 +108,7 @@ class Level {
 
     // gibt instanz von Cloud zurück
     createCloud() {
-        return new Cloud(Math.random() * this.level_end_x);
+        return new Cloud(Math.random() * Level.END_X);
     }
 
     //#endregion

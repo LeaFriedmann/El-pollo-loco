@@ -32,8 +32,8 @@ class Character extends MovableObject {
 
     movement = () => {
         // bewegt objekt wenn pfeiltaste rechts gedrückt
-        // und objekt noch nicht am ende der level_end_x koordinate angekommen
-        if (Keyboard.RIGHT && this.x < level1.level_end_x) {
+        // und objekt noch nicht am ende der Level.END_X koordinate angekommen
+        if (Keyboard.RIGHT && this.x < Level.END_X) {
             this.moveRight();
             this.otherDirection = false;
         }

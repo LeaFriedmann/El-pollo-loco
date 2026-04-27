@@ -1,7 +1,7 @@
 class World {
     //#region properties
     character = new Character();
-    level = level1;
+    level;
     canvas;
     ctx;
     statusbar = new StatusBar();
@@ -10,9 +10,10 @@ class World {
 
     //#endregion
 
-    constructor(canvas) {
+    constructor(canvas, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
+        this.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
         IntervalHub.startInterval(this.checkThrowObjects, 200)

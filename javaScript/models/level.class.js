@@ -21,11 +21,6 @@ class Level {
     level_end_x;
     //#endregion
 
-    // constructor(enemies_, clouds_, backgroundObjects_){
-    //     this.enemies = enemies_;
-    //     this.clouds = clouds_;
-    //     this.backgroundObjects = backgroundObjects_;
-    // }
     constructor(levelNumber_) {
         this.levelNumber = levelNumber_;
         this.setLevelConfig();
@@ -115,52 +110,6 @@ class Level {
     createCloud() {
         return new Cloud(Math.random() * this.level_end_x);
     }
-
-    // gibt array mit instatnzen von backgroundObjekt zurück, um sie in constructur von Level bei instazierung einzufügen
-    // als argument wird die häufigkeit übergeben, wie oft alle layer instanziert werden sollen
-    // static addBackground(repeat){
-    //     const backgrArr = [];
-    //     for (let index = 0; index < repeat; index++) {
-    //         ImgHub.BACKGROUND.ALL_LAYERS.forEach((part) => {
-    //             const backgrPart = Level.addBackgrPart(part);
-    //             backgrArr.push(backgrPart);
-    //         })
-
-    //     }
-
-    //     return backgrArr;
-    // }
-
-    // gibt instanz von BackgrounfObject zurück, welche als argument das bild des entsprechenden parts nimmt
-    // static addBackgrPart(part){
-    //     const backgrPart = new BackgroundObject(part);
-    //     return backgrPart;
-    // }
-
-    // static addEnemies(amount){
-    //     const enemyArr = [];
-    //     for (let index = 0; index < amount; index++) {
-    //         const enemy = new Chicken();
-    //         enemyArr.push(enemy);
-    //     }
-    //     enemyArr.push(new Endboss())
-
-    //     return enemyArr;
-    // }
-
-    // static addClouds(amount){
-    //     return Level.createObjArr(() => new Cloud(), amount);
-    // }
-
-    // static createObjArr(instance, amount){
-    //     const objArr = [];
-    //     for (let index = 0; index < amount; index++) {
-
-    //         objArr.push(instance());
-    //     }
-
-    //     return objArr;
-    // }
 
     //#endregion
 }

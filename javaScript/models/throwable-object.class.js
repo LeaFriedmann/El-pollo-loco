@@ -19,10 +19,6 @@ class ThrowableObject extends MovableObject {
 
     //#region methods
 
-    // throw(){
-    //     this.speedY = 30;
-    // }
-
     animate = () => {
         this.moveRight();
     }

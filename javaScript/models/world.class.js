@@ -24,7 +24,7 @@ export class World {
         this.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
-        IntervalHub.startInterval(this.checkThrowObjects, 200)
+        IntervalHub.startInterval(this.checkThrowObjects, 150)
     }
 
     //#region methods
@@ -42,9 +42,12 @@ export class World {
 
     checkThrowObjects = () => {
         if (Keyboard.D) {
-            const bottle = new ThrowableObject(this.character.rX, this.character.rY);
-            this.throwableObjects.push(bottle);
+            this.addThrowableObject();           
         }
+    }
+
+    addThrowableObject(){
+        this.throwableObjects.push(new ThrowableObject(this.character.rX, this.character.rY));
     }
 
     draw() {

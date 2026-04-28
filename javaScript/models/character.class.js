@@ -9,6 +9,7 @@ export class Character extends MovableObject {
     //#region properties
 
     currentImg = 0;
+    currentJumpImg = 0;
     offset = {
         top: 130,
         right: 30,
@@ -67,7 +68,10 @@ export class Character extends MovableObject {
     animate = () => {
         if (!this.isAboveGround()) {
             // jump img auf index 0 wenn sprung vorbei
-            this.currentJumpImg = 0;
+            this.resetJumpAnimation();
+        }
+        if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D ){
+            this.resetIdleCounter();
         }
         if (this.isDead()) {
             // deat animation wenn health = 0
@@ -78,11 +82,9 @@ export class Character extends MovableObject {
         } else if (this.isAboveGround()) {
             // jump animation bei sprung
             this.playJumpAnimation(ImgHub.PEPE.JUMP);
-            this.idleCounter = 0;
         } else if (Keyboard.RIGHT || Keyboard.LEFT) {
             // laufanimation wenn pfeil rechts oder links gedrückt
             this.playAnimation(ImgHub.PEPE.WALK);
-            this.idleCounter = 0;
         } else {
             // idle animation wenn keine tasten gedrückt
             this.playAnimation(ImgHub.PEPE.IDLE);
@@ -95,6 +97,7 @@ export class Character extends MovableObject {
         }
     };
 
+    //#region methods idle/sleepdd
     // berechnet wie lange schon idle, true wenn länger als 8 sec
     sleepTime() {
         let timePassed = new Date().getTime() - this.idleCounter;
@@ -106,6 +109,38 @@ export class Character extends MovableObject {
     startIdleCounter() {
         this.idleCounter = new Date().getTime();
     }
+
+    resetIdleCounter(){
+        this.idleCounter = 0;
+    }
+    //#endregion
+
+    //#region methods jump animation
+    // speilt jump animation ein mal pro sprung
+    playJumpAnimation(images) {
+        if (this.currentJumpImg < images.length) {
+            this.nextJumpImg(images);
+        }
+        if (!this.isAboveGround()) {
+            this.resetJumpAnimation();
+        }
+    }
+
+    nextJumpImg(images) {
+        const i = this.currentJumpImg;
+        const path = images[i];
+        this.img = this.imgCache[path];
+        this.currentJumpImg++;
+    }
+
+    resetJumpAnimation() {
+        this.currentJumpImg = 0;
+    }
+
+    jump() {
+        this.speedY = 25;
+    }
+    //#endregion
 
     //#endregion
 }

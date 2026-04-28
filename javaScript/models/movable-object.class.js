@@ -5,7 +5,6 @@ import { DrawableObject } from "./drawable-objects.class.js";
 
 export class MovableObject extends DrawableObject {
     //#region properties
-    currentJumpImg = 0;
     speed;
     otherDirection = false;
     speedY = 0;
@@ -89,27 +88,6 @@ export class MovableObject extends DrawableObject {
         this.currentImg++;
     }
 
-    // speilt jump animation ein mal pro sprung
-    playJumpAnimation(images) {
-        if (this.currentJumpImg < images.length) {
-            this.nextJumpImg(images);
-        }
-        if (!this.isAboveGround()) {
-            this.resetJumpAnimation();
-        }
-    }
-
-    nextJumpImg(images) {
-        const i = this.currentJumpImg;
-        const path = images[i];
-        this.img = this.imgCache[path];
-        this.currentJumpImg++;
-    }
-
-    resetJumpAnimation() {
-        this.currentJumpImg = 0;
-    }
-
     moveRight() {
         this.x += this.speed;
     }
@@ -131,8 +109,5 @@ export class MovableObject extends DrawableObject {
         return this.y < 420 - this.height;
     }
 
-    jump() {
-        this.speedY = 25;
-    }
     //#endregion
 }

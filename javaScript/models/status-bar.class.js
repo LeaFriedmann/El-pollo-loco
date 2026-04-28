@@ -5,11 +5,13 @@ export class StatusBar extends DrawableObject {
 
     //#region properties
     percentage = 100;
+    imgStatusbar;
     //#endregion
 
-    constructor(){
-        super(30, 0, 60, 200);
-        this.loadImages(ImgHub.STATUSBAR.HEALTH);
+    constructor(imgStatusbar_, y_){
+        super(30, y_, 60, 200);
+        this.imgStatusbar = imgStatusbar_;
+        this.loadImages(imgStatusbar_);
         this.setPercentage(100);
     }
 
@@ -17,7 +19,7 @@ export class StatusBar extends DrawableObject {
 
     setPercentage(percentage){
         this.percentage = percentage;
-        const path = ImgHub.STATUSBAR.HEALTH[this.resolveImageIndex()];
+        const path = this.imgStatusbar[this.resolveImageIndex()];
         this.img = this.imgCache[path];
     }
 

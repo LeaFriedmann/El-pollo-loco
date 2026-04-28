@@ -13,7 +13,8 @@ export class World {
     level;
     canvas;
     ctx;
-    statusbar = new StatusBar();
+    statusbarHealth = new StatusBar(ImgHub.STATUSBAR.HEALTH, 0);
+    statusbarEndboss = new StatusBar(ImgHub.STATUSBAR.ENEMY, 60);
     static ThrowableObjects = [];
     static CAMERA_X = 0;
 
@@ -39,11 +40,11 @@ export class World {
         //         console.log(this.character.energy);
         //     }
         // });
-        this.collisionObjects(this.level.enemies, this.character);
-        this.collisionObjects(World.ThrowableObjects, this.level.endboss);
+        this.collisionObjects(this.level.enemies, this.character, this.statusbarHealth);
+        this.collisionObjects(World.ThrowableObjects, this.level.endboss, this.statusbarEndboss);
     };
 
-    collisionObjects(mO, target) {
+    collisionObjects(mO, target, statusbar) {
         if (target.energy > 0) {
             mO.forEach((mo) => {
                 if (target.isColliding(mo)) {
@@ -53,7 +54,7 @@ export class World {
                             mo.alive = false;
                         }
                     }
-                    this.statusbar.setPercentage(target.energy);
+                    statusbar.setPercentage(target.energy);
                     console.log(target.energy);
                 }
             });
@@ -82,7 +83,8 @@ export class World {
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-World.CAMERA_X, 0);
-        this.addToMap(this.statusbar);
+        this.addToMap(this.statusbarHealth);
+        this.addToMap(this.statusbarEndboss);
         this.ctx.translate(World.CAMERA_X, 0);
 
         this.addToMap(this.character);

@@ -127,17 +127,8 @@ export class MovableObject extends DrawableObject {
         }
     };
 
-    // FIXME
-    // gibt zurück ob objekt eine geringere y koordinate hat, als wenn es auf dem boden stehen würde
-    // isAboveGround() {
-    //     if (this instanceof ThrowableObject) {
-    //         return true;
-    //     } else {
-    //         return this.y < 140;
-    //     }
-    // }
     isAboveGround() {
-        return this.y < 140;
+        return this.y < 420 - this.height;
     }
 
     jump() {

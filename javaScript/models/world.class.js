@@ -1,6 +1,8 @@
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
 import { Character } from "./character.class.js";
+import { Chicken } from "./chicken.class.js";
+import { Endboss } from "./endboss.class.js";
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 
@@ -40,7 +42,7 @@ export class World {
 
     checkThrowObjects = () => {
         if (Keyboard.D) {
-            const bottle = new ThrowableObject(this.character.x, this.character.y);
+            const bottle = new ThrowableObject(this.character.rX, this.character.rY);
             this.throwableObjects.push(bottle);
         }
     }

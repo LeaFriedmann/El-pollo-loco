@@ -10,11 +10,13 @@ export class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    healthReduction;
     rX;
     rY;
     rW;
     rH;
     lastHit = 0;
+    alive = true;
     //#endregion
 
     constructor(x_, y_, height_, width_, speed_) {
@@ -60,7 +62,7 @@ export class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 10;
+        this.energy -= this.healthReduction;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -98,8 +100,9 @@ export class MovableObject extends DrawableObject {
     }
 
     // verringert y koordinate so lange, bis objekt am boden angekommen ist
+    // this.alive abfrage für throwable object
     applyGravity = () => {
-        if (this.isAboveGround() || this.speedY > 0) {
+        if (this.isAboveGround() && this.alive || this.speedY > 0 && this.alive) {
             this.y -= this.speedY;
             this.speedY -= this.acceleration;
         }

@@ -17,6 +17,7 @@ export class Character extends MovableObject {
         left: 30,
     };
     idleCounter = 0;
+    healthReduction = 10;
 
     //#endregion
 

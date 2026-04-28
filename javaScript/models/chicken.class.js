@@ -11,6 +11,7 @@ export class Chicken extends MovableObject {
         bottom: 0,
         left: 0,
     };
+    healthReduction = 100;
     //#endregion
 
     constructor(x_, speed_){

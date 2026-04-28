@@ -24,6 +24,7 @@ export class Level {
     enemies = [];
     clouds = [];
     backgroundObjects = [];
+    endboss;
     static END_X;
 
     //#endregion
@@ -98,6 +99,7 @@ export class Level {
             this.enemies.push(this.createChicken());
         }
         this.enemies.push(new Endboss(Level.END_X));
+        this.endboss = new Endboss(Level.END_X);
     }
 
     // gibt instanz von Chicken zurück

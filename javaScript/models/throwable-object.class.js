@@ -2,6 +2,7 @@ import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
 import { MovableObject } from "./movable-object.class.js";
+import { World } from "./world.class.js";
 
 export class ThrowableObject extends MovableObject {
     offset = {
@@ -19,37 +20,36 @@ export class ThrowableObject extends MovableObject {
         this.loadImages(ImgHub.BOTTLE.ROTATION);
         this.loadImages(ImgHub.BOTTLE.SPLASH);
         IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
-        this.throw();
+        IntervalHub.startInterval(this.applyGravity, 1000 / 25);
+        IntervalHub.startInterval(this.movement, 25);
+        IntervalHub.startInterval(this.animate, 50);
+        // this.throw();
     }
 
     //#region methods
-    throw() {
-        if (Keyboard.D) {
-            IntervalHub.startInterval(this.applyGravity, 1000 / 25);
-            IntervalHub.startInterval(this.movement, 25);
-            IntervalHub.startInterval(this.animate, 100);
-        }
-    }
 
     animate = () => {
-        if (this.isAboveGround()) {
-            this.playAnimation(ImgHub.BOTTLE.ROTATION);          
-        } else if (!this.isAboveGround()) {
+        if (this.isAboveGround() && this.alive) {
+            this.playAnimation(ImgHub.BOTTLE.ROTATION);
+        } else if (!this.isAboveGround() || !this.alive) {
             this.playSplashAnimation(ImgHub.BOTTLE.SPLASH);
         }
-    }
+    };
 
     movement = () => {
-        if (this.isAboveGround()) { 
+        if (this.isAboveGround() && this.alive) {
             this.moveRight();
         }
     };
 
-    playSplashAnimation(images) {
-        if (this.currentSplashImg < images.length) {
-            this.nextSplashImg(images);
+    playSplashAnimation() {
+        if (this.currentSplashImg < ImgHub.BOTTLE.SPLASH.length) {
+            this.nextSplashImg(ImgHub.BOTTLE.SPLASH);
         } else {
-            this.visible = false;
+            const index = World.ThrowableObjects.indexOf(this);
+            if (index > -1) {
+                World.ThrowableObjects.splice(index, 1);
+            }
         }
     }
 
@@ -59,8 +59,6 @@ export class ThrowableObject extends MovableObject {
         this.img = this.imgCache[path];
         this.currentSplashImg++;
     }
-
-
 
     //#endregion
 }

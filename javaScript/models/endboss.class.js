@@ -10,6 +10,7 @@ export class Endboss extends MovableObject {
         bottom: 20,
         left: 20,
     }
+    healthReduction = 10;
 
     constructor(x_){
         super(x_, 50, 400, 250);

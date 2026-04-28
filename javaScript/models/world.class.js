@@ -1,3 +1,4 @@
+import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
 import { Character } from "./character.class.js";
@@ -13,7 +14,7 @@ export class World {
     canvas;
     ctx;
     statusbar = new StatusBar();
-    throwableObjects = [];
+    static ThrowableObjects = [];
     static CAMERA_X = 0;
 
     //#endregion
@@ -24,30 +25,49 @@ export class World {
         this.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
-        IntervalHub.startInterval(this.checkThrowObjects, 150)
+        IntervalHub.startInterval(this.checkThrowObjects, 150);
     }
 
     //#region methods
 
     // checkt für jeden enemy ob kollision mit character
     checkCollisions = () => {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusbar.setPercentage(this.character.energy)
-                console.log(this.character.energy);
-            }
-        });
+        // this.level.enemies.forEach((enemy) => {
+        //     if (this.character.isColliding(enemy)) {
+        //         this.character.hit();
+        //         this.statusbar.setPercentage(this.character.energy)
+        //         console.log(this.character.energy);
+        //     }
+        // });
+        this.collisionObjects(this.level.enemies, this.character);
+        this.collisionObjects(World.ThrowableObjects, this.level.endboss);
     };
 
-    checkThrowObjects = () => {
-        if (Keyboard.D) {
-            this.addThrowableObject();           
+    collisionObjects(mO, target) {
+        if (target.energy > 0) {
+            mO.forEach((mo) => {
+                if (target.isColliding(mo)) {
+                    if (mo.alive) {
+                        target.hit();
+                        if (mo instanceof ThrowableObject) {                            
+                            mo.alive = false;
+                        }
+                    }
+                    this.statusbar.setPercentage(target.energy);
+                    console.log(target.energy);
+                }
+            });
         }
     }
 
-    addThrowableObject(){
-        this.throwableObjects.push(new ThrowableObject(this.character.rX, this.character.rY));
+    checkThrowObjects = () => {
+        if (Keyboard.D) {
+            this.addThrowableObject();
+        }
+    };
+
+    addThrowableObject() {
+        World.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY));
     }
 
     draw() {
@@ -67,7 +87,7 @@ export class World {
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(World.ThrowableObjects);
 
         this.ctx.translate(-World.CAMERA_X, 0);
 

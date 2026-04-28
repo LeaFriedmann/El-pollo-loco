@@ -1,5 +1,4 @@
 export class DrawableObject {
-
     //#region properties
     x;
     y;
@@ -11,7 +10,7 @@ export class DrawableObject {
     visible = true;
     //#endregion
 
-    constructor(x_, y_, height_, width_){
+    constructor(x_, y_, height_, width_) {
         this.x = x_;
         this.y = y_;
         this.height = height_;
@@ -34,9 +33,7 @@ export class DrawableObject {
     }
 
     draw(ctx) {
-        if (this.visible) {
-            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);           
-        }
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
     //#endregion

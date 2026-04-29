@@ -5,6 +5,7 @@ import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Endboss } from "./endboss.class.js";
 import { Level } from "./level.class.js";
+import { SmallChicken } from "./small-chicken.class.js";
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 
@@ -116,7 +117,7 @@ export class World {
         // gemeint ist draw methode in movable object class
         mo.draw(this.ctx);
 
-        // if (mo instanceof Character || mo instanceof Chicken || mo instanceof Endboss || mo instanceof ThrowableObject) {
+        // if (mo instanceof Character || mo instanceof Chicken || mo instanceof SmallChicken || mo instanceof Endboss || mo instanceof ThrowableObject) {
         //     mo.drawFrame(this.ctx);
         //     mo.drawRealFrame(this.ctx);
         // }

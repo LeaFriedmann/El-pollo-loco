@@ -3,12 +3,14 @@ import { BackgroundObject } from "./background-object.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
 import { Endboss } from "./endboss.class.js";
+import { SmallChicken } from "./small-chicken.class.js";
 
 export class Level {
     //#region properties
     levelConfig = {
         repetition : {
             chicken : 0,
+            smallChicken : 0,
             background : 0,
             clouds : 0
         },
@@ -17,15 +19,17 @@ export class Level {
             character : 0
         },
         speed : {
-            chicken : 0
+            chicken : 0, 
+            smallChicken : 0
         }
     };
     levelNumber;
     enemies = [];
     clouds = [];
     backgroundObjects = [];
-    endboss;
+    static endboss;
     static END_X;
+    static ThrowableObjects = [];
 
     //#endregion
     
@@ -45,6 +49,7 @@ export class Level {
 
     setLevelConfig() {
         this.levelConfig.repetition.chicken = this.levelNumber + 4;
+        this.levelConfig.repetition.smallChicken = this.levelNumber + 5;
         this.levelConfig.repetition.background = this.getBackgrRepeat(this.levelNumber);
         this.levelConfig.repetition.clouds = 6;
 
@@ -52,6 +57,7 @@ export class Level {
         this.levelConfig.health.character = this.levelNumber + 100;
 
         this.levelConfig.speed.chicken = this.levelNumber / 10 + Math.random();
+        this.levelConfig.speed.smallChicken = this.levelNumber / 5 + Math.random();
     }
 
     // länge hintergrund anpassung nach level
@@ -93,19 +99,27 @@ export class Level {
     }
 
     // pusht je nach level andere anzahl an instanzen von Chicken in property enemies
-    // push danach noch den endbuss in das arr
+    // instanziert Endboss und weist instanz property endboss zu
     addEnemies() {
         for (let i = 0; i < this.levelConfig.repetition.chicken; i++) {
             this.enemies.push(this.createChicken());
+        };
+        for (let i = 0; i < this.levelConfig.repetition.smallChicken; i++) {
+            this.enemies.push(this.createSmallChicken());
         }
-        this.enemies.push(new Endboss(Level.END_X));
-        this.endboss = new Endboss(Level.END_X);
+        const endboss = new Endboss(Level.END_X);
+        Level.endboss = endboss;
+        this.enemies.push(endboss);
     }
 
     // gibt instanz von Chicken zurück
     createChicken() {
         // speed und x koordinate übergeben
         return new Chicken(200 + Math.random() * Level.END_X , this.levelConfig.speed.chicken);
+    }
+
+    createSmallChicken(){
+        return new SmallChicken(200 + Math.random() * Level.END_X, this.levelConfig.speed.smallChicken)
     }
 
     // pusht je nach level andere anzahl an instanzen von Cloud in property clouds

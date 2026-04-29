@@ -66,7 +66,7 @@ export class MovableObject extends DrawableObject {
         if (this.energy < 0) {
             this.energy = 0;
         } else {
-            this.lastHit = new Date().getTime();
+            this.lastHit = new Date().getTime();     
         }
     }
 
@@ -75,7 +75,9 @@ export class MovableObject extends DrawableObject {
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
+        // console.log(timePassed);
         return timePassed < 0.5;
+        
     }
 
     isDead() {

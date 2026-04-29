@@ -4,6 +4,7 @@ import { Keyboard } from "../manager/keyboard.class.js";
 import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Endboss } from "./endboss.class.js";
+import { Level } from "./level.class.js";
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 
@@ -15,7 +16,6 @@ export class World {
     ctx;
     statusbarHealth = new StatusBar(ImgHub.STATUSBAR.HEALTH, 0);
     statusbarEndboss = new StatusBar(ImgHub.STATUSBAR.ENEMY, 60);
-    static ThrowableObjects = [];
     static CAMERA_X = 0;
 
     //#endregion
@@ -41,7 +41,7 @@ export class World {
         //     }
         // });
         this.collisionObjects(this.level.enemies, this.character, this.statusbarHealth);
-        this.collisionObjects(World.ThrowableObjects, this.level.endboss, this.statusbarEndboss);
+        this.collisionObjects(Level.ThrowableObjects, Level.endboss, this.statusbarEndboss);
     };
 
     collisionObjects(mO, target, statusbar) {
@@ -68,7 +68,7 @@ export class World {
     };
 
     addThrowableObject() {
-        World.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY));
+        Level.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY));
     }
 
     draw() {
@@ -89,7 +89,8 @@ export class World {
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(World.ThrowableObjects);
+        this.addToMap(Level.endboss)
+        this.addObjectsToMap(Level.ThrowableObjects);
 
         this.ctx.translate(-World.CAMERA_X, 0);
 

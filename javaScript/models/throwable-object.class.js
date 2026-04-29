@@ -1,6 +1,7 @@
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
+import { Level } from "./level.class.js";
 import { MovableObject } from "./movable-object.class.js";
 import { World } from "./world.class.js";
 
@@ -23,7 +24,6 @@ export class ThrowableObject extends MovableObject {
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
         IntervalHub.startInterval(this.movement, 25);
         IntervalHub.startInterval(this.animate, 50);
-        // this.throw();
     }
 
     //#region methods
@@ -46,9 +46,9 @@ export class ThrowableObject extends MovableObject {
         if (this.currentSplashImg < ImgHub.BOTTLE.SPLASH.length) {
             this.nextSplashImg(ImgHub.BOTTLE.SPLASH);
         } else {
-            const index = World.ThrowableObjects.indexOf(this);
+            const index = Level.ThrowableObjects.indexOf(this);
             if (index > -1) {
-                World.ThrowableObjects.splice(index, 1);
+                Level.ThrowableObjects.splice(index, 1);
             }
         }
     }

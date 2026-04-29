@@ -62,13 +62,15 @@ export class World {
     }
 
     checkThrowObjects = () => {
-        if (Keyboard.D) {
-            this.addThrowableObject();
+        if (Keyboard.D && this.character.otherDirection) {
+            this.addThrowableObject("left");
+        } else if (Keyboard.D && !this.character.otherDirection){
+            this.addThrowableObject("right");
         }
     };
 
-    addThrowableObject() {
-        Level.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY));
+    addThrowableObject(direction) {
+        Level.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY, direction));
     }
 
     draw() {

@@ -14,9 +14,11 @@ export class ThrowableObject extends MovableObject {
     };
     speedY = 30;
     currentSplashImg = 0;
+    throwDirection;
 
-    constructor(x_, y_) {
+    constructor(x_, y_, direction_) {
         super(x_, y_, 70, 50, 10);
+        this.throwDirection = direction_;
         this.loadImage(ImgHub.BOTTLE.NORMAL);
         this.loadImages(ImgHub.BOTTLE.ROTATION);
         this.loadImages(ImgHub.BOTTLE.SPLASH);
@@ -28,6 +30,8 @@ export class ThrowableObject extends MovableObject {
 
     //#region methods
 
+    // spielt rotation animation, bis es mit mo oder boden kollidiert
+    // dann splash animation
     animate = () => {
         if (this.isAboveGround() && this.alive) {
             this.playAnimation(ImgHub.BOTTLE.ROTATION);
@@ -36,12 +40,18 @@ export class ThrowableObject extends MovableObject {
         }
     };
 
+    // bewegt sich je nach instanzierung nach rechts oder links wenn es über dem boden und noch nicht kollidiert ist
     movement = () => {
         if (this.isAboveGround() && this.alive) {
-            this.moveRight();
+            if (this.throwDirection == "right") {
+                this.moveRight();
+            } else if (this.throwDirection == "left") {
+                this.moveLeft();
+            }
         }
     };
 
+    // spielt splash animation ein mal und entfernt object aus array mit throwableObjects
     playSplashAnimation() {
         if (this.currentSplashImg < ImgHub.BOTTLE.SPLASH.length) {
             this.nextSplashImg(ImgHub.BOTTLE.SPLASH);

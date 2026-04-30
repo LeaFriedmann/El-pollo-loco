@@ -120,9 +120,9 @@ export class World {
     // instanziert flasche bei klick auf taste D
     // flasche wird bei instanzierung geworfen
     checkThrowObjects = () => {
-        if (Keyboard.D && this.character.otherDirection) {
+        if (Keyboard.D && this.character.otherDirection && Level.ThrowableObjects.length < 1) {
             this.addThrowableObject("left");
-        } else if (Keyboard.D && !this.character.otherDirection) {
+        } else if (Keyboard.D && !this.character.otherDirection && Level.ThrowableObjects.length < 1) {
             this.addThrowableObject("right");
         }
     };

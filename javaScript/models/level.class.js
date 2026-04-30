@@ -24,9 +24,9 @@ export class Level {
         }
     };
     levelNumber;
-    enemies = [];
     clouds = [];
     backgroundObjects = [];
+    enemies = [];
     static endboss;
     static END_X;
     static ThrowableObjects = [];
@@ -115,11 +115,11 @@ export class Level {
     // gibt instanz von Chicken zurück
     createChicken() {
         // speed und x koordinate übergeben
-        return new Chicken(200 + Math.random() * Level.END_X , this.levelConfig.speed.chicken);
+        return new Chicken(300 + Math.random() * Level.END_X , this.levelConfig.speed.chicken);
     }
 
     createSmallChicken(){
-        return new SmallChicken(200 + Math.random() * Level.END_X, this.levelConfig.speed.smallChicken)
+        return new SmallChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.smallChicken)
     }
 
     // pusht je nach level andere anzahl an instanzen von Cloud in property clouds

@@ -27,6 +27,7 @@ export class World {
         this.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
+        IntervalHub.startInterval(this.collisionTop, 50);
         IntervalHub.startInterval(this.checkThrowObjects, 150);
     }
 
@@ -41,18 +42,23 @@ export class World {
         //         console.log(this.character.energy);
         //     }
         // });
-        this.collisionObjects(this.level.enemies, this.character, this.statusbarHealth);
-        this.collisionObjects(Level.ThrowableObjects, Level.endboss, this.statusbarEndboss);
+
+        // this.collisionObjects(this.level.enemies, this.character, this.statusbarHealth);
+        // this.collisionObjects(Level.ThrowableObjects, Level.endboss, this.statusbarEndboss);
+
+        this.collisionCharacter();
+        this.collisionBottle();
     };
 
     collisionObjects(mO, target, statusbar) {
         if (target.energy > 0) {
             mO.forEach((mo) => {
                 if (target.isColliding(mo)) {
-                    if (mo.alive) {
+                    if (!mo.isDead()) {
                         target.hit();
-                        if (mo instanceof ThrowableObject) {                            
-                            mo.alive = false;
+                        console.log(mo instanceof SmallChicken);
+                        if (mo instanceof ThrowableObject) {
+                            mo.energy = 0;
                         }
                     }
                     statusbar.setPercentage(target.energy);
@@ -62,10 +68,61 @@ export class World {
         }
     }
 
+    // checkt für jede bottle kollision mit jedem enemy
+    collisionBottle(){
+        Level.ThrowableObjects.forEach((bottle) => {
+            this.collisionEnemies(bottle);
+        })
+    }
+
+    // checkt für jeden enemy collision mit bottle
+    // bei kollision wird enemy schaden abgezogen, flasche auch (chicken, smallChicken und bottle direkt energy auf 0)
+    collisionEnemies(bottle){
+        this.level.enemies.forEach((enemy) => {
+            if (bottle.isColliding(enemy)) {
+                if (!bottle.isDead()) {
+                    enemy.hit();
+                    bottle.energy = 0;
+                    if (enemy instanceof Endboss) {
+                        this.statusbarEndboss.setPercentage(enemy.energy);
+                    }
+                }
+            }
+        })
+    }
+
+    // checkt für jeden enemy collision mit character
+    // wenn enemy lebt wird character energy abgezogen
+    collisionCharacter() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.character.speedY >= 0 && !enemy.isDead()) {
+                this.character.hit();
+                this.statusbarHealth.setPercentage(this.character.energy);
+                console.log(this.character.energy);
+            }
+        });
+    }
+
+    // prüft für jeden enemy, ob character kollidiert, wenn er vom sprung runter kommt
+    // tötet enemy bei collision (außer endboss)
+    collisionTop = () => {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.speedY < 0) {
+                enemy.hit();
+            }
+        });
+    };
+
+    killableByJump(enemy) {
+        return enemy instanceof Chicken || enemy instanceof SmallChicken;
+    }
+
+    // instanziert flasche bei klick auf taste D
+    // flasche wird bei instanzierung geworfen
     checkThrowObjects = () => {
         if (Keyboard.D && this.character.otherDirection) {
             this.addThrowableObject("left");
-        } else if (Keyboard.D && !this.character.otherDirection){
+        } else if (Keyboard.D && !this.character.otherDirection) {
             this.addThrowableObject("right");
         }
     };
@@ -92,7 +149,7 @@ export class World {
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addToMap(Level.endboss)
+        this.addToMap(Level.endboss);
         this.addObjectsToMap(Level.ThrowableObjects);
 
         this.ctx.translate(-World.CAMERA_X, 0);

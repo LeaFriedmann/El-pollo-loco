@@ -66,7 +66,7 @@ export class MovableObject extends DrawableObject {
         if (this.energy < 0) {
             this.energy = 0;
         } else {
-            this.lastHit = new Date().getTime();     
+            this.lastHit = new Date().getTime();
         }
     }
 
@@ -77,7 +77,6 @@ export class MovableObject extends DrawableObject {
         timePassed = timePassed / 1000;
         // console.log(timePassed);
         return timePassed < 0.5;
-        
     }
 
     isDead() {
@@ -104,9 +103,13 @@ export class MovableObject extends DrawableObject {
     // verringert y koordinate so lange, bis objekt am boden angekommen ist
     // this.alive abfrage für throwable object
     applyGravity = () => {
-        if (this.isAboveGround() && this.alive || this.speedY > 0 && this.alive) {
+        if ((this.isAboveGround() || (this.speedY) > 0 && !this.isDead())) {
             this.y -= this.speedY;
             this.speedY -= this.acceleration;
+            if (!this.isAboveGround()) {
+                // speedY auf 0 setzen, damit character chicken hit() wenn er von oben runter kommt
+                this.speedY = 0;
+            }
         }
     };
 

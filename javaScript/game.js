@@ -10,7 +10,7 @@ class StartGame {
 
     constructor() {
         this.canvas = document.getElementById("canvas");
-        this.world = new World(canvas, new Level(1));
+        this.world = new World(canvas, new Level(10));
 
         window.addEventListener("keydown", (e) => {
             if (e.key == "ArrowUp") {

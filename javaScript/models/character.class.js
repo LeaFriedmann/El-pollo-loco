@@ -59,7 +59,7 @@ export class Character extends MovableObject {
         }
 
         // sprung wird nur ausgeführt wenn character auf boden
-        if (Keyboard.UP && !this.isAboveGround()) {
+        if (Keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
         }
 
@@ -67,6 +67,7 @@ export class Character extends MovableObject {
     };
 
     animate = () => {
+        
         if (!this.isAboveGround()) {
             // jump img auf index 0 wenn sprung vorbei
             this.resetJumpAnimation();

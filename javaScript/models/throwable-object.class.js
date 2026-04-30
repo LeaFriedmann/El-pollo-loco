@@ -33,16 +33,16 @@ export class ThrowableObject extends MovableObject {
     // spielt rotation animation, bis es mit mo oder boden kollidiert
     // dann splash animation
     animate = () => {
-        if (this.isAboveGround() && this.alive) {
+        if (this.isAboveGround() && !this.isDead()) {
             this.playAnimation(ImgHub.BOTTLE.ROTATION);
-        } else if (!this.isAboveGround() || !this.alive) {
+        } else if (!this.isAboveGround() || this.isDead()) {
             this.playSplashAnimation(ImgHub.BOTTLE.SPLASH);
         }
     };
 
     // bewegt sich je nach instanzierung nach rechts oder links wenn es über dem boden und noch nicht kollidiert ist
     movement = () => {
-        if (this.isAboveGround() && this.alive) {
+        if (this.isAboveGround() && !this.isDead()) {
             if (this.throwDirection == "right") {
                 this.moveRight();
             } else if (this.throwDirection == "left") {

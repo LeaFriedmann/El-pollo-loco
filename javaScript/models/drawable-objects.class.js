@@ -33,9 +33,7 @@ export class DrawableObject {
     }
 
     draw(ctx) {
-        if (this.visible) {
-            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);           
-        }
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
     //#endregion

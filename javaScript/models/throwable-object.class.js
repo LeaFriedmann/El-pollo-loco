@@ -17,12 +17,9 @@ export class ThrowableObject extends Entity {
     throwDirection;
 
     constructor(x_, y_, direction_) {
-        super(x_, y_, 70, 50, 10, 100, 100);
+        super(x_, y_, 70, 50, 10, 100, 100, ImgHub.BOTTLE.ROTATION, ImgHub.BOTTLE.SPLASH);
         this.throwDirection = direction_;
-        this.loadImage(ImgHub.BOTTLE.NORMAL);
-        this.loadImages(ImgHub.BOTTLE.ROTATION);
-        this.loadImages(ImgHub.BOTTLE.SPLASH);
-        IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
+        
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
         IntervalHub.startInterval(this.movement, 25);
         IntervalHub.startInterval(this.animate, 50);
@@ -30,19 +27,9 @@ export class ThrowableObject extends Entity {
 
     //#region methods
 
-    // spielt rotation animation, bis es mit mo oder boden kollidiert
-    // dann splash animation
-    animate = () => {
-        if (this.isAboveGround() && !this.isDead()) {
-            this.playAnimation(ImgHub.BOTTLE.ROTATION);
-        } else if (!this.isAboveGround() || this.isDead()) {
-            this.playSplashAnimation(ImgHub.BOTTLE.SPLASH);
-        }
-    };
-
     // bewegt sich je nach instanzierung nach rechts oder links wenn es über dem boden und noch nicht kollidiert ist
     movement = () => {
-        if (this.isAboveGround() && !this.isDead()) {
+        if (this.inAir()) {
             if (this.throwDirection == "right") {
                 this.moveRight();
             } else if (this.throwDirection == "left") {
@@ -51,16 +38,35 @@ export class ThrowableObject extends Entity {
         }
     };
 
+    // spielt rotation animation, bis es mit mo oder boden kollidiert
+    // dann splash animation
+    animate = () => {
+        if (this.inAir()) {
+            this.playAnimation(this.animationWalk);
+        } else if (this.splashed()) {
+            this.playSplashAnimation();
+        }
+    };
+
+    inAir(){
+        return (this.isAboveGround() && !this.isDead());
+    }
+
+    splashed(){
+        return !this.isAboveGround() || this.isDead();
+    }
+
     // spielt splash animation ein mal und entfernt object aus array mit throwableObjects
     playSplashAnimation() {
-        if (this.currentSplashImg < ImgHub.BOTTLE.SPLASH.length) {
-            this.nextSplashImg(ImgHub.BOTTLE.SPLASH);
+        if (this.animationFirstRound()) {
+            this.nextSplashImg(this.animationDead);
         } else {
-            const index = Level.ThrowableObjects.indexOf(this);
-            if (index > -1) {
-                Level.ThrowableObjects.splice(index, 1);
-            }
+            this.removeObj(Level.ThrowableObjects);
         }
+    }
+
+    animationFirstRound() {
+        return this.currentSplashImg < ImgHub.BOTTLE.SPLASH.length;
     }
 
     nextSplashImg(images) {

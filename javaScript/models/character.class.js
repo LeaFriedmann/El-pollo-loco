@@ -7,6 +7,10 @@ import { World } from "./world.class.js";
 
 export class Character extends Entity {
     //#region properties
+    animationJump = ImgHub.PEPE.JUMP;
+    animationIdle = ImgHub.PEPE.IDLE;
+    animationSleep = ImgHub.PEPE.SLEEPING;
+    animationHurt = ImgHub.PEPE.HURT;
     currentJumpImg = 0;
     offset = {
         top: 130,
@@ -18,16 +22,12 @@ export class Character extends Entity {
     //#endregion
 
     constructor() {
-        super(120, 150, 280, 120, 10, 100, 10);
+        super(120, 150, 280, 120, 10, 100, 10, ImgHub.PEPE.WALK, ImgHub.PEPE.DEAD);
 
-        // this.getFrameValues();
-        this.loadImage(ImgHub.PEPE.WALK[0]);
-        this.loadImages(ImgHub.PEPE.WALK);
-        this.loadImages(ImgHub.PEPE.JUMP);
-        this.loadImages(ImgHub.PEPE.DEAD);
-        this.loadImages(ImgHub.PEPE.HURT);
-        this.loadImages(ImgHub.PEPE.IDLE);
-        this.loadImages(ImgHub.PEPE.SLEEPING);
+        this.loadImages(this.animationJump);
+        this.loadImages(this.animationHurt);
+        this.loadImages(this.animationIdle);
+        this.loadImages(this.animationSleep);
 
         IntervalHub.startInterval(this.movement, 1000 / 25);
         IntervalHub.startInterval(this.animate, 70); // laufanimation
@@ -72,24 +72,24 @@ export class Character extends Entity {
         }
         if (this.isDead()) {
             // deat animation wenn health = 0
-            this.playAnimation(ImgHub.PEPE.DEAD);
+            this.playAnimation(this.animationDead);
         } else if (this.isHurt()) {
             // hurt animation wenn letzter hit mehl als 0.5 sec her war
-            this.playAnimation(ImgHub.PEPE.HURT);
+            this.playAnimation(this.animationHurt);
         } else if (this.isAboveGround()) {
             // jump animation bei sprung
-            this.playJumpAnimation(ImgHub.PEPE.JUMP);
+            this.playJumpAnimation(this.animationJump);
         } else if (Keyboard.RIGHT || Keyboard.LEFT) {
             // laufanimation wenn pfeil rechts oder links gedrückt
-            this.playAnimation(ImgHub.PEPE.WALK);
+            this.playAnimation(this.animationWalk);
         } else {
             // idle animation wenn keine tasten gedrückt
-            this.playAnimation(ImgHub.PEPE.IDLE);
+            this.playAnimation(this.animationIdle);
             if (this.idleCounter == 0) { // idle counter starten, wird  auf 0 gesetzt wenn character sich bewegt
                 this.startIdleCounter();
             }
             if (this.sleepTime()) { // wenn idle counter über 8 sleep animation
-                this.playAnimation(ImgHub.PEPE.SLEEPING);
+                this.playAnimation(this.animationSleep);
             }
         }
     };
@@ -99,7 +99,6 @@ export class Character extends Entity {
     sleepTime() {
         let timePassed = new Date().getTime() - this.idleCounter;
         timePassed = timePassed / 1000;
-        // console.log(timePassed);
         return timePassed > 8;
     }
 

@@ -6,18 +6,15 @@ import { Level } from "./level.class.js";
 export class Chicken extends Entity {
     //#region properties
     offset = {
-        top: 2,
-        right: 2,
-        bottom: 2,
-        left: 2,
+        top: 0,
+        right: 1,
+        bottom: 1,
+        left: 1,
     };
     //#endregion
 
-    constructor(x_, speed_) {
-        super(x_, 360, 60, 60, speed_, 100, 100);
-        this.loadImage(ImgHub.ENEMIES.CHICKEN_NORMAL.WALK[0]);
-        this.loadImages(ImgHub.ENEMIES.CHICKEN_NORMAL.WALK);
-        this.loadImages(ImgHub.ENEMIES.CHICKEN_NORMAL.DEAD);
+    constructor(x_, y_, width_, height_,  speed_, animationWalk_, animationDead_) {
+        super(x_, y_, height_, width_, speed_, 100, 100, animationWalk_, animationDead_);
 
         IntervalHub.startInterval(this.animate, 50);
     }
@@ -25,16 +22,13 @@ export class Chicken extends Entity {
     // für interval, laufanimation + laufen nach links
     animate = () => {
         if (this.isDead()) {
-            this.playAnimation(ImgHub.ENEMIES.CHICKEN_NORMAL.DEAD);
+            this.playAnimation(this.animationDead);
             setTimeout(() => {
-                const index = Level.enemies.indexOf(this);
-                if (index > -1) {
-                    Level.enemies.splice(index, 1);
-                }
+                this.removeObj(Level.enemies);
             }, 2000);
         } else {
             this.moveLeft();
-            this.playAnimation(ImgHub.ENEMIES.CHICKEN_NORMAL.WALK);
+            this.playAnimation(this.animationWalk);
         }
     };
 }

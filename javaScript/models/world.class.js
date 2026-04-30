@@ -6,6 +6,7 @@ import { Chicken } from "./chicken.class.js";
 import { Endboss } from "./endboss.class.js";
 import { Entity } from "./entity.class.js";
 import { Level } from "./level.class.js";
+import { NormalChicken } from "./normal-chicken.class.js";
 import { SmallChicken } from "./small-chicken.class.js";
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
@@ -29,7 +30,7 @@ export class World {
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
         IntervalHub.startInterval(this.collisionTop, 1000/60);
-        IntervalHub.startInterval(this.checkThrowObjects, 150);
+        IntervalHub.startInterval(this.checkThrowObjects, 50);
     }
 
     //#region methods
@@ -83,7 +84,7 @@ export class World {
             if (bottle.isColliding(enemy)) {
                 if (!bottle.isDead()) {
                     enemy.hit();
-                    bottle.energy = 0;
+                    bottle.hit();
                     if (enemy instanceof Endboss) {
                         this.statusbarEndboss.setPercentage(enemy.energy);
                     }
@@ -115,7 +116,7 @@ export class World {
     };
 
     killableByJump(enemy) {
-        return enemy instanceof Chicken || enemy instanceof SmallChicken;
+        return enemy instanceof NormalChicken || enemy instanceof SmallChicken;
     }
 
     // instanziert flasche bei klick auf taste D
@@ -172,7 +173,7 @@ export class World {
             this.flipImage(mo);
         }
 
-        // gemeint ist draw methode in movable object class
+        // gemeint ist draw methode in drawable object class
         mo.draw(this.ctx);
 
         // if (mo instanceof Entity) {

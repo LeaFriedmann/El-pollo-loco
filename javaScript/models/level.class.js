@@ -3,7 +3,9 @@ import { BackgroundObject } from "./background-object.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
 import { Endboss } from "./endboss.class.js";
+import { NormalChicken } from "./normal-chicken.class.js";
 import { SmallChicken } from "./small-chicken.class.js";
+
 
 export class Level {
     //#region properties
@@ -115,7 +117,7 @@ export class Level {
     // gibt instanz von Chicken zurück
     createChicken() {
         // speed und x koordinate übergeben
-        return new Chicken(300 + Math.random() * Level.END_X , this.levelConfig.speed.chicken);
+        return new NormalChicken(300 + Math.random() * Level.END_X , this.levelConfig.speed.chicken);
     }
 
     createSmallChicken(){

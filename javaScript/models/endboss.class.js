@@ -5,6 +5,8 @@ import { Level } from "./level.class.js";
 
 export class Endboss extends Entity {
 
+    animationHurt = ImgHub.ENEMIES.ENDBOSS.HURT;
+    animationAlert = ImgHub.ENEMIES.ENDBOSS.ALERT;
     offset = {
         top: 80,
         right: 20,
@@ -13,30 +15,26 @@ export class Endboss extends Entity {
     }
 
     constructor(x_, speed_){
-        super(x_, 50, 400, 250, speed_, 100, 10);
+        super(x_, 50, 400, 250, speed_, 100, 10, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
 
-        this.loadImage(ImgHub.ENEMIES.ENDBOSS.ALERT[0]);
-        this.loadImages(ImgHub.ENEMIES.ENDBOSS.ALERT);
-        this.loadImages(ImgHub.ENEMIES.ENDBOSS.HURT);
-        this.loadImages(ImgHub.ENEMIES.ENDBOSS.DEAD);
+        this.loadImages(this.animationAlert);
+        this.loadImages(this.animationHurt);
 
         IntervalHub.startInterval(this.animate, 100);
     }
 
     // animation endboss für interval
     animate = () => {
-        // console.log(this.isDead());
         
         if (this.isHurt()) {
-            this.playAnimation(ImgHub.ENEMIES.ENDBOSS.HURT);
+            this.playAnimation(this.animationHurt);
         } else if (this.isDead()) {
-            this.playAnimation(ImgHub.ENEMIES.ENDBOSS.DEAD);
+            this.playAnimation(this.animationDead);
             setTimeout(() => {
                 this.visible = false;
             }, 1000);
-
         } else {
-            this.playAnimation(ImgHub.ENEMIES.ENDBOSS.ALERT);
+            this.playAnimation(this.animationAlert);
         }
     };
 }

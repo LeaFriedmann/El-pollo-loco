@@ -26,7 +26,7 @@ export class Level {
     levelNumber;
     clouds = [];
     backgroundObjects = [];
-    enemies = [];
+    static enemies = [];
     static endboss;
     static END_X;
     static ThrowableObjects = [];
@@ -102,14 +102,14 @@ export class Level {
     // instanziert Endboss und weist instanz property endboss zu
     addEnemies() {
         for (let i = 0; i < this.levelConfig.repetition.chicken; i++) {
-            this.enemies.push(this.createChicken());
+            Level.enemies.push(this.createChicken());
         };
         for (let i = 0; i < this.levelConfig.repetition.smallChicken; i++) {
-            this.enemies.push(this.createSmallChicken());
+            Level.enemies.push(this.createSmallChicken());
         }
         const endboss = new Endboss(Level.END_X);
         Level.endboss = endboss;
-        this.enemies.push(endboss);
+        Level.enemies.push(endboss);
     }
 
     // gibt instanz von Chicken zurück

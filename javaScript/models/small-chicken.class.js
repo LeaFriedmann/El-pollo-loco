@@ -1,6 +1,7 @@
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Entity } from "./entity.class.js";
+import { Level } from "./level.class.js";
 
 export class SmallChicken extends Entity {
     //#region properties
@@ -25,12 +26,18 @@ export class SmallChicken extends Entity {
 
     animate = () => {
         if (this.isDead()) {
-            this.playAnimation(ImgHub.ENEMIES.CHICKEN_SMALL.DEAD)
+            this.playAnimation(ImgHub.ENEMIES.CHICKEN_SMALL.DEAD);
+            setTimeout(() => {               
+                const index = Level.enemies.indexOf(this);
+                if (index > -1) {
+                    Level.enemies.splice(index, 1);
+                }
+            }, 2000);
         } else {
             this.moveLeft();
             this.playAnimation(ImgHub.ENEMIES.CHICKEN_SMALL.WALK);
         }
-    }
-    
+    };
+
     //#endregion
 }

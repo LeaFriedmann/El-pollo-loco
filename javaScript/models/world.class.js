@@ -36,7 +36,7 @@ export class World {
 
     // checkt für jeden enemy ob kollision mit character
     checkCollisions = () => {
-        // this.level.enemies.forEach((enemy) => {
+        // Level.enemies.forEach((enemy) => {
         //     if (this.character.isColliding(enemy)) {
         //         this.character.hit();
         //         this.statusbar.setPercentage(this.character.energy)
@@ -44,7 +44,7 @@ export class World {
         //     }
         // });
 
-        // this.collisionObjects(this.level.enemies, this.character, this.statusbarHealth);
+        // this.collisionObjects(Level.enemies, this.character, this.statusbarHealth);
         // this.collisionObjects(Level.ThrowableObjects, Level.endboss, this.statusbarEndboss);
 
         this.collisionCharacter();
@@ -79,7 +79,7 @@ export class World {
     // checkt für jeden enemy collision mit bottle
     // bei kollision wird enemy schaden abgezogen, flasche auch (chicken, smallChicken und bottle direkt energy auf 0)
     collisionEnemies(bottle){
-        this.level.enemies.forEach((enemy) => {
+        Level.enemies.forEach((enemy) => {
             if (bottle.isColliding(enemy)) {
                 if (!bottle.isDead()) {
                     enemy.hit();
@@ -95,7 +95,7 @@ export class World {
     // checkt für jeden enemy collision mit character
     // wenn enemy lebt wird character energy abgezogen
     collisionCharacter() {
-        this.level.enemies.forEach((enemy) => {
+        Level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.speedY >= 0 && !enemy.isDead()) {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
@@ -107,7 +107,7 @@ export class World {
     // prüft für jeden enemy, ob character kollidiert, wenn er vom sprung runter kommt
     // tötet enemy bei collision (außer endboss)
     collisionTop = () => {
-        this.level.enemies.forEach((enemy) => {
+        Level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.speedY < 0) {
                 enemy.hit();
             }
@@ -149,7 +149,7 @@ export class World {
         this.ctx.translate(World.CAMERA_X, 0);
 
         this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(Level.enemies);
         this.addToMap(Level.endboss);
         this.addObjectsToMap(Level.ThrowableObjects);
 
@@ -175,10 +175,10 @@ export class World {
         // gemeint ist draw methode in movable object class
         mo.draw(this.ctx);
 
-        if (mo instanceof Entity) {
-            mo.drawFrame(this.ctx);
-            mo.drawRealFrame(this.ctx);
-        }
+        // if (mo instanceof Entity) {
+        //     mo.drawFrame(this.ctx);
+        //     mo.drawRealFrame(this.ctx);
+        // }
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

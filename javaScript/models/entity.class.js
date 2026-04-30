@@ -14,7 +14,6 @@ export class Entity extends MovableObject{
     rW;
     rH;
     lastHit = 0;
-    alive = true;
     //#endregion
 
     constructor(x_, y_, height_, width_, speed_, energy_, healthReduction_){

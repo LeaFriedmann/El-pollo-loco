@@ -1,11 +1,11 @@
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
+import { Entity } from "./entity.class.js";
 import { Level } from "./level.class.js";
-import { MovableObject } from "./movable-object.class.js";
 import { World } from "./world.class.js";
 
-export class ThrowableObject extends MovableObject {
+export class ThrowableObject extends Entity {
     offset = {
         top: 10,
         right: 20,
@@ -17,7 +17,7 @@ export class ThrowableObject extends MovableObject {
     throwDirection;
 
     constructor(x_, y_, direction_) {
-        super(x_, y_, 70, 50, 10);
+        super(x_, y_, 70, 50, 10, 100, 100);
         this.throwDirection = direction_;
         this.loadImage(ImgHub.BOTTLE.NORMAL);
         this.loadImages(ImgHub.BOTTLE.ROTATION);

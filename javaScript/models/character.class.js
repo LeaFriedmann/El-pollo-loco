@@ -1,14 +1,12 @@
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
+import { Entity } from "./entity.class.js";
 import { Level } from "./level.class.js";
-import { MovableObject } from "./movable-object.class.js";
 import { World } from "./world.class.js";
 
-export class Character extends MovableObject {
+export class Character extends Entity {
     //#region properties
-
-    currentImg = 0;
     currentJumpImg = 0;
     offset = {
         top: 130,
@@ -17,12 +15,10 @@ export class Character extends MovableObject {
         left: 30,
     };
     idleCounter = 0;
-    healthReduction = 10;
-
     //#endregion
 
     constructor() {
-        super(120, 150, 280, 120, 10);
+        super(120, 150, 280, 120, 10, 100, 10);
 
         // this.getFrameValues();
         this.loadImage(ImgHub.PEPE.WALK[0]);
@@ -36,7 +32,6 @@ export class Character extends MovableObject {
         IntervalHub.startInterval(this.movement, 1000 / 25);
         IntervalHub.startInterval(this.animate, 70); // laufanimation
         IntervalHub.startInterval(this.applyGravity, 1000 / 25); // fall animation
-        IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
     }
 
     //#region methods

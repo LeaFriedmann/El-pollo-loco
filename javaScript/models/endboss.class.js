@@ -1,9 +1,9 @@
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
+import { Entity } from "./entity.class.js";
 import { Level } from "./level.class.js";
-import { MovableObject } from "./movable-object.class.js";
 
-export class Endboss extends MovableObject {
+export class Endboss extends Entity {
 
     offset = {
         top: 80,
@@ -11,10 +11,9 @@ export class Endboss extends MovableObject {
         bottom: 50,
         left: 30,
     }
-    healthReduction = 10;
 
-    constructor(x_){
-        super(x_, 50, 400, 250);
+    constructor(x_, speed_){
+        super(x_, 50, 400, 250, speed_, 100, 10);
 
         this.loadImage(ImgHub.ENEMIES.ENDBOSS.ALERT[0]);
         this.loadImages(ImgHub.ENEMIES.ENDBOSS.ALERT);
@@ -22,7 +21,6 @@ export class Endboss extends MovableObject {
         this.loadImages(ImgHub.ENEMIES.ENDBOSS.DEAD);
 
         IntervalHub.startInterval(this.animate, 100);
-        IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
     }
 
     // animation endboss für interval

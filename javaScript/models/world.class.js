@@ -4,6 +4,7 @@ import { Keyboard } from "../manager/keyboard.class.js";
 import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Endboss } from "./endboss.class.js";
+import { Entity } from "./entity.class.js";
 import { Level } from "./level.class.js";
 import { SmallChicken } from "./small-chicken.class.js";
 import { StatusBar } from "./status-bar.class.js";
@@ -27,7 +28,7 @@ export class World {
         this.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
-        IntervalHub.startInterval(this.collisionTop, 50);
+        IntervalHub.startInterval(this.collisionTop, 1000/60);
         IntervalHub.startInterval(this.checkThrowObjects, 150);
     }
 
@@ -174,10 +175,10 @@ export class World {
         // gemeint ist draw methode in movable object class
         mo.draw(this.ctx);
 
-        // if (mo instanceof Character || mo instanceof Chicken || mo instanceof SmallChicken || mo instanceof Endboss || mo instanceof ThrowableObject) {
-        //     mo.drawFrame(this.ctx);
-        //     mo.drawRealFrame(this.ctx);
-        // }
+        if (mo instanceof Entity) {
+            mo.drawFrame(this.ctx);
+            mo.drawRealFrame(this.ctx);
+        }
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

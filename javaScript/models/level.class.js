@@ -165,7 +165,7 @@ export class Level {
 
     // gibt instanz von Cloud zurück
     createCloud() {
-        return new Cloud(Math.random() * Level.END_X);
+        return new Cloud();
     }
 
     // pusht instanzen von sammelbaren flaschen in collectableObj array

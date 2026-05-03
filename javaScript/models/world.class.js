@@ -23,7 +23,6 @@ export class World {
     statusbarEndboss = new StatusBar(30, 60, ImgHub.STATUSBAR.ENEMY, 100);
     statusbarBottle = new StatusBar(490, 0, ImgHub.STATUSBAR.BOTTLE, 0)
     static CAMERA_X = 0;
-    outroBackgr = GameState.outroBackground();
 
     //#endregion
 
@@ -171,24 +170,25 @@ export class World {
         // canvas leeren
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // erster wert x achse, zweiter wert y achse
+        this.ctx.translate(World.CAMERA_X, 0);
+
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+
         if (GameState.GAME_ONGOING) {
             this.drawGameObjects();
         } else {
             this.drawOutro();
         }
 
+        this.ctx.translate(-World.CAMERA_X, 0);
         requestAnimationFrame(() => this.draw()); // draw wird immer wieder aufgerufen
     }
 
     // während spiel läuft
     drawGameObjects() {
-        // erster wert x achse, zweiter wert y achse
-        this.ctx.translate(World.CAMERA_X, 0);
-
-        // objekte hinzufügen
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-
+        
         this.ctx.translate(-World.CAMERA_X, 0);
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarEndboss);
@@ -199,15 +199,14 @@ export class World {
         this.addObjectsToMap(Level.enemies);
         this.addToMap(Level.endboss);
         this.addObjectsToMap(Level.collectableObj);
-        this.addObjectsToMap(Level.ThrowableObjects);
-
-        this.ctx.translate(-World.CAMERA_X, 0);
+        this.addObjectsToMap(Level.ThrowableObjects);       
     }
 
     // wenn spiel vorbei endscreen
     drawOutro() {
-        this.addObjectsToMap(GameState.outroBackgrArr);
+        this.ctx.translate(-World.CAMERA_X, 0);
         this.addToMap(GameState.outro);
+        this.ctx.translate(World.CAMERA_X, 0);
     }
 
     // for each durch array von img der objekte

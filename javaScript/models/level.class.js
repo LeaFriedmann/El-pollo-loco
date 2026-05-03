@@ -14,7 +14,9 @@ export class Level {
             chicken : 0,
             smallChicken : 0,
             background : 0,
-            clouds : 0
+            clouds : 0, 
+            coins : 0,
+            collectableBottle : 0
         },
         health : {
             chicken : 0,
@@ -39,10 +41,7 @@ export class Level {
     constructor(levelNumber_) {
         this.levelNumber = levelNumber_;
         this.setLevelConfig();
-        this.getLevelEnd();
-        console.log(this.levelConfig.repetition.background)
-        console.log(this.levelConfig);
-        
+        this.getLevelEnd();      
         this.addBackground();
         this.addClouds();
         this.addEnemies();
@@ -55,6 +54,7 @@ export class Level {
         this.levelConfig.repetition.smallChicken = this.levelNumber + 5;
         this.levelConfig.repetition.background = this.getBackgrRepeat(this.levelNumber);
         this.levelConfig.repetition.clouds = 6;
+        this.levelConfig.repetition.collectableBottle = this.collectBottleNr(this.levelNumber);
 
         this.levelConfig.health.chicken = 20;
         this.levelConfig.health.character = this.levelNumber + 100;
@@ -66,19 +66,33 @@ export class Level {
 
     // länge hintergrund anpassung nach level
     getBackgrRepeat(levelNr) {
-        if (levelNr < 4) {
+        if (levelNr < 6) {
             return 2;
         }
-        if (levelNr < 10) {
+        if (levelNr < 11) {
             return 3;
         }
-        if (levelNr < 15) {
+        if (levelNr < 16) {
             return 4;
         }
-        if (levelNr < 20) {
+        if (levelNr < 21) {
             return 5;
         } else {
             return 6;
+        }
+    }
+
+    collectBottleNr(levelNr){
+        if (levelNr < 6) {
+            return 13 - levelNr;
+        } else if (levelNr < 11) {
+            return 22 - levelNr;
+        } else if (levelNr < 16) {
+            return 26 - levelNr;
+        } else if (levelNr < 21) {
+            return 30 - levelNr;
+        } else {
+            return 10;
         }
     }
 

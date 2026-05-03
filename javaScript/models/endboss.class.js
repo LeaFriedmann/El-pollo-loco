@@ -19,8 +19,8 @@ export class Endboss extends Entity {
     static startWalking = false;
     static attack = false;
 
-    constructor(x_, speed_) {
-        super(x_, 50, 400, 250, speed_, 100, 20, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
+    constructor(x_, speed_, healthReduction_) {
+        super(x_, 50, 400, 250, speed_, 100, healthReduction_, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
 
         this.loadImages(this.animationAlert);
         this.loadImages(this.animationHurt);

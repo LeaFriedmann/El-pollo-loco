@@ -19,8 +19,9 @@ export class World {
     level;
     canvas;
     ctx;
-    statusbarHealth = new StatusBar(ImgHub.STATUSBAR.HEALTH, 0);
-    statusbarEndboss = new StatusBar(ImgHub.STATUSBAR.ENEMY, 60);
+    statusbarHealth = new StatusBar(30, 0, ImgHub.STATUSBAR.HEALTH, 100);
+    statusbarEndboss = new StatusBar(30, 60, ImgHub.STATUSBAR.ENEMY, 100);
+    statusbarBottle = new StatusBar(490, 0, ImgHub.STATUSBAR.BOTTLE, 0)
     static CAMERA_X = 0;
     outroBackgr = GameState.outroBackground();
 
@@ -135,6 +136,7 @@ export class World {
             if (this.character.isColliding(bottle)) {
                 CollectableObject.bottles++;
                 bottle.removeBottle();
+                this.statusbarBottle.setPercentage(CollectableObject.bottles * 10)
             }
         });
     }
@@ -151,6 +153,7 @@ export class World {
                 this.addThrowableObject("right");
             }
             CollectableObject.bottles--;
+            this.statusbarBottle.setPercentage(CollectableObject.bottles * 10)
         }
     };
 
@@ -189,6 +192,7 @@ export class World {
         this.ctx.translate(-World.CAMERA_X, 0);
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarEndboss);
+        this.addToMap(this.statusbarBottle);
         this.ctx.translate(World.CAMERA_X, 0);
 
         this.addToMap(this.character);

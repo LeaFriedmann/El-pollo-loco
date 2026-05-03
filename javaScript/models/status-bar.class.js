@@ -4,15 +4,16 @@ import { DrawableObject } from "./drawable-objects.class.js";
 export class StatusBar extends DrawableObject {
 
     //#region properties
-    percentage = 100;
+    percentage;
     imgStatusbar;
     //#endregion
 
-    constructor(imgStatusbar_, y_){
-        super(30, y_, 60, 200);
+    constructor(x_, y_, imgStatusbar_, percentage_){
+        super(x_, y_, 60, 200);
         this.imgStatusbar = imgStatusbar_;
+        this.percentage = percentage_;
         this.loadImages(imgStatusbar_);
-        this.setPercentage(100);
+        this.setPercentage(percentage_);
     }
 
     //#region methods

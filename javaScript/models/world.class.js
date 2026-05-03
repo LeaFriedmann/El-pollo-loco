@@ -5,6 +5,7 @@ import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Endboss } from "./endboss.class.js";
 import { Entity } from "./entity.class.js";
+import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
 import { NormalChicken } from "./normal-chicken.class.js";
 import { SmallChicken } from "./small-chicken.class.js";
@@ -20,6 +21,7 @@ export class World {
     statusbarHealth = new StatusBar(ImgHub.STATUSBAR.HEALTH, 0);
     statusbarEndboss = new StatusBar(ImgHub.STATUSBAR.ENEMY, 60);
     static CAMERA_X = 0;
+    outroBackgr = GameState.outroBackground();
 
     //#endregion
 
@@ -29,7 +31,7 @@ export class World {
         this.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
-        IntervalHub.startInterval(this.collisionTop, 1000/60);
+        IntervalHub.startInterval(this.collisionTop, 1000 / 60);
         IntervalHub.startInterval(this.checkThrowObjects, 50);
     }
 
@@ -71,15 +73,15 @@ export class World {
     }
 
     // checkt für jede bottle kollision mit jedem enemy
-    collisionBottle(){
+    collisionBottle() {
         Level.ThrowableObjects.forEach((bottle) => {
             this.collisionEnemies(bottle);
-        })
+        });
     }
 
     // checkt für jeden enemy collision mit bottle
     // bei kollision wird enemy schaden abgezogen, flasche auch (chicken, smallChicken und bottle direkt energy auf 0)
-    collisionEnemies(bottle){
+    collisionEnemies(bottle) {
         Level.enemies.forEach((enemy) => {
             if (bottle.isColliding(enemy)) {
                 if (!bottle.isDead()) {
@@ -90,7 +92,7 @@ export class World {
                     }
                 }
             }
-        })
+        });
     }
 
     // checkt für jeden enemy collision mit character
@@ -137,6 +139,17 @@ export class World {
         // canvas leeren
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        if (GameState.GAME_ONGOING) {
+            this.drawGameObjects();
+        } else {
+            this.drawOutro();
+        }
+
+        requestAnimationFrame(() => this.draw()); // draw wird immer wieder aufgerufen
+    }
+
+    // während spiel läuft
+    drawGameObjects() {
         // erster wert x achse, zweiter wert y achse
         this.ctx.translate(World.CAMERA_X, 0);
 
@@ -155,8 +168,12 @@ export class World {
         this.addObjectsToMap(Level.ThrowableObjects);
 
         this.ctx.translate(-World.CAMERA_X, 0);
+    }
 
-        requestAnimationFrame(() => this.draw()); // draw wird immer wieder aufgerufen
+    // wenn spiel vorbei endscreen
+    drawOutro() {
+        this.addObjectsToMap(GameState.outroBackgrArr);
+        this.addToMap(GameState.outro);
     }
 
     // for each durch array von img der objekte

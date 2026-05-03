@@ -1,7 +1,9 @@
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
+import { BackgroundObject } from "./background-object.class.js";
 import { Entity } from "./entity.class.js";
+import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
 import { World } from "./world.class.js";
 
@@ -73,6 +75,10 @@ export class Character extends Entity {
         if (this.isDead()) {
             // deat animation wenn health = 0
             this.playAnimation(this.animationDead);
+            setTimeout(() => {
+                GameState.gameReset("lost");
+                GameState.LOST = true;
+            }, 1500);
         } else if (this.isHurt()) {
             // hurt animation wenn letzter hit mehl als 0.5 sec her war
             this.playAnimation(this.animationHurt);

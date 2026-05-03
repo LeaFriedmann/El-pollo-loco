@@ -1,6 +1,8 @@
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
+import { BackgroundObject } from "./background-object.class.js";
 import { Entity } from "./entity.class.js";
+import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
 
 export class Endboss extends Entity {
@@ -15,7 +17,7 @@ export class Endboss extends Entity {
     }
 
     constructor(x_, speed_){
-        super(x_, 50, 400, 250, speed_, 100, 10, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
+        super(x_, 50, 400, 250, speed_, 100, 20, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
 
         this.loadImages(this.animationAlert);
         this.loadImages(this.animationHurt);
@@ -31,8 +33,9 @@ export class Endboss extends Entity {
         } else if (this.isDead()) {
             this.playAnimation(this.animationDead);
             setTimeout(() => {
-                this.visible = false;
-            }, 1000);
+                GameState.gameReset("won");
+                GameState.WON = true;
+            }, 1500);
         } else {
             this.playAnimation(this.animationAlert);
         }

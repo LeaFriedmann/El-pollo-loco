@@ -2,6 +2,7 @@ import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
 import { BackgroundObject } from "./background-object.class.js";
+import { Endboss } from "./endboss.class.js";
 import { Entity } from "./entity.class.js";
 import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
@@ -71,6 +72,13 @@ export class Character extends Entity {
         }
         if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D ){
             this.resetIdleCounter();
+        }
+        if (Level.END_X - this.x < 600 && !Endboss.startWalking) {
+            Endboss.isAlert = true;
+        }
+        if (Level.END_X - this.x < 400) {
+            Endboss.isAlert = false;
+            Endboss.startWalking = true;
         }
         if (this.isDead()) {
             // deat animation wenn health = 0

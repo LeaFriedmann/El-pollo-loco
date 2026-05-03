@@ -37,6 +37,7 @@ export class World {
 
     //#region methods
 
+    //#region methods collision
     // checkt für jeden enemy ob kollision mit character
     checkCollisions = () => {
         // Level.enemies.forEach((enemy) => {
@@ -54,23 +55,23 @@ export class World {
         this.collisionBottle();
     };
 
-    collisionObjects(mO, target, statusbar) {
-        if (target.energy > 0) {
-            mO.forEach((mo) => {
-                if (target.isColliding(mo)) {
-                    if (!mo.isDead()) {
-                        target.hit();
-                        console.log(mo instanceof SmallChicken);
-                        if (mo instanceof ThrowableObject) {
-                            mo.energy = 0;
-                        }
-                    }
-                    statusbar.setPercentage(target.energy);
-                    console.log(target.energy);
-                }
-            });
-        }
-    }
+    // collisionObjects(mO, target, statusbar) {
+    //     if (target.energy > 0) {
+    //         mO.forEach((mo) => {
+    //             if (target.isColliding(mo)) {
+    //                 if (!mo.isDead()) {
+    //                     target.hit();
+    //                     console.log(mo instanceof SmallChicken);
+    //                     if (mo instanceof ThrowableObject) {
+    //                         mo.energy = 0;
+    //                     }
+    //                 }
+    //                 statusbar.setPercentage(target.energy);
+    //                 console.log(target.energy);
+    //             }
+    //         });
+    //     }
+    // }
 
     // checkt für jede bottle kollision mit jedem enemy
     collisionBottle() {
@@ -99,9 +100,15 @@ export class World {
     // wenn enemy lebt wird character energy abgezogen
     collisionCharacter() {
         Level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.speedY >= 0 && !enemy.isDead()) {
+            if (this.character.isColliding(enemy) && this.character.speedY >= 0 && !enemy.isDead() && !this.character.isHurt()) {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
+                if (enemy instanceof Endboss) {
+                    Endboss.attack = true;
+                    setTimeout(() => {
+                        Endboss.attack = false;
+                    }, 500);
+                }
                 console.log(this.character.energy);
             }
         });
@@ -121,6 +128,8 @@ export class World {
         return enemy instanceof NormalChicken || enemy instanceof SmallChicken;
     }
 
+    //#endregion
+
     // instanziert flasche bei klick auf taste D
     // flasche wird bei instanzierung geworfen
     checkThrowObjects = () => {
@@ -134,6 +143,8 @@ export class World {
     addThrowableObject(direction) {
         Level.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY, direction));
     }
+
+    //#region methods draw
 
     draw() {
         // canvas leeren
@@ -214,5 +225,6 @@ export class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+    //#endregion
     //#endregion
 }

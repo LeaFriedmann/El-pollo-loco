@@ -109,7 +109,7 @@ export class Level {
         for (let i = 0; i < this.levelConfig.repetition.smallChicken; i++) {
             Level.enemies.push(this.createSmallChicken());
         }
-        const endboss = new Endboss(Level.END_X);
+        const endboss = new Endboss(Level.END_X, 2);
         Level.endboss = endboss;
         Level.enemies.push(endboss);
     }

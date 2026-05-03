@@ -108,6 +108,10 @@ export class Character extends Entity {
         }
     };
 
+    jumpsDown(){
+        return this.speedY < 0;
+    }
+
     //#region methods idle/sleepdd
     // berechnet wie lange schon idle, true wenn länger als 8 sec
     sleepTime() {

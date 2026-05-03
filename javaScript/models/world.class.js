@@ -100,7 +100,7 @@ export class World {
     // wenn enemy lebt wird character energy abgezogen
     collisionCharacter() {
         Level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.speedY >= 0 && !enemy.isDead() && !this.character.isHurt()) {
+            if (this.character.isColliding(enemy) && !this.character.jumpsDown() && !enemy.isDead() && !this.character.isHurt()) {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
                 if (enemy instanceof Endboss) {
@@ -118,7 +118,7 @@ export class World {
     // tötet enemy bei collision (außer endboss)
     collisionTop = () => {
         Level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.speedY < 0) {
+            if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.jumpsDown()) {
                 enemy.hit();
             }
         });

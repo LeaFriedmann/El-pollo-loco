@@ -22,7 +22,8 @@ export class Level {
         },
         speed : {
             chicken : 0, 
-            smallChicken : 0
+            smallChicken : 0, 
+            endboss : 0
         }
     };
     levelNumber;
@@ -60,6 +61,7 @@ export class Level {
 
         this.levelConfig.speed.chicken = this.levelNumber / 10 + Math.random();
         this.levelConfig.speed.smallChicken = this.levelNumber / 5 + Math.random();
+        this.levelConfig.speed.endboss = this.levelNumber / 10 + Math.random();
     }
 
     // länge hintergrund anpassung nach level
@@ -109,7 +111,7 @@ export class Level {
         for (let i = 0; i < this.levelConfig.repetition.smallChicken; i++) {
             Level.enemies.push(this.createSmallChicken());
         }
-        const endboss = new Endboss(Level.END_X, 2);
+        const endboss = new Endboss(Level.END_X, this.levelConfig.speed.endboss);
         Level.endboss = endboss;
         Level.enemies.push(endboss);
     }

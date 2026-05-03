@@ -37,11 +37,6 @@ export class Entity extends MovableObject {
 
     //#region methods
 
-    // gibt zurück, ob zwei objekte miteinander kollidieren
-    isColliding(mo) {
-        return this.rX + this.rW > mo.rX && this.rY + this.rH > mo.rY && this.rX < mo.rX + mo.rW && this.rY < mo.rY + mo.rH;
-    }
-
     hit() {
         this.energy -= this.healthReduction;
         if (this.energy < 0) {
@@ -77,13 +72,6 @@ export class Entity extends MovableObject {
 
     isAboveGround() {
         return this.y < 420 - this.height;
-    }
-
-    removeObj(arr) {
-        const index = arr.indexOf(this);
-        if (index > -1) {
-            arr.splice(index, 1);
-        }
     }
 
     //#endregion

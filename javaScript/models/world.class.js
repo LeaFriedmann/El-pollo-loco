@@ -3,6 +3,7 @@ import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
 import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
+import { CollectableObject } from "./collectable-object.class.js";
 import { Endboss } from "./endboss.class.js";
 import { Entity } from "./entity.class.js";
 import { GameState } from "./game-state.class.js";
@@ -53,6 +54,7 @@ export class World {
 
         this.collisionCharacter();
         this.collisionBottle();
+        this.bottleColllect();
     };
 
     // collisionObjects(mO, target, statusbar) {
@@ -128,17 +130,33 @@ export class World {
         return enemy instanceof NormalChicken || enemy instanceof SmallChicken;
     }
 
+    bottleColllect() {
+        Level.collectableObj.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                CollectableObject.bottles++;
+                bottle.removeBottle();
+            }
+        });
+    }
+
     //#endregion
 
     // instanziert flasche bei klick auf taste D
     // flasche wird bei instanzierung geworfen
     checkThrowObjects = () => {
-        if (Keyboard.D && this.character.otherDirection && Level.ThrowableObjects.length < 1) {
-            this.addThrowableObject("left");
-        } else if (Keyboard.D && !this.character.otherDirection && Level.ThrowableObjects.length < 1) {
-            this.addThrowableObject("right");
+        if (Keyboard.D && this.bottleAvailable()) {
+            if (this.character.otherDirection) {
+                this.addThrowableObject("left");
+            } else {
+                this.addThrowableObject("right");
+            }
+            CollectableObject.bottles--;
         }
     };
+
+    bottleAvailable(){
+        return Level.ThrowableObjects.length < 1 && CollectableObject.bottles > 0;
+    }
 
     addThrowableObject(direction) {
         Level.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY, direction));
@@ -176,6 +194,7 @@ export class World {
         this.addToMap(this.character);
         this.addObjectsToMap(Level.enemies);
         this.addToMap(Level.endboss);
+        this.addObjectsToMap(Level.collectableObj);
         this.addObjectsToMap(Level.ThrowableObjects);
 
         this.ctx.translate(-World.CAMERA_X, 0);

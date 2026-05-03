@@ -42,6 +42,17 @@ export class MovableObject extends DrawableObject {
         this.rH = this.height - this.offset.top - this.offset.bottom;
     };
 
+    // gibt zurück, ob zwei objekte miteinander kollidieren
+    isColliding(mo) {
+        return this.rX + this.rW > mo.rX && this.rY + this.rH > mo.rY && this.rX < mo.rX + mo.rW && this.rY < mo.rY + mo.rH;
+    }
+
+    removeObj(arr) {
+        const index = arr.indexOf(this);
+        if (index > -1) {
+            arr.splice(index, 1);
+        }
+    }
 
     // vorlage für animation des jeweiligen objects. arr mit images muss übergeben werden
     playAnimation(images) {

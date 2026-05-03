@@ -2,6 +2,7 @@ import { ImgHub } from "../manager/imgHub.class.js";
 import { BackgroundObject } from "./background-object.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
+import { CollectableObject } from "./collectable-object.class.js";
 import { Endboss } from "./endboss.class.js";
 import { NormalChicken } from "./normal-chicken.class.js";
 import { SmallChicken } from "./small-chicken.class.js";
@@ -38,6 +39,7 @@ export class Level {
     static endboss;
     static END_X;
     static ThrowableObjects = [];
+    static collectableObj = [];
 
     //#endregion
     
@@ -48,6 +50,7 @@ export class Level {
         this.addBackground();
         this.addClouds();
         this.addEnemies();
+        this.addCollectables();
     }
 
     //#region methods
@@ -89,7 +92,7 @@ export class Level {
 
     collectBottleNr(levelNr){
         if (levelNr < 6) {
-            return 13 - levelNr;
+            return 11 - levelNr;
         } else if (levelNr < 11) {
             return 22 - levelNr;
         } else if (levelNr < 16) {
@@ -163,6 +166,19 @@ export class Level {
     // gibt instanz von Cloud zurück
     createCloud() {
         return new Cloud(Math.random() * Level.END_X);
+    }
+
+    // pusht instanzen von sammelbaren flaschen in collectableObj array
+    addCollectables(){
+        CollectableObject.gap = (Level.END_X - 400) / this.levelConfig.repetition.collectableBottle;
+        for (let index = 0; index < this.levelConfig.repetition.collectableBottle; index++) {
+            Level.collectableObj.push(this.createBottle());            
+        }
+    }
+
+    // gibt instanz von CollectableObject zurück, in dem fall für Flaschen
+    createBottle(){
+        return new CollectableObject(70, 50, ImgHub.BOTTLE.NORMAL[0]);
     }
 
     //#endregion

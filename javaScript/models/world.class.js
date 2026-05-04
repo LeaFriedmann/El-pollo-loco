@@ -32,15 +32,14 @@ export class World {
         this.canvas = canvas;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 1000 / 60);
-        IntervalHub.startInterval(this.collisionTop, 1000 / 60);
         IntervalHub.startInterval(this.checkThrowObjects, 1000 / 25);
     }
 
     //#region methods
 
     //#region methods collision
-    // checkt für jeden enemy ob kollision mit character
     checkCollisions = () => {
+        this.collisionTop();
         this.collisionCharacter();
         this.collisionBottle();
         this.bottleColllect();
@@ -89,7 +88,7 @@ export class World {
 
     // prüft für jeden enemy, ob character kollidiert, wenn er vom sprung runter kommt
     // tötet enemy bei collision (außer endboss)
-    collisionTop = () => {
+    collisionTop () {
         Level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.jumpsDown()) {
                 enemy.hit();

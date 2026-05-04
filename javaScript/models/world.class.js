@@ -31,9 +31,9 @@ export class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.draw();
-        IntervalHub.startInterval(this.checkCollisions, 200);
+        IntervalHub.startInterval(this.checkCollisions, 1000 / 60);
         IntervalHub.startInterval(this.collisionTop, 1000 / 60);
-        IntervalHub.startInterval(this.checkThrowObjects, 50);
+        IntervalHub.startInterval(this.checkThrowObjects, 1000 / 25);
     }
 
     //#region methods

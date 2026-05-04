@@ -46,10 +46,10 @@ export class Character extends Entity {
             // jump img auf index 0 wenn sprung vorbei
             this.resetJumpAnimation();
         }
-        
+
         // bewegt objekt wenn pfeiltaste rechts gedrückt
         // und objekt noch nicht am ende der Level.END_X koordinate angekommen
-        if (Keyboard.RIGHT && this.x < Level.END_X) {
+        if (Keyboard.RIGHT && this.x < Level.END_X && this.endbossNotPassed()) {
             this.moveRight();
             this.otherDirection = false;
         }
@@ -68,6 +68,10 @@ export class Character extends Entity {
 
         World.CAMERA_X = -this.x + 100;
     };
+
+    endbossNotPassed(){
+        return Level.endboss.rX > this.rX + this.rW;
+    }
 
     animate = () => {
         if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D) {

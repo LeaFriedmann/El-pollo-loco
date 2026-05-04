@@ -79,7 +79,7 @@ export class World {
                     Endboss.attack = true;
                     setTimeout(() => {
                         Endboss.attack = false;
-                    }, 500);
+                    }, 1000);
                 }
                 console.log(this.character.energy);
             }

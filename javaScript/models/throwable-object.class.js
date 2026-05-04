@@ -12,7 +12,7 @@ export class ThrowableObject extends Entity {
         bottom: 10,
         left: 20,
     };
-    speedY = 30;
+    speedY = 27;
     currentSplashImg = 0;
     throwDirection;
 

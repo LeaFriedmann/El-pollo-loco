@@ -60,4 +60,4 @@ export class StartGame {
     }
 }
 
-new StartGame();
+// new StartGame();

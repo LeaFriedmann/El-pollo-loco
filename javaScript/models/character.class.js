@@ -42,6 +42,11 @@ export class Character extends Entity {
     // TODO geschwindigkeit animation anpassen
 
     movement = () => {
+        if (!this.isAboveGround()) {
+            // jump img auf index 0 wenn sprung vorbei
+            this.resetJumpAnimation();
+        }
+        
         // bewegt objekt wenn pfeiltaste rechts gedrückt
         // und objekt noch nicht am ende der Level.END_X koordinate angekommen
         if (Keyboard.RIGHT && this.x < Level.END_X) {
@@ -65,11 +70,6 @@ export class Character extends Entity {
     };
 
     animate = () => {
-        
-        if (!this.isAboveGround()) {
-            // jump img auf index 0 wenn sprung vorbei
-            this.resetJumpAnimation();
-        }
         if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D) {
             this.resetIdleCounter();
         }

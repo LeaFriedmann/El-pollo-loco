@@ -58,6 +58,12 @@ export class Entity extends MovableObject {
         return this.energy == 0;
     }
 
+    deadAnimationStop(){
+        let timePassed = new Date().getTime() - this.lastHit;
+        timePassed = timePassed / 1000;
+        return timePassed > 3;
+    }
+
     // verringert y koordinate so lange, bis objekt am boden angekommen ist
     // this.isDead() abfrage für throwable object
     applyGravity = () => {

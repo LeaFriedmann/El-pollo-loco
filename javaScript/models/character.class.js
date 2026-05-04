@@ -33,7 +33,7 @@ export class Character extends Entity {
         this.loadImages(this.animationSleep);
 
         IntervalHub.startInterval(this.movement, 1000 / 25);
-        IntervalHub.startInterval(this.animate, 70); // laufanimation
+        IntervalHub.startInterval(this.animate, 1000 / 14); // laufanimation
         IntervalHub.startInterval(this.applyGravity, 1000 / 25); // fall animation
     }
 
@@ -70,7 +70,7 @@ export class Character extends Entity {
             // jump img auf index 0 wenn sprung vorbei
             this.resetJumpAnimation();
         }
-        if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D ){
+        if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D) {
             this.resetIdleCounter();
         }
         if (Level.END_X - this.x < 600 && !Endboss.startWalking) {
@@ -82,11 +82,13 @@ export class Character extends Entity {
         }
         if (this.isDead()) {
             // deat animation wenn health = 0
-            this.playAnimation(this.animationDead);
-            setTimeout(() => {
+            if (!this.deadAnimationStop()) {
+                this.playAnimation(this.animationDead);
+            } else {
+                IntervalHub.stopAllIntervals();
                 GameState.gameReset("lost");
                 GameState.LOST = true;
-            }, 1500);
+            }
         } else if (this.isHurt()) {
             // hurt animation wenn letzter hit mehl als 0.5 sec her war
             this.playAnimation(this.animationHurt);
@@ -99,16 +101,18 @@ export class Character extends Entity {
         } else {
             // idle animation wenn keine tasten gedrückt
             this.playAnimation(this.animationIdle);
-            if (this.idleCounter == 0) { // idle counter starten, wird  auf 0 gesetzt wenn character sich bewegt
+            if (this.idleCounter == 0) {
+                // idle counter starten, wird  auf 0 gesetzt wenn character sich bewegt
                 this.startIdleCounter();
             }
-            if (this.sleepTime()) { // wenn idle counter über 8 sleep animation
+            if (this.sleepTime()) {
+                // wenn idle counter über 8 sleep animation
                 this.playAnimation(this.animationSleep);
             }
         }
     };
 
-    jumpsDown(){
+    jumpsDown() {
         return this.speedY < 0;
     }
 
@@ -124,7 +128,7 @@ export class Character extends Entity {
         this.idleCounter = new Date().getTime();
     }
 
-    resetIdleCounter(){
+    resetIdleCounter() {
         this.idleCounter = 0;
     }
     //#endregion

@@ -3,16 +3,13 @@ import { GameState } from "./models/game-state.class.js";
 import { Level } from "./models/level.class.js";
 import { World } from "./models/world.class.js";
 
-class StartGame {
-    //#region properties
-    canvas;
-    world;
-    //#endregion
+export let world = [];
+export const canvas = document.getElementById("canvas");
+
+export class StartGame {
 
     constructor() {
-        GameState.GAME_ONGOING = true;
-        this.canvas = document.getElementById("canvas");
-        this.world = new World(canvas, new Level(5));
+        world.push(new World(canvas));
 
         window.addEventListener("keydown", (e) => {
             if (e.key == "ArrowUp") {
@@ -32,6 +29,11 @@ class StartGame {
             }
             if (e.key == "d") {
                 Keyboard.D = true;
+            }
+            if (e.key == "g") {
+                World.level = new Level(Level.currentLevel);
+                GameState.GAME_ONGOING = true;
+                console.log(Level.currentLevel)
             }
         });
 

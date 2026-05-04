@@ -7,7 +7,6 @@ import { Endboss } from "./endboss.class.js";
 import { NormalChicken } from "./normal-chicken.class.js";
 import { SmallChicken } from "./small-chicken.class.js";
 
-
 export class Level {
     //#region properties
     levelConfig = {
@@ -40,6 +39,7 @@ export class Level {
     static END_X;
     static ThrowableObjects = [];
     static collectableObj = [];
+    static currentLevel = 1;
 
     //#endregion
     

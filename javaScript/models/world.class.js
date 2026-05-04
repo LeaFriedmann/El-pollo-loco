@@ -16,20 +16,20 @@ import { ThrowableObject } from "./throwable-object.class.js";
 export class World {
     //#region properties
     character = new Character();
-    level;
     canvas;
     ctx;
+    startScreen = new GameState(0, 0, 480, 720, ImgHub.STARTSCREEN[0])
     statusbarHealth = new StatusBar(30, 0, ImgHub.STATUSBAR.HEALTH, 100);
     statusbarEndboss = new StatusBar(30, 60, ImgHub.STATUSBAR.ENEMY, 100);
-    statusbarBottle = new StatusBar(490, 0, ImgHub.STATUSBAR.BOTTLE, 0)
+    statusbarBottle = new StatusBar(490, 0, ImgHub.STATUSBAR.BOTTLE, 0);
     static CAMERA_X = 0;
+    static level;
 
     //#endregion
 
-    constructor(canvas, level) {
+    constructor(canvas) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
-        this.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 200);
         IntervalHub.startInterval(this.collisionTop, 1000 / 60);
@@ -135,7 +135,7 @@ export class World {
             if (this.character.isColliding(bottle)) {
                 CollectableObject.bottles++;
                 bottle.removeBottle();
-                this.statusbarBottle.setPercentage(CollectableObject.bottles * 10)
+                this.statusbarBottle.setPercentage(CollectableObject.bottles * 10);
             }
         });
     }
@@ -152,11 +152,11 @@ export class World {
                 this.addThrowableObject("right");
             }
             CollectableObject.bottles--;
-            this.statusbarBottle.setPercentage(CollectableObject.bottles * 10)
+            this.statusbarBottle.setPercentage(CollectableObject.bottles * 10);
         }
     };
 
-    bottleAvailable(){
+    bottleAvailable() {
         return Level.ThrowableObjects.length < 1 && CollectableObject.bottles > 0;
     }
 
@@ -170,25 +170,28 @@ export class World {
         // canvas leeren
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // erster wert x achse, zweiter wert y achse
-        this.ctx.translate(World.CAMERA_X, 0);
-
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-
-        if (GameState.GAME_ONGOING) {
-            this.drawGameObjects();
+        if (!GameState.GAME_ONGOING && !GameState.WON && !GameState.LOST) {
+            this.addToMap(this.startScreen)
         } else {
-            this.drawOutro();
-        }
+            // erster wert x achse, zweiter wert y achse
+            this.ctx.translate(World.CAMERA_X, 0);
 
-        this.ctx.translate(-World.CAMERA_X, 0);
+            this.addObjectsToMap(World.level.backgroundObjects);
+            this.addObjectsToMap(World.level.clouds);
+
+            if (GameState.GAME_ONGOING) {
+                this.drawGameObjects();
+            } else {
+                this.drawOutro();
+            }
+
+            this.ctx.translate(-World.CAMERA_X, 0);
+        }
         requestAnimationFrame(() => this.draw()); // draw wird immer wieder aufgerufen
     }
 
     // während spiel läuft
     drawGameObjects() {
-        
         this.ctx.translate(-World.CAMERA_X, 0);
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarEndboss);
@@ -199,7 +202,7 @@ export class World {
         this.addObjectsToMap(Level.enemies);
         this.addToMap(Level.endboss);
         this.addObjectsToMap(Level.collectableObj);
-        this.addObjectsToMap(Level.ThrowableObjects);       
+        this.addObjectsToMap(Level.ThrowableObjects);
     }
 
     // wenn spiel vorbei endscreen

@@ -35,13 +35,15 @@ export class Endboss extends Entity {
         if (this.isHurt()) {
             this.playAnimation(this.animationHurt);
         } else if (Endboss.attack) {
-            this.playAnimation(this.animationAtack)
+            this.playAnimation(this.animationAtack);
         } else if (this.isDead()) {
-            this.playAnimation(this.animationDead);
-            setTimeout(() => {
+            if (!this.deadAnimationStop()) {
+                this.playAnimation(this.animationDead);
+            } else {
+                IntervalHub.stopAllIntervals();
                 GameState.gameReset("won");
                 GameState.WON = true;
-            }, 1500);
+            }
         } else if (Endboss.isAlert) {
             this.playAnimation(this.animationAlert);
         } else if (Endboss.startWalking) {

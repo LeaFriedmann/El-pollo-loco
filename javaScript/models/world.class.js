@@ -41,39 +41,10 @@ export class World {
     //#region methods collision
     // checkt für jeden enemy ob kollision mit character
     checkCollisions = () => {
-        // Level.enemies.forEach((enemy) => {
-        //     if (this.character.isColliding(enemy)) {
-        //         this.character.hit();
-        //         this.statusbar.setPercentage(this.character.energy)
-        //         console.log(this.character.energy);
-        //     }
-        // });
-
-        // this.collisionObjects(Level.enemies, this.character, this.statusbarHealth);
-        // this.collisionObjects(Level.ThrowableObjects, Level.endboss, this.statusbarEndboss);
-
         this.collisionCharacter();
         this.collisionBottle();
         this.bottleColllect();
     };
-
-    // collisionObjects(mO, target, statusbar) {
-    //     if (target.energy > 0) {
-    //         mO.forEach((mo) => {
-    //             if (target.isColliding(mo)) {
-    //                 if (!mo.isDead()) {
-    //                     target.hit();
-    //                     console.log(mo instanceof SmallChicken);
-    //                     if (mo instanceof ThrowableObject) {
-    //                         mo.energy = 0;
-    //                     }
-    //                 }
-    //                 statusbar.setPercentage(target.energy);
-    //                 console.log(target.energy);
-    //             }
-    //         });
-    //     }
-    // }
 
     // checkt für jede bottle kollision mit jedem enemy
     collisionBottle() {

@@ -127,7 +127,7 @@ export class World {
     };
 
     bottleAvailable() {
-        return Level.ThrowableObjects.length < 1 && CollectableObject.bottles > 0;
+        return Level.ThrowableObjects.length < 1 && CollectableObject.bottles > 0 && !Level.endboss.isDead();
     }
 
     addThrowableObject(direction) {

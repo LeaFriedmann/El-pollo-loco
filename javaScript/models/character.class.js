@@ -49,14 +49,14 @@ export class Character extends Entity {
 
         // bewegt objekt wenn pfeiltaste rechts gedrückt
         // und objekt noch nicht am ende der Level.END_X koordinate angekommen
-        if (Keyboard.RIGHT && this.x < Level.END_X && this.endbossNotPassed()) {
+        if (Keyboard.RIGHT && this.x < Level.END_X && this.endbossNotPassed() && !this.isDead()) {
             this.moveRight();
             this.otherDirection = false;
         }
 
         // bewegt objekt wenn pfeiltaste links gedrückt
         // und x koordinate größer als 0
-        if (Keyboard.LEFT && this.x > 0) {
+        if (Keyboard.LEFT && this.x > 0 && !this.isDead()) {
             this.moveLeft();
             this.otherDirection = true;
         }

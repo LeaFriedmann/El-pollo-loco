@@ -90,8 +90,8 @@ export class Character extends Entity {
                 this.playAnimation(this.animationDead);
             } else {
                 IntervalHub.stopAllIntervals();
-                GameState.gameReset("lost");
                 GameState.LOST = true;
+                GameState.showOutro();
             }
         } else if (this.isHurt()) {
             // hurt animation wenn letzter hit mehl als 0.5 sec her war

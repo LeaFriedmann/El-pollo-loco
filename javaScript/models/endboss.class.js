@@ -41,8 +41,8 @@ export class Endboss extends Entity {
                 this.playAnimation(this.animationDead);
             } else {
                 IntervalHub.stopAllIntervals();
-                GameState.gameReset("won");
                 GameState.WON = true;
+                GameState.showOutro();
             }
         } else if (Endboss.isAlert) {
             this.playAnimation(this.animationAlert);

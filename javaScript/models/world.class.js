@@ -18,7 +18,6 @@ export class World {
     character = new Character();
     canvas;
     ctx;
-    startScreen = new GameState(0, 0, 480, 720, ImgHub.STARTSCREEN[0])
     statusbarHealth = new StatusBar(30, 0, ImgHub.STATUSBAR.HEALTH, 100);
     statusbarEndboss = new StatusBar(30, 60, ImgHub.STATUSBAR.ENEMY, 100);
     statusbarBottle = new StatusBar(490, 0, ImgHub.STATUSBAR.BOTTLE, 0);
@@ -27,9 +26,10 @@ export class World {
 
     //#endregion
 
-    constructor(canvas) {
+    constructor(canvas, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
+        World.level = level;
         this.draw();
         IntervalHub.startInterval(this.checkCollisions, 1000 / 60);
         IntervalHub.startInterval(this.checkThrowObjects, 1000 / 25);
@@ -88,13 +88,13 @@ export class World {
 
     // prüft für jeden enemy, ob character kollidiert, wenn er vom sprung runter kommt
     // tötet enemy bei collision (außer endboss)
-    collisionTop () {
+    collisionTop() {
         Level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.jumpsDown()) {
                 enemy.hit();
             }
         });
-    };
+    }
 
     killableByJump(enemy) {
         return enemy instanceof NormalChicken || enemy instanceof SmallChicken;
@@ -140,23 +140,21 @@ export class World {
         // canvas leeren
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        if (!GameState.GAME_ONGOING && !GameState.WON && !GameState.LOST) {
-            this.addToMap(this.startScreen)
-        } else {
-            // erster wert x achse, zweiter wert y achse
-            this.ctx.translate(World.CAMERA_X, 0);
+        // erster wert x achse, zweiter wert y achse
+        this.ctx.translate(World.CAMERA_X, 0);
 
-            this.addObjectsToMap(World.level.backgroundObjects);
-            this.addObjectsToMap(World.level.clouds);
+        this.addObjectsToMap(World.level.backgroundObjects);
+        this.addObjectsToMap(World.level.clouds);
 
-            if (GameState.GAME_ONGOING) {
-                this.drawGameObjects();
-            } else {
-                this.drawOutro();
-            }
-
-            this.ctx.translate(-World.CAMERA_X, 0);
+        if (GameState.GAME_ONGOING) {
+            this.drawGameObjects();
+        } else if(GameState.LOST || GameState.WON){
+            this.drawOutro();
+        } else if (GameState.startscreen) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
+
+        this.ctx.translate(-World.CAMERA_X, 0);
         requestAnimationFrame(() => this.draw()); // draw wird immer wieder aufgerufen
     }
 

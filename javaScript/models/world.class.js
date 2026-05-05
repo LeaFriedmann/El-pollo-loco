@@ -21,6 +21,7 @@ export class World {
     statusbarHealth = new StatusBar(30, 0, ImgHub.STATUSBAR.HEALTH, 100);
     statusbarEndboss = new StatusBar(30, 60, ImgHub.STATUSBAR.ENEMY, 100);
     statusbarBottle = new StatusBar(490, 0, ImgHub.STATUSBAR.BOTTLE, 0);
+    statusbarCoin = new StatusBar(490, 60, ImgHub.STATUSBAR.COIN, 0)
     static CAMERA_X = 0;
     static level;
 
@@ -164,6 +165,7 @@ export class World {
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarEndboss);
         this.addToMap(this.statusbarBottle);
+        this.addToMap(this.statusbarCoin);
         this.ctx.translate(World.CAMERA_X, 0);
 
         this.addToMap(this.character);

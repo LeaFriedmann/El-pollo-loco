@@ -73,7 +73,7 @@ export class World {
     // wenn enemy lebt wird character energy abgezogen
     collisionCharacter() {
         Level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !this.character.jumpsDown() && !enemy.isDead() && !this.character.isHurt()) {
+            if (this.character.isColliding(enemy) && !this.character.jumpsDown() && !enemy.isDead() && !this.character.isHurt() && !Level.endboss.isDead()) {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
                 if (enemy instanceof Endboss) {

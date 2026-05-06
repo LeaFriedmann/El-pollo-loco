@@ -6,11 +6,23 @@ export class Ref {
     static btnRestart = document.getElementById("btnRestart");
     static btnNextLvl = document.getElementById("btnNextLvl");
 
-    static hideButton(refBtn){
+    static hideButton(refBtn) {
         refBtn.classList.add("hide");
     }
 
-    static showButton(refBtn){
+    static showButton(refBtn) {
         refBtn.classList.remove("hide");
+    }
+
+    static hideBtns() {
+        Ref.hideButton(Ref.btnHome);
+        Ref.hideButton(Ref.btnRestart);
+        Ref.hideButton(Ref.btnNextLvl);
+    }
+
+    static showBtns(){
+        Ref.showButton(Ref.btnHome);
+        Ref.showButton(Ref.btnRestart);
+        Ref.showButton(Ref.btnNextLvl);
     }
 }

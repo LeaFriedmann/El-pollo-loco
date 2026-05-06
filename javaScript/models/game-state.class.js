@@ -60,14 +60,23 @@ export class GameState extends DrawableObject {
         // zeigt benötigte buttons 
         if (GameState.WON) {
             GameState.outro = GameState.wonOutro();
-            Ref.showButton(Ref.btnHome);
-            Ref.showButton(Ref.btnNextLvl);
-            Level.currentLevel++;
+            Ref.showBtns();
         } else if (GameState.LOST) {
             GameState.outro = GameState.lostOutro();
-            Ref.showButton(Ref.btnRestart);
-            Ref.showButton(Ref.btnHome);
+            Ref.showBtns();
         }
         GameState.GAME_ONGOING = false;
+    }
+
+    static nextLvl(){
+        Level.currentLevel++;
+    }
+
+    static startLevel() {
+        GameState.startscreen = false;
+        GameState.gameReset();
+        world.push(new World(Ref.canvas, new Level(Level.currentLevel)));
+        GameState.GAME_ONGOING = true;
+        console.log(Level.currentLevel);
     }
 }

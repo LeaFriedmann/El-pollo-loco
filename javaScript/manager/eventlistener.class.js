@@ -58,32 +58,23 @@ export class Listener {
     static clickStartGame() {
         Ref.btnStart.addEventListener("click", () => {
             Ref.hideButton(Ref.btnStart);
-            Listener.startLevel();
+            GameState.startLevel();
         });
     }
 
     static clickRestart() {
         Ref.btnRestart.addEventListener("click", () => {
-            Ref.hideButton(Ref.btnHome);
-            Ref.hideButton(Ref.btnRestart);
-            Listener.startLevel();
+            Ref.hideBtns();
+            GameState.startLevel();
         });
     }
 
     static clickNextLvl() {
         Ref.btnNextLvl.addEventListener("click", () => {
-            Ref.hideButton(Ref.btnHome);
-            Ref.hideButton(Ref.btnNextLvl);
-            Listener.startLevel();
+            Ref.hideBtns();
+            GameState.nextLvl();
+            GameState.startLevel();
         });
-    }
-
-    static startLevel() {
-        GameState.startscreen = false;
-        GameState.gameReset();
-        world.push(new World(Ref.canvas, new Level(Level.currentLevel)));
-        GameState.GAME_ONGOING = true;
-        console.log(Level.currentLevel);
     }
 
     static clickHome() {
@@ -92,10 +83,8 @@ export class Listener {
             GameState.LOST = false;
             GameState.startscreen = true;
             GameState.gameReset();
-            Ref.hideButton(Ref.btnHome);
             Ref.showButton(Ref.btnStart);
-            Ref.hideButton(Ref.btnRestart);
-            Ref.hideButton(Ref.btnNextLvl);
+            Ref.hideBtns();
         });
     }
     //#endregion

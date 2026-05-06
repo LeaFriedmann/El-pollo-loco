@@ -49,14 +49,14 @@ export class Character extends Entity {
 
         // bewegt objekt wenn pfeiltaste rechts gedrückt
         // und objekt noch nicht am ende der Level.END_X koordinate angekommen
-        if (Keyboard.RIGHT && this.x < Level.END_X && this.endbossNotPassed() && !this.isDead()) {
+        if (Keyboard.RIGHT && this.x < Level.END_X && this.endbossNotPassed() && !this.isDead() && !Level.endboss.isDead()) {
             this.moveRight();
             this.otherDirection = false;
         }
 
         // bewegt objekt wenn pfeiltaste links gedrückt
         // und x koordinate größer als 0
-        if (Keyboard.LEFT && this.x > 0 && !this.isDead()) {
+        if (Keyboard.LEFT && this.x > 0 && !this.isDead() && !Level.endboss.isDead()) {
             this.moveLeft();
             this.otherDirection = true;
         }
@@ -99,7 +99,7 @@ export class Character extends Entity {
         } else if (this.isAboveGround()) {
             // jump animation bei sprung
             this.playJumpAnimation(this.animationJump);
-        } else if (Keyboard.RIGHT || Keyboard.LEFT) {
+        } else if ((Keyboard.RIGHT || Keyboard.LEFT) && !Level.endboss.isDead()) {
             // laufanimation wenn pfeil rechts oder links gedrückt
             this.playAnimation(this.animationWalk);
         } else {

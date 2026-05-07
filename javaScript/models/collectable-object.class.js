@@ -15,7 +15,6 @@ export class CollectableObject extends MovableObject{
     static gap = 0;
     static xPos = 300;
     static bottles = 0; // wird mehr beim einsammeln und weniger beim werfen
-    collected = false;
     //#endregion
 
     constructor(height_, width_, img_){
@@ -24,15 +23,8 @@ export class CollectableObject extends MovableObject{
         this.loadImage(this.img);
         CollectableObject.xPos += CollectableObject.gap;
         IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
-        // IntervalHub.startInterval(this.removeCollected, 50)
     }
 
-    //#region methods
-    // removeCollected = () => {
-    //     if (this.collected) {
-    //         this.removeObj(Level.collectableObj);
-    //     }
-    // }
     removeBottle(){
         this.removeObj(Level.collectableObj);
     }

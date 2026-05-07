@@ -12,8 +12,8 @@ export class Endboss extends Entity {
     offset = {
         top: 80,
         right: 20,
-        bottom: 90,
-        left: 60,
+        bottom: 105,
+        left: 65,
     };
     static isAlert = false;
     static startWalking = false;

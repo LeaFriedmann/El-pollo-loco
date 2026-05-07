@@ -8,9 +8,9 @@ import { World } from "./world.class.js";
 export class ThrowableObject extends Entity {
     offset = {
         top: 10,
-        right: 20,
+        right: 30,
         bottom: 10,
-        left: 20,
+        left: 30,
     };
     speedY = 27;
     currentSplashImg = 0;

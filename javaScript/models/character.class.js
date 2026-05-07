@@ -74,7 +74,7 @@ export class Character extends Entity {
     }
 
     animate = () => {
-        if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D) {
+        if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D || this.isHurt()) {
             this.resetIdleCounter();
         }
         if (Level.END_X - this.x < 600 && !Endboss.startWalking) {

@@ -3,6 +3,8 @@ import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
 import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
+import { Coin } from "./coin.class.js";
+import { CollectableBottle } from "./collectable-bottle.class.js";
 import { CollectableObject } from "./collectable-object.class.js";
 import { Endboss } from "./endboss.class.js";
 import { Entity } from "./entity.class.js";
@@ -43,7 +45,7 @@ export class World {
         this.collisionTop();
         this.collisionCharacter();
         this.collisionBottle();
-        this.bottleColllect();
+        this.checkCollecktables();
     };
 
     // checkt für jede bottle kollision mit jedem enemy
@@ -101,12 +103,18 @@ export class World {
         return enemy instanceof NormalChicken || enemy instanceof SmallChicken;
     }
 
-    bottleColllect() {
-        Level.collectableObj.forEach((bottle) => {
-            if (this.character.isColliding(bottle)) {
-                CollectableObject.bottles++;
-                bottle.removeBottle();
-                this.statusbarBottle.setPercentage(CollectableObject.bottles * 10);
+    checkCollecktables() {
+        CollectableObject.arrAll.forEach((collectable) => {
+            if (this.character.isColliding(collectable)) {
+                if (collectable instanceof CollectableBottle) {
+                    CollectableBottle.collected++;
+                    collectable.removeCollectable();
+                    this.statusbarBottle.setPercentage(CollectableBottle.collected * 10);                    
+                } else {
+                    Coin.collected++;
+                    collectable.removeCollectable();
+                    this.statusbarCoin.setPercentage(Coin.collected * 10)
+                }
             }
         });
     }
@@ -122,13 +130,13 @@ export class World {
             } else {
                 this.addThrowableObject("right");
             }
-            CollectableObject.bottles--;
-            this.statusbarBottle.setPercentage(CollectableObject.bottles * 10);
+            CollectableBottle.collected--;
+            this.statusbarBottle.setPercentage(CollectableBottle.collected * 10);
         }
     };
 
     bottleAvailable() {
-        return Level.ThrowableObjects.length < 1 && CollectableObject.bottles > 0 && !Level.endboss.isDead();
+        return Level.ThrowableObjects.length < 1 && CollectableBottle.collected > 0 && !Level.endboss.isDead();
     }
 
     addThrowableObject(direction) {
@@ -171,7 +179,7 @@ export class World {
         this.addToMap(this.character);
         this.addObjectsToMap(Level.enemies);
         this.addToMap(Level.endboss);
-        this.addObjectsToMap(Level.collectableObj);
+        this.addObjectsToMap(CollectableObject.arrAll);
         this.addObjectsToMap(Level.ThrowableObjects);
     }
 

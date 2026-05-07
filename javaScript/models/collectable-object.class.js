@@ -1,32 +1,27 @@
+import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { DrawableObject } from "./drawable-objects.class.js";
-import { Level } from "./level.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
-export class CollectableObject extends MovableObject{
-
+export class CollectableObject extends MovableObject {
     //#region properties
-    offset = {
-        top: 10,
-        right: 20,
-        bottom: 10,
-        left: 20,
-    };
+    animation;
     static gap = 0;
     static xPos = 300;
-    static bottles = 0; // wird mehr beim einsammeln und weniger beim werfen
+    static arrAll = [];
+    static collected = 0;
     //#endregion
 
-    constructor(height_, width_, img_){
-        super(CollectableObject.xPos + Math.random() * CollectableObject.gap, 100 + Math.random() * 200, height_, width_, 0);
-        this.img = img_;
-        this.loadImage(this.img);
-        CollectableObject.xPos += CollectableObject.gap;
+    constructor(x_, y_, height_, width_, animation_) {
+        super(x_, y_, height_, width_, 0);
+
+        this.animation = animation_;
+        this.loadImage(this.animation[0]);
+        this.loadImages(this.animation);
         IntervalHub.startInterval(this.getFrameValues, 1000 / 60);
     }
 
-    removeBottle(){
-        this.removeObj(Level.collectableObj);
+    removeCollectable() {
+        this.removeObj(CollectableObject.arrAll);
     }
-    //#endregion
 }

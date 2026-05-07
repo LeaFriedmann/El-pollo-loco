@@ -2,6 +2,8 @@ import { ImgHub } from "../manager/imgHub.class.js";
 import { BackgroundObject } from "./background-object.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
+import { Coin } from "./coin.class.js";
+import { CollectableBottle } from "./collectable-bottle.class.js";
 import { CollectableObject } from "./collectable-object.class.js";
 import { Endboss } from "./endboss.class.js";
 import { NormalChicken } from "./normal-chicken.class.js";
@@ -10,26 +12,26 @@ import { SmallChicken } from "./small-chicken.class.js";
 export class Level {
     //#region properties
     levelConfig = {
-        repetition : {
-            chicken : 0,
-            smallChicken : 0,
-            background : 0,
-            clouds : 0, 
-            coins : 0,
-            collectableBottle : 0
+        repetition: {
+            chicken: 0,
+            smallChicken: 0,
+            background: 0,
+            clouds: 0,
+            coins: 10,
+            collectableBottle: 0,
         },
-        health : {
-            chicken : 0,
-            character : 0
+        health: {
+            chicken: 0,
+            character: 0,
         },
-        speed : {
-            chicken : 0, 
-            smallChicken : 0, 
-            endboss : 0
-        }, 
-        healthReduction : {
-            endboss : 0
-        }
+        speed: {
+            chicken: 0,
+            smallChicken: 0,
+            endboss: 0,
+        },
+        healthReduction: {
+            endboss: 0,
+        },
     };
     levelNumber;
     clouds = [];
@@ -42,11 +44,11 @@ export class Level {
     static currentLevel = 1;
 
     //#endregion
-    
+
     constructor(levelNumber_) {
         this.levelNumber = levelNumber_;
         this.setLevelConfig();
-        this.getLevelEnd();      
+        this.getLevelEnd();
         this.addBackground();
         this.addClouds();
         this.addEnemies();
@@ -90,7 +92,7 @@ export class Level {
         }
     }
 
-    collectBottleNr(levelNr){
+    collectBottleNr(levelNr) {
         if (levelNr < 6) {
             return 11 - levelNr;
         } else if (levelNr < 11) {
@@ -104,7 +106,7 @@ export class Level {
         }
     }
 
-    healthReductEndboss(levelNr){
+    healthReductEndboss(levelNr) {
         if (levelNr < 6) {
             return 20;
         } else {
@@ -113,12 +115,12 @@ export class Level {
     }
 
     // weist x koordinate zu, bis zu welcher character laufen kann
-    getLevelEnd(){
-        Level.END_X = (this.levelConfig.repetition.background * 719 * 2) -719 - 650;
+    getLevelEnd() {
+        Level.END_X = this.levelConfig.repetition.background * 719 * 2 - 719 - 650;
     }
 
     // iteriert durch arr mit allen hintergrund layern und pusht instanzen von BackgroundObject
-    // in property backgroundObjects 
+    // in property backgroundObjects
     addBackground() {
         for (let index = 0; index < this.levelConfig.repetition.background; index++) {
             ImgHub.BACKGROUND.ALL_LAYERS.forEach((part) => {
@@ -137,7 +139,7 @@ export class Level {
     addEnemies() {
         for (let i = 0; i < this.levelConfig.repetition.chicken; i++) {
             Level.enemies.push(this.createChicken());
-        };
+        }
         for (let i = 0; i < this.levelConfig.repetition.smallChicken; i++) {
             Level.enemies.push(this.createSmallChicken());
         }
@@ -149,11 +151,11 @@ export class Level {
     // gibt instanz von Chicken zurück
     createChicken() {
         // speed und x koordinate übergeben
-        return new NormalChicken(300 + Math.random() * Level.END_X , this.levelConfig.speed.chicken);
+        return new NormalChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.chicken);
     }
 
-    createSmallChicken(){
-        return new SmallChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.smallChicken)
+    createSmallChicken() {
+        return new SmallChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.smallChicken);
     }
 
     // pusht je nach level andere anzahl an instanzen von Cloud in property clouds
@@ -168,17 +170,32 @@ export class Level {
         return new Cloud();
     }
 
-    // pusht instanzen von sammelbaren flaschen in collectableObj array
-    addCollectables(){
-        CollectableObject.gap = (Level.END_X - 400) / this.levelConfig.repetition.collectableBottle;
-        for (let index = 0; index < this.levelConfig.repetition.collectableBottle; index++) {
-            Level.collectableObj.push(this.createBottle());            
+    addCoins() {
+        Coin.gap = (Level.END_X - 400) / this.levelConfig.repetition.coins;
+        for (let index = 0; index < this.levelConfig.repetition.coins; index++) {
+            CollectableObject.arrAll.push(this.coin());
         }
     }
 
+    addBottles() {
+        CollectableBottle.gap = (Level.END_X - 400) / this.levelConfig.repetition.collectableBottle;
+        for (let index = 0; index < this.levelConfig.repetition.collectableBottle; index++) {
+            CollectableObject.arrAll.push(this.bottle());
+        }
+    }
+
+    addCollectables() {
+        this.addCoins();
+        this.addBottles();
+    }
+
     // gibt instanz von CollectableObject zurück, in dem fall für Flaschen
-    createBottle(){
-        return new CollectableObject(70, 50, ImgHub.BOTTLE.NORMAL[0]);
+    bottle() {
+        return new CollectableBottle();
+    }
+
+    coin() {
+        return new Coin();
     }
 
     //#endregion

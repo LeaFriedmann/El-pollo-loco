@@ -17,7 +17,7 @@ export class ThrowableObject extends Entity {
     throwDirection;
 
     constructor(x_, y_, direction_) {
-        super(x_, y_, 70, 50, 10, 100, 100, ImgHub.BOTTLE.ROTATION, ImgHub.BOTTLE.SPLASH);
+        super(x_, y_, 70, 70, 10, 100, 100, ImgHub.BOTTLE.ROTATION, ImgHub.BOTTLE.SPLASH);
         this.throwDirection = direction_;
         
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);

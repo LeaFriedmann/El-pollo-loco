@@ -178,7 +178,7 @@ export class ImgHub {
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/70.png",
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png",
             "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/90.png",
-            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png"
+            "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
         ],
         BOTTLE: [
             "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
@@ -191,7 +191,7 @@ export class ImgHub {
             "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/70.png",
             "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
             "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/90.png",
-            "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png"
+            "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
         ],
         ENEMY: [
             "./img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
@@ -204,14 +204,11 @@ export class ImgHub {
             "./img/7_statusbars/2_statusbar_endboss/blue/blue70.png",
             "./img/7_statusbars/2_statusbar_endboss/blue/blue80.png",
             "./img/7_statusbars/2_statusbar_endboss/blue/blue90.png",
-            "./img/7_statusbars/2_statusbar_endboss/blue/blue100.png"
+            "./img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
         ],
     };
 
-    static COIN = {
-        VERSION1: ["./img/8_coin/coin_1.png"],
-        VERSION2: ["./img/8_coin/coin_2.png"],
-    };
+    static COIN = ["./img/8_coin/coin_1.png", "./img/8_coin/coin_2.png"];
 
     static STARTSCREEN = ["./img/9_intro_outro_screens/start/startscreen_1.png"];
 

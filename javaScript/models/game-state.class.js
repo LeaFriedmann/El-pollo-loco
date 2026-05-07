@@ -4,6 +4,8 @@ import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Ref } from "../manager/ref.class.js";
 import { BackgroundObject } from "./background-object.class.js";
 import { Cloud } from "./cloud.class.js";
+import { Coin } from "./coin.class.js";
+import { CollectableBottle } from "./collectable-bottle.class.js";
 import { CollectableObject } from "./collectable-object.class.js";
 import { DrawableObject } from "./drawable-objects.class.js";
 import { Endboss } from "./endboss.class.js";
@@ -40,9 +42,12 @@ export class GameState extends DrawableObject {
         GameState.WON = false;
         GameState.LOST = false;
         Cloud.xPos = 0;
-        CollectableObject.gap = 0;
-        CollectableObject.xPos = 300;
-        CollectableObject.bottles = 0;
+        Coin.collected = 0;
+        CollectableBottle.collected = 0;
+        Coin.gap = 0;
+        CollectableBottle.gap = 0;
+        Coin.xPos = 300;
+        CollectableBottle.xPos = 300;
         Endboss.isAlert = false;
         Endboss.startWalking = false;
         Endboss.attack = false;
@@ -50,7 +55,7 @@ export class GameState extends DrawableObject {
         Level.enemies = [];
         Level.endboss = "";
         Level.ThrowableObjects = [];
-        Level.collectableObj = [];
+        CollectableObject.arrAll = [];
         World.CAMERA_X = 0;
         world.splice(0);
     }

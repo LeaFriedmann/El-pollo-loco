@@ -3,7 +3,6 @@ import { MovableObject } from "./movable-object.class.js";
 
 export class Entity extends MovableObject {
     //#region properties
-    otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
     energy;

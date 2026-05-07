@@ -8,10 +8,6 @@ export class Entity extends MovableObject {
     acceleration = 2.5;
     energy;
     healthReduction;
-    rX;
-    rY;
-    rW;
-    rH;
     lastHit = 0;
     animationWalk;
     animationDead;
@@ -77,7 +73,7 @@ export class Entity extends MovableObject {
     };
 
     isAboveGround() {
-        return this.y < 420 - this.height;
+        return this.y < 430 - this.height;
     }
 
     //#endregion

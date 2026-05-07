@@ -5,6 +5,10 @@ import { DrawableObject } from "./drawable-objects.class.js";
 
 export class MovableObject extends DrawableObject {
     //#region properties
+    rX;
+    rY;
+    rW;
+    rH;
     speed;
     //#endregion
 

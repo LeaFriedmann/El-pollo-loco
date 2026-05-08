@@ -1,3 +1,4 @@
+import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Entity } from "./entity.class.js";
@@ -11,9 +12,10 @@ export class Chicken extends Entity {
         bottom: 1,
         left: 1,
     };
+    audioPlayed = false;
     //#endregion
 
-    constructor(x_, y_, width_, height_,  speed_, animationWalk_, animationDead_) {
+    constructor(x_, y_, width_, height_, speed_, animationWalk_, animationDead_) {
         super(x_, y_, height_, width_, speed_, 100, 100, animationWalk_, animationDead_);
 
         IntervalHub.startInterval(this.animate, 50);
@@ -23,6 +25,10 @@ export class Chicken extends Entity {
     animate = () => {
         if (this.isDead()) {
             this.playAnimation(this.animationDead);
+            if (this.isDead && !this.audioPlayed) {
+                AudioHub.playOne(AudioHub.CHICKEN.DEAD);
+                this.audioPlayed = true;
+            }
             setTimeout(() => {
                 this.removeObj(Level.enemies);
             }, 2000);
@@ -31,4 +37,6 @@ export class Chicken extends Entity {
             this.playAnimation(this.animationWalk);
         }
     };
+
+    resetAudio = () => {};
 }

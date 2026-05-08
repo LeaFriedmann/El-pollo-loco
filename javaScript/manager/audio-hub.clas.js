@@ -1,9 +1,12 @@
 class MyAudio {
     file;
     isLoaded = false;
+    isPlaying = false;
 
-    constructor(file_) {
+
+    constructor(file_, playbackRate_) {
         this.file = new Audio(file_);
+        this.file.playbackRate = playbackRate_;
     }
 }
 
@@ -15,28 +18,28 @@ export class AudioHub {
 
     //#region audios
     static CHARACTER = {
-        DAMAGE: new MyAudio("./sounds/character/characterDamage.mp3"),
-        DEAD: new MyAudio("./sounds/character/characterDead.wav"),
-        JUMP: new MyAudio("./sounds/character/characterJump.wav"),
-        RUN: new MyAudio("./sounds/character/characterRun.mp3"),
-        SNORING: new MyAudio("./sounds/character/characterSnoring.mp3"),
+        DAMAGE: new MyAudio("./sounds/character/characterDamage.mp3", 1),
+        DEAD: new MyAudio("./sounds/character/characterDead.wav", 1),
+        JUMP: new MyAudio("./sounds/character/characterJump.wav", 1),
+        RUN: new MyAudio("./sounds/character/characterRun.mp3", 1.5),
+        SNORING: new MyAudio("./sounds/character/characterSnoring.mp3", 1),
     };
 
     static CHICKEN = {
-        DEAD: new MyAudio("./sounds/chicken/chickenDead.mp3"),
-        DEAD2: new MyAudio("./sounds/chicken/chickenDead2.mp3"),
+        DEAD: new MyAudio("./sounds/chicken/chickenDead.mp3", 1),
+        DEAD2: new MyAudio("./sounds/chicken/chickenDead2.mp3", 1),
     };
 
     static COLLECT = {
-        BOTTLE: new MyAudio("./sounds/collectibles/bottleCollectSound.wav"),
-        COIN: new MyAudio("./sounds/collectibles/collectSound.wav"),
+        BOTTLE: new MyAudio("./sounds/collectibles/bottleCollectSound.wav", 1),
+        COIN: new MyAudio("./sounds/collectibles/collectSound.wav", 1),
     };
 
-    static ENDBOSS_APPROACH = new MyAudio("./sounds/endboss/endbossApproach.wav");
+    static ENDBOSS_APPROACH = new MyAudio("./sounds/endboss/endbossApproach.wav", 1);
 
-    static GAME_START = new MyAudio("./sounds/game/gameStart.mp3");
+    static GAME_START = new MyAudio("./sounds/game/gameStart.mp3", 1);
 
-    static BOTTLE_BREAK = new MyAudio("./sounds/throwable/bottleBreak.mp3");
+    static BOTTLE_BREAK = new MyAudio("./sounds/throwable/bottleBreak.mp3", 1);
 
     static allSounds = [
         AudioHub.CHARACTER.DAMAGE,
@@ -59,6 +62,7 @@ export class AudioHub {
 
     // spielt eine sounddatei ab
     static playOne(sound) {
+        sound.isPlaying = true;
         sound.file.volume = AudioHub.VOLUME; // setzt Lautstärke auf static wert
         sound.file.currentTime = 0; // Startet ab bestimmter stelle (0= anfang, 5 = 5 sec)
 
@@ -79,6 +83,7 @@ export class AudioHub {
     // TODO in stop all nutzen
     static stopOne(sound) {
         sound.file.pause(); // Pausiert das übergebene Audio
+        sound.isPlaying = false;
     }
 
     static toggleSound() {

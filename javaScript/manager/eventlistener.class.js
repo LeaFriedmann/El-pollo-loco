@@ -2,6 +2,7 @@ import { world } from "../game.js";
 import { GameState } from "../models/game-state.class.js";
 import { Level } from "../models/level.class.js";
 import { World } from "../models/world.class.js";
+import { AudioHub } from "./audio-hub.clas.js";
 import { Keyboard } from "./keyboard.class.js";
 import { Ref } from "./ref.class.js";
 
@@ -86,6 +87,13 @@ export class Listener {
             Ref.showButton(Ref.btnStart);
             Ref.hideBtns();
         });
+    }
+
+    // wenn audio für schnarchen durchgelaufen ist, wird isPlaying auf false gesetzt, dass sound im interval wieder von vore gespielt wird
+    static endSnoring(){
+        AudioHub.CHARACTER.SNORING.file.addEventListener("ended", () => {
+            AudioHub.CHARACTER.SNORING.isPlaying = false;
+        })
     }
     //#endregion
 }

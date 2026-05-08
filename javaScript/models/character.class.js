@@ -1,3 +1,4 @@
+import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
@@ -22,6 +23,7 @@ export class Character extends Entity {
         left: 30,
     };
     idleCounter = 0;
+
     //#endregion
 
     constructor() {
@@ -35,6 +37,7 @@ export class Character extends Entity {
         IntervalHub.startInterval(this.movement, 1000 / 25);
         IntervalHub.startInterval(this.animate, 1000 / 14); // laufanimation
         IntervalHub.startInterval(this.applyGravity, 1000 / 25); // fall animation
+        IntervalHub.startInterval(this.resetValues, 1000 / 60);
     }
 
     //#region methods
@@ -42,10 +45,6 @@ export class Character extends Entity {
     // TODO geschwindigkeit animation anpassen
 
     movement = () => {
-        if (!this.isAboveGround()) {
-            // jump img auf index 0 wenn sprung vorbei
-            this.resetJumpAnimation();
-        }
 
         // bewegt objekt wenn pfeiltaste rechts gedrückt
         // und objekt noch nicht am ende der Level.END_X koordinate angekommen
@@ -64,6 +63,7 @@ export class Character extends Entity {
         // sprung wird nur ausgeführt wenn character auf boden
         if (Keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
+            AudioHub.playOne(AudioHub.CHARACTER.JUMP)
         }
 
         World.CAMERA_X = -this.x + 100;
@@ -74,20 +74,13 @@ export class Character extends Entity {
     }
 
     animate = () => {
-        if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D || this.isHurt()) {
-            this.resetIdleCounter();
-        }
-        if (Level.END_X - this.x < 600 && !Endboss.startWalking) {
-            Endboss.isAlert = true;
-        }
-        if (Level.END_X - this.x < 400) {
-            Endboss.isAlert = false;
-            Endboss.startWalking = true;
-        }
         if (this.isDead()) {
             // deat animation wenn health = 0
             if (!this.deadAnimationStop()) {
                 this.playAnimation(this.animationDead);
+                if (!AudioHub.CHARACTER.DEAD.isPlaying) {
+                    AudioHub.playOne(AudioHub.CHARACTER.DEAD)
+                }
             } else {
                 IntervalHub.stopAllIntervals();
                 GameState.LOST = true;
@@ -96,12 +89,18 @@ export class Character extends Entity {
         } else if (this.isHurt()) {
             // hurt animation wenn letzter hit mehl als 0.5 sec her war
             this.playAnimation(this.animationHurt);
+            if (!AudioHub.CHARACTER.DAMAGE.isPlaying) {
+                AudioHub.playOne(AudioHub.CHARACTER.DAMAGE)
+            }
         } else if (this.isAboveGround()) {
             // jump animation bei sprung
             this.playJumpAnimation(this.animationJump);
         } else if ((Keyboard.RIGHT || Keyboard.LEFT) && !Level.endboss.isDead()) {
             // laufanimation wenn pfeil rechts oder links gedrückt
             this.playAnimation(this.animationWalk);
+            if (!AudioHub.CHARACTER.RUN.isPlaying) {
+                AudioHub.playOne(AudioHub.CHARACTER.RUN);
+            }
         } else {
             // idle animation wenn keine tasten gedrückt
             this.playAnimation(this.animationIdle);
@@ -112,9 +111,36 @@ export class Character extends Entity {
             if (this.sleepTime()) {
                 // wenn idle counter über 8 sleep animation
                 this.playAnimation(this.animationSleep);
+                if (!AudioHub.CHARACTER.SNORING.isPlaying) {
+                    AudioHub.playOne(AudioHub.CHARACTER.SNORING)
+                }
             }
         }
     };
+
+    resetValues = () =>{
+        if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D || this.isHurt()) {
+            this.resetIdleCounter();
+            AudioHub.stopOne(AudioHub.CHARACTER.SNORING)
+        }
+        if (Level.END_X - this.x < 600 && !Endboss.startWalking) {
+            Endboss.isAlert = true;
+        }
+        if (Level.END_X - this.x < 400) {
+            Endboss.isAlert = false;
+            Endboss.startWalking = true;
+        }
+        if (!this.isAboveGround()) {
+            // jump img auf index 0 wenn sprung vorbei
+            this.resetJumpAnimation();
+        }
+        if (!this.isHurt()) {
+            AudioHub.stopOne(AudioHub.CHARACTER.DAMAGE)
+        }
+        if ((!Keyboard.LEFT && !Keyboard.RIGHT) || this.isHurt() || this.isDead() || this.isAboveGround()){
+            AudioHub.stopOne(AudioHub.CHARACTER.RUN);
+        }
+    }
 
     jumpsDown() {
         return this.speedY < 0;

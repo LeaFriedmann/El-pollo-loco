@@ -10,6 +10,7 @@ export class StartGame {
         Listener.clickHome();
         Listener.clickNextLvl();
         Listener.clickRestart();
+        Listener.endSnoring();
     }
 }
 

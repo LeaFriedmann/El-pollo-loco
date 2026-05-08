@@ -96,6 +96,7 @@ export class World {
         Level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.jumpsDown()) {
                 enemy.hit();
+                AudioHub.playOne(AudioHub.CHICKEN.DEAD);
             }
         });
     }

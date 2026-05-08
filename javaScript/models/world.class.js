@@ -1,3 +1,4 @@
+import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
@@ -107,10 +108,12 @@ export class World {
         CollectableObject.arrAll.forEach((collectable) => {
             if (this.character.isColliding(collectable)) {
                 if (collectable instanceof CollectableBottle) {
+                    AudioHub.playOne(AudioHub.COLLECT.BOTTLE)
                     CollectableBottle.collected++;
                     collectable.removeCollectable();
                     this.statusbarBottle.setPercentage(CollectableBottle.collected * 10);                    
                 } else {
+                    AudioHub.playOne(AudioHub.COLLECT.COIN)
                     Coin.collected++;
                     collectable.removeCollectable();
                     this.statusbarCoin.setPercentage(Coin.collected * 10)

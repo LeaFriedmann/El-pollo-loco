@@ -2,11 +2,12 @@ class MyAudio {
     file;
     isLoaded = false;
     isPlaying = false;
+    changeVol = 0;
 
-
-    constructor(file_, playbackRate_) {
+    constructor(file_, playbackRate_, changeVol_) {
         this.file = new Audio(file_);
         this.file.playbackRate = playbackRate_;
+        this.changeVol = changeVol_;
     }
 }
 
@@ -14,32 +15,32 @@ export class AudioHub {
     //#region properties
     static VOLUME = 0.2;
 
-    static TOGGLE_SOUND = false;
+    static TOGGLE_SOUND = true;
 
     //#region audios
     static CHARACTER = {
-        DAMAGE: new MyAudio("./sounds/character/characterDamage.mp3", 1),
-        DEAD: new MyAudio("./sounds/character/characterDead.wav", 1),
-        JUMP: new MyAudio("./sounds/character/characterJump.wav", 1),
-        RUN: new MyAudio("./sounds/character/characterRun.mp3", 1.5),
-        SNORING: new MyAudio("./sounds/character/characterSnoring.mp3", 1),
+        DAMAGE: new MyAudio("./sounds/character/characterDamage.mp3", 1, 0),
+        DEAD: new MyAudio("./sounds/character/characterDead.wav", 1, 0),
+        JUMP: new MyAudio("./sounds/character/characterJump.wav", 1, 0),
+        RUN: new MyAudio("./sounds/character/characterRun.mp3", 1.5, 0),
+        SNORING: new MyAudio("./sounds/character/characterSnoring.mp3", 1, 0),
     };
 
     static CHICKEN = {
-        DEAD: new MyAudio("./sounds/chicken/chickenDead.mp3", 1),
-        DEAD2: new MyAudio("./sounds/chicken/chickenDead2.mp3", 1),
+        DEAD: new MyAudio("./sounds/chicken/chickenDead.mp3", 1, 0),
+        DEAD2: new MyAudio("./sounds/chicken/chickenDead2.mp3", 1, 0),
     };
 
     static COLLECT = {
-        BOTTLE: new MyAudio("./sounds/collectibles/bottleCollectSound.wav", 1),
-        COIN: new MyAudio("./sounds/collectibles/collectSound.wav", 1),
+        BOTTLE: new MyAudio("./sounds/collectibles/bottleCollectSound.wav", 1, 0),
+        COIN: new MyAudio("./sounds/collectibles/collectSound.wav", 1, 0),
     };
 
-    static ENDBOSS_APPROACH = new MyAudio("./sounds/endboss/endbossApproach.wav", 1);
+    static ENDBOSS_APPROACH = new MyAudio("./sounds/endboss/endbossApproach.wav", 1, 0.8);
 
-    static GAME_START = new MyAudio("./sounds/game/gameStart.mp3", 1);
+    static GAME_START = new MyAudio("./sounds/game/gameStart.mp3", 1, 0);
 
-    static BOTTLE_BREAK = new MyAudio("./sounds/throwable/bottleBreak.mp3", 1);
+    static BOTTLE_BREAK = new MyAudio("./sounds/throwable/bottleBreak.mp3", 1, 0);
 
     static allSounds = [
         AudioHub.CHARACTER.DAMAGE,
@@ -62,14 +63,17 @@ export class AudioHub {
 
     // spielt eine sounddatei ab
     static playOne(sound) {
-        sound.isPlaying = true;
-        sound.file.volume = AudioHub.VOLUME; // setzt Lautstärke auf static wert
-        sound.file.currentTime = 0; // Startet ab bestimmter stelle (0= anfang, 5 = 5 sec)
-
-        if (sound.file.readyState > 0 || sound.isLoaded) {
-            sound.isLoaded = true; // für safari notwendeg, daher auch die klasse MyAudio
-            sound.file.play(); // spielt übergebenes sound-objekt ab
-        }
+        // if abfrage für sounds beim erstellen extra lautstärke bekommen (AudioHub.VOLUME + sound.changeVol)
+        if (AudioHub.TOGGLE_SOUND) {            
+            sound.isPlaying = true;
+            sound.file.volume = AudioHub.VOLUME + sound.changeVol; // setzt Lautstärke auf static wert + extra Lautstärke je nach sound
+            sound.file.currentTime = 0; // Startet ab bestimmter stelle (0= anfang, 5 = 5 sec)
+    
+            if (sound.file.readyState > 0 || sound.isLoaded) {
+                sound.isLoaded = true; // für safari notwendeg, daher auch die klasse MyAudio
+                sound.file.play(); // spielt übergebenes sound-objekt ab
+            }
+        }        
     }
 
     static stopAll() {

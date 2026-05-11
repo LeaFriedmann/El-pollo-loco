@@ -1,3 +1,4 @@
+import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { BackgroundObject } from "./background-object.class.js";
@@ -46,6 +47,9 @@ export class Endboss extends Entity {
             }
         } else if (Endboss.isAlert) {
             this.playAnimation(this.animationAlert);
+            if (!AudioHub.ENDBOSS_APPROACH.isPlaying) {
+                AudioHub.playOne(AudioHub.ENDBOSS_APPROACH);
+            }
         } else if (Endboss.startWalking) {
             this.playAnimation(this.animationWalk);
             this.moveLeft();

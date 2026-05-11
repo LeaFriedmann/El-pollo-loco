@@ -11,6 +11,7 @@ export class StartGame {
         Listener.clickNextLvl();
         Listener.clickRestart();
         Listener.endSnoring();
+        Listener.muteAudio();
     }
 }
 

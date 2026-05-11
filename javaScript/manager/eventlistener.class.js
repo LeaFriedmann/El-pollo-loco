@@ -95,5 +95,11 @@ export class Listener {
             AudioHub.CHARACTER.SNORING.isPlaying = false;
         })
     }
+
+    static muteAudio(){
+        Ref.btnMute.addEventListener("click", () => {
+            AudioHub.toggleSound();
+        })
+    }
     //#endregion
 }

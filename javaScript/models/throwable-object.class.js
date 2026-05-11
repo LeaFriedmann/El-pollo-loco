@@ -1,3 +1,4 @@
+import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
@@ -15,6 +16,7 @@ export class ThrowableObject extends Entity {
     speedY = 27;
     currentSplashImg = 0;
     throwDirection;
+    audioPlayed;
 
     constructor(x_, y_, direction_) {
         super(x_, y_, 70, 70, 10, 100, 100, ImgHub.BOTTLE.ROTATION, ImgHub.BOTTLE.SPLASH);
@@ -60,6 +62,10 @@ export class ThrowableObject extends Entity {
     playSplashAnimation() {
         if (this.animationFirstRound()) {
             this.nextSplashImg(this.animationDead);
+            if (!this.audioPlayed) {
+                AudioHub.playOne(AudioHub.BOTTLE_BREAK);
+                this.audioPlayed = true;
+            }
         } else {
             this.removeObj(Level.ThrowableObjects);
         }

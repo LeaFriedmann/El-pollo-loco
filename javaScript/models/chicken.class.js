@@ -12,6 +12,7 @@ export class Chicken extends Entity {
         bottom: 1,
         left: 1,
     };
+    audioPlayed = false;
     //#endregion
 
     constructor(x_, y_, width_, height_, speed_, animationWalk_, animationDead_) {
@@ -24,6 +25,10 @@ export class Chicken extends Entity {
     animate = () => {
         if (this.isDead()) {
             this.playAnimation(this.animationDead);
+            if (this.isDead && !this.audioPlayed) {
+                AudioHub.playOne(AudioHub.CHICKEN.DEAD);
+                this.audioPlayed = true;
+            }
             setTimeout(() => {
                 this.removeObj(Level.enemies);
             }, 2000);

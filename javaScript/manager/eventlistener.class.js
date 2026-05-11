@@ -101,5 +101,17 @@ export class Listener {
             AudioHub.toggleSound();
         })
     }
+
+    static startGameAudio(){
+        Ref.btnStart.addEventListener("click", () => {
+            AudioHub.playOne(AudioHub.GAME_START);
+        })
+    }
+
+    static restartAudio(){
+        Ref.btnRestart.addEventListener("click",() => {
+            AudioHub.playOne(AudioHub.GAME_START);
+        })
+    }
     //#endregion
 }

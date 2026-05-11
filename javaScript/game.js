@@ -12,6 +12,8 @@ export class StartGame {
         Listener.clickRestart();
         Listener.endSnoring();
         Listener.muteAudio();
+        Listener.startGameAudio();
+        Listener.restartAudio();
     }
 }
 

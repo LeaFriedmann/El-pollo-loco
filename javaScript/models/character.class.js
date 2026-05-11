@@ -61,7 +61,7 @@ export class Character extends Entity {
         }
 
         // sprung wird nur ausgeführt wenn character auf boden
-        if (Keyboard.SPACE && !this.isAboveGround()) {
+        if (Keyboard.UP && !this.isAboveGround()) {
             this.jump();
             AudioHub.playOne(AudioHub.CHARACTER.JUMP)
         }

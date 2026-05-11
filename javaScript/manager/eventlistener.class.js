@@ -80,8 +80,6 @@ export class Listener {
 
     static clickHome() {
         Ref.btnHome.addEventListener("click", () => {
-            GameState.WON = false;
-            GameState.LOST = false;
             GameState.startscreen = true;
             GameState.gameReset();
             Ref.showButton(Ref.btnStart);

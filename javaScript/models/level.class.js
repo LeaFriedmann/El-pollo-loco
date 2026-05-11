@@ -40,7 +40,6 @@ export class Level {
     static endboss;
     static END_X;
     static ThrowableObjects = [];
-    static collectableObj = [];
     static currentLevel = 1;
 
     //#endregion

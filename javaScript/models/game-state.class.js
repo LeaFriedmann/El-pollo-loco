@@ -39,6 +39,7 @@ export class GameState extends DrawableObject {
     // setzt werte nach ende des spiels zurück
     static gameReset() {
         BackgroundObject.xPos = -719;
+        BackgroundObject.turn = 0;
         GameState.WON = false;
         GameState.LOST = false;
         Cloud.xPos = 0;

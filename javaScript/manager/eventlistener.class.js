@@ -5,6 +5,7 @@ import { World } from "../models/world.class.js";
 import { AudioHub } from "./audio-hub.clas.js";
 import { Keyboard } from "./keyboard.class.js";
 import { Ref } from "./ref.class.js";
+import { Render } from "./render.class.js";
 
 export class Listener {
     //#region tastatur
@@ -96,6 +97,11 @@ export class Listener {
 
     static muteAudio(){
         Ref.btnMute.addEventListener("click", () => {
+            if (AudioHub.TOGGLE_SOUND) {
+                Render.btnMute();
+            } else {
+                Render.btnSound();
+            };
             AudioHub.toggleSound();
         })
     }

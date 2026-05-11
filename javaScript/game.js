@@ -1,9 +1,11 @@
 import { Listener } from "./manager/eventlistener.class.js";
+import { Render } from "./manager/render.class.js";
 
 export const world = [];
 
 export class StartGame {
     constructor() {
+        Render.btnSound();
         Listener.clickKeyDown();
         Listener.clickKeyUp();
         Listener.clickStartGame();

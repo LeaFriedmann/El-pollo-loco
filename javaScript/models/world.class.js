@@ -23,8 +23,8 @@ export class World {
     ctx;
     statusbarHealth = new StatusBar(30, 0, ImgHub.STATUSBAR.HEALTH, 100);
     statusbarEndboss = new StatusBar(30, 60, ImgHub.STATUSBAR.ENEMY, 100);
-    statusbarBottle = new StatusBar(490, 0, ImgHub.STATUSBAR.BOTTLE, 0);
-    statusbarCoin = new StatusBar(490, 60, ImgHub.STATUSBAR.COIN, 0)
+    statusbarBottle = new StatusBar(450, 0, ImgHub.STATUSBAR.BOTTLE, 0);
+    statusbarCoin = new StatusBar(450, 60, ImgHub.STATUSBAR.COIN, 0)
     static CAMERA_X = 0;
     static level;
 

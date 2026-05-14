@@ -56,7 +56,7 @@ export class Entity extends MovableObject {
     deadAnimationStop(){
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
-        return timePassed > 3;
+        return timePassed > 2;
     }
 
     // verringert y koordinate so lange, bis objekt am boden angekommen ist

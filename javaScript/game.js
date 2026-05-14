@@ -19,6 +19,7 @@ export class StartGame {
         Listener.muteAudio();
         Listener.startGameAudio();
         Listener.restartAudio();
+        Listener.disableCntxtMenu();
     }
 }
 

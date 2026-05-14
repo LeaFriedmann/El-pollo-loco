@@ -124,4 +124,8 @@ export class Listener {
         })
     }
     //#endregion
+
+    static disableCntxtMenu(){
+        Ref.mobileBtns.addEventListener("contextmenu", e => e.preventDefault());
+    }
 }

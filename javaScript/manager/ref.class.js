@@ -5,6 +5,7 @@ export class Ref {
     static btnHome = document.getElementById("btnHome");
     static btnRestart = document.getElementById("btnRestart");
     static btnNextLvl = document.getElementById("btnNextLvl");
+    static wrprBtns = document.getElementById("btnsPostGame");
 
     static mobileBtns = document.getElementById("mobileBtns")
     static btnLeftMobile = document.getElementById("btnLeft");
@@ -21,15 +22,11 @@ export class Ref {
     }
 
     static hideBtns() {
-        Ref.hideButton(Ref.btnHome);
-        Ref.hideButton(Ref.btnRestart);
-        Ref.hideButton(Ref.btnNextLvl);
+        Ref.hideButton(Ref.wrprBtns);
     }
 
     static showBtns(){
-        Ref.showButton(Ref.btnHome);
-        Ref.showButton(Ref.btnRestart);
-        Ref.showButton(Ref.btnNextLvl);
+        Ref.showButton(Ref.wrprBtns);
     }
 
     static hideMobileBtn(){

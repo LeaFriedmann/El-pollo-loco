@@ -113,8 +113,12 @@ h1 {
 
         .btnsBottomStyle {
             width: 100%;
+        }
+
+        .btnsPostGameStyle {
+            width: 100%;
             height: fit-content;
-            padding-bottom: 6px;
+            padding-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -126,6 +130,7 @@ h1 {
             width: 100%;
             padding-left: 30px;
             padding-right: 30px;
+            padding-bottom: 6px;
 
             @media only screen and (min-width: 769px) {
                 display: none;
@@ -135,6 +140,7 @@ h1 {
                 display: flex;
                 gap: 20px;
             }
+
             button {
                 font-size: 0;
                 width: clamp(35px, 6vw, 50px);

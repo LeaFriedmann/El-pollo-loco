@@ -158,3 +158,16 @@ h1 {
         }
     }
 }
+
+footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 16px;
+    backdrop-filter: blur(2px);
+    border-top: 1px solid #89412E;
+    text-align: center;
+    a:hover {
+        text-decoration: underline;
+    }
+}

@@ -39,14 +39,21 @@ h1 {
     font-size: 48px;
     color: brown;
     text-shadow: 1px 1px 2px rgb(58, 13, 13);
+
+    @media only screen and (max-width: 768px) {
+        display: none;
+    }
 }
 
 .wrprCanvasStyle {
     position: relative;
-    width: 720px;
-    height: 480px;
+    width: min(720px, 100dvw, calc(100dvh * 1.5));
+    aspect-ratio: 720 / 480;
 
     canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
         border-radius: 20px;
         box-shadow: 1px 1px 5px;
         background-image: url(./img/9_intro_outro_screens/start/startscreen_1.png);
@@ -56,8 +63,8 @@ h1 {
     }
 
     .overlayStyle {
-        width: 720px;
-        height: 480px;
+        width: 100%;
+        height: 100%;
         position: absolute;
         top: 0;
         z-index: 1;
@@ -71,14 +78,14 @@ h1 {
             border: #8c3618 solid 2px;
             border-radius: 15px;
             padding: 4px;
-            font-size: 24px;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
             text-shadow: 1px 1px 2px black;
             box-shadow: 1px 1px 5px;
         }
 
         .btnsStyle:hover {
-                transform: scale(1.05);
-            }
+            transform: scale(1.05);
+        }
 
         .btnsTopStyle {
             width: 100%;
@@ -90,9 +97,11 @@ h1 {
             flex-direction: column;
 
             .btnMuteStyle {
-                height: 52px;
+                font-size: 0;
+                width: clamp(35px, 6vw, 50px);
+                aspect-ratio: 1 / 1;
                 img {
-                    width: 40px;
+                    width: 100%;
                 }
             }
 
@@ -104,10 +113,38 @@ h1 {
 
         .btnsBottomStyle {
             width: 100%;
-            height: 70px;
+            height: fit-content;
+            padding-bottom: 6px;
             display: flex;
             align-items: center;
             justify-content: space-around;
+        }
+
+        .mobileBtnsStyle {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding-left: 30px;
+            padding-right: 30px;
+
+            @media only screen and (min-width: 769px) {
+                display: none;
+            }
+
+            div {
+                display: flex;
+                gap: 20px;
+            }
+            button {
+                font-size: 0;
+                width: clamp(35px, 6vw, 50px);
+                aspect-ratio: 1 / 1;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
         }
 
         .hide {

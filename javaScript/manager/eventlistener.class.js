@@ -107,12 +107,8 @@ export class Listener {
 
     static muteAudio(){
         Ref.btnMute.addEventListener("click", () => {
-            if (AudioHub.TOGGLE_SOUND) {
-                Render.btnMute();
-            } else {
-                Render.btnSound();
-            };
             AudioHub.toggleSound();
+            Render.btnSound();
         })
     }
 

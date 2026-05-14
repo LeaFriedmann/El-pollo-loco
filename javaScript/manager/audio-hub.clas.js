@@ -48,43 +48,41 @@ export class AudioHub {
         AudioHub.CHARACTER.JUMP,
         AudioHub.CHARACTER.RUN,
         AudioHub.CHARACTER.SNORING,
-        AudioHub.CHICKEN.DEAD, 
-        AudioHub.CHICKEN.DEAD2, 
-        AudioHub.COLLECT.COIN, 
-        AudioHub.COLLECT.BOTTLE, 
-        AudioHub.ENDBOSS_APPROACH, 
-        AudioHub.GAME_START, 
-        AudioHub.BOTTLE_BREAK
+        AudioHub.CHICKEN.DEAD,
+        AudioHub.CHICKEN.DEAD2,
+        AudioHub.COLLECT.COIN,
+        AudioHub.COLLECT.BOTTLE,
+        AudioHub.ENDBOSS_APPROACH,
+        AudioHub.GAME_START,
+        AudioHub.BOTTLE_BREAK,
     ];
     //#endregion
     //#endregion
 
     //#region methods
 
+    //#region play and stop
     // spielt eine sounddatei ab
     static playOne(sound) {
         // if abfrage für sounds beim erstellen extra lautstärke bekommen (AudioHub.VOLUME + sound.changeVol)
-        if (AudioHub.TOGGLE_SOUND) {            
+        if (AudioHub.TOGGLE_SOUND) {
             sound.isPlaying = true;
             sound.file.volume = AudioHub.VOLUME + sound.changeVol; // setzt Lautstärke auf static wert + extra Lautstärke je nach sound
             sound.file.currentTime = 0; // Startet ab bestimmter stelle (0= anfang, 5 = 5 sec)
-    
+
             if (sound.file.readyState > 0 || sound.isLoaded) {
                 sound.isLoaded = true; // für safari notwendeg, daher auch die klasse MyAudio
                 sound.file.play(); // spielt übergebenes sound-objekt ab
             }
-        }        
+        }
     }
 
     static stopAll() {
         AudioHub.allSounds.forEach((sound) => {
             sound.file.pause(); // pausiert alle audios in arrray
         });
-        // TODO html element für lautstärke regler
-        // document.getElementById('volume').value = 0.2;  // Setzt den Sound-Slider wieder auf 0.2
     }
 
-    // TODO in stop all nutzen
     static stopOne(sound) {
         sound.file.pause(); // Pausiert das übergebene Audio
         sound.isPlaying = false;
@@ -100,6 +98,24 @@ export class AudioHub {
         AudioHub.allSounds.forEach((sound) => {
             sound.file.volume = AudioHub.VOLUME;
         });
+        AudioHub.toLoclStrg();
     }
+    //#endregion
+
+    //#region local storage
+    static toLoclStrg() {
+        localStorage.setItem("TOGGLE_SOUND", JSON.stringify(AudioHub.TOGGLE_SOUND));
+    }
+
+    static getFromLocl() {
+        const backFrLocal = JSON.parse(localStorage.getItem("TOGGLE_SOUND"));
+
+        if (backFrLocal != null) {
+            AudioHub.TOGGLE_SOUND = backFrLocal;
+        } else {
+            AudioHub.TOGGLE_SOUND = AudioHub.TOGGLE_SOUND;
+        }
+    }
+    //#endregion
     //#endregion
 }

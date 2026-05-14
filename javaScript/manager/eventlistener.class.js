@@ -88,6 +88,16 @@ export class Listener {
         });
     }
 
+    //#region buttons mobile
+    static addMobileBtn(){
+        Ref.btnStart.addEventListener("click", () => {
+            Ref.showMobileBtn();
+        })
+    }
+    //#endregion
+    //#endregion
+
+    //#region audio
     // wenn audio für schnarchen durchgelaufen ist, wird isPlaying auf false gesetzt, dass sound im interval wieder von vore gespielt wird
     static endSnoring(){
         AudioHub.CHARACTER.SNORING.file.addEventListener("ended", () => {

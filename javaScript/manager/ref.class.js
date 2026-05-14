@@ -6,6 +6,12 @@ export class Ref {
     static btnRestart = document.getElementById("btnRestart");
     static btnNextLvl = document.getElementById("btnNextLvl");
 
+    static mobileBtns = document.getElementById("mobileBtns")
+    static btnLeftMobile = document.getElementById("btnLeft");
+    static btnRightMobile = document.getElementById("btnRight");
+    static btnJumpMobile = document.getElementById("btnJump");
+    static btnThrowMobile = document.getElementById("btnThrow");
+
     static hideButton(refBtn) {
         refBtn.classList.add("hide");
     }
@@ -24,5 +30,13 @@ export class Ref {
         Ref.showButton(Ref.btnHome);
         Ref.showButton(Ref.btnRestart);
         Ref.showButton(Ref.btnNextLvl);
+    }
+
+    static hideMobileBtn(){
+        Ref.hideButton(Ref.mobileBtns);
+    }
+
+    static showMobileBtn(){
+        Ref.showButton(Ref.mobileBtns);
     }
 }

@@ -12,6 +12,7 @@ export class StartGame {
         Listener.clickHome();
         Listener.clickNextLvl();
         Listener.clickRestart();
+        Listener.addMobileBtn();
         Listener.endSnoring();
         Listener.muteAudio();
         Listener.startGameAudio();

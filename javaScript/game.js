@@ -6,6 +6,8 @@ export const world = [];
 
 export class StartGame {
     constructor() {
+        Listener.checkDevice();
+        Listener.checkOrientation();
         AudioHub.getFromLocl();
         Render.btnSound();
         Listener.clickKeyDown();

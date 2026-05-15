@@ -34,21 +34,33 @@ body {
     font-family: "Sancreek", serif;
 }
 
+.positionCenter {
+    justify-content: center;
+}
+
 h1 {
     margin: 48px;
     font-size: 48px;
     color: brown;
     text-shadow: 1px 1px 2px rgb(58, 13, 13);
+}
 
-    @media only screen and (max-width: 768px) {
-        display: none;
-    }
+#rotateMessage {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    text-align: center;
+    padding: 8px;
 }
 
 .wrprCanvasStyle {
+    /* display: none; */
+    /* display: block; */
     position: relative;
     width: min(720px, 100dvw, calc(100dvh * 1.5));
     aspect-ratio: 720 / 480;
+
+    /* @media only screen and (min-width: 769px) {
+        display: block;
+    } */
 
     canvas {
         display: block;
@@ -132,10 +144,6 @@ h1 {
             padding-right: 30px;
             padding-bottom: 6px;
 
-            @media only screen and (min-width: 769px) {
-                display: none;
-            }
-
             div {
                 display: flex;
                 gap: 20px;
@@ -159,13 +167,17 @@ h1 {
     }
 }
 
-footer{
+.hide {
+    display: none;
+}
+
+footer {
     width: 100%;
     position: absolute;
     bottom: 0;
     padding: 16px;
     backdrop-filter: blur(2px);
-    border-top: 1px solid #89412E;
+    border-top: 1px solid #89412e;
     text-align: center;
     a:hover {
         text-decoration: underline;

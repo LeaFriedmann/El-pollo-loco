@@ -88,50 +88,114 @@ export class Listener {
         });
     }
 
-    //#region buttons mobile
-    static addMobileBtn(){
-        Ref.btnStart.addEventListener("click", () => {
-            Ref.showMobileBtn();
-        })
+    static isMobile() {
+        return "ontouchstart" in window || navigator.maxTouchPoints > 0;
     }
+
+    //#region buttons mobile
+    static addMobileBtn() {
+        if (Listener.isMobile()) {
+            Ref.btnStart.addEventListener("click", () => {
+                Ref.showMobileBtn();
+            });
+            Ref.btnRestart.addEventListener("click", () => {
+                Ref.showMobileBtn();
+            });
+            Ref.btnNextLvl.addEventListener("click", () => {
+                Ref.showMobileBtn();
+            });
+        }
+    }
+
     //#endregion
     //#endregion
 
     //#region audio
     // wenn audio für schnarchen durchgelaufen ist, wird isPlaying auf false gesetzt, dass sound im interval wieder von vore gespielt wird
-    static endSnoring(){
+    static endSnoring() {
         AudioHub.CHARACTER.SNORING.file.addEventListener("ended", () => {
             AudioHub.CHARACTER.SNORING.isPlaying = false;
-        })
+        });
     }
 
-    static muteAudio(){
+    static muteAudio() {
         Ref.btnMute.addEventListener("click", () => {
             AudioHub.toggleSound();
             Render.btnSound();
-        })
+        });
     }
 
-    static startGameAudio(){
+    static startGameAudio() {
         Ref.btnStart.addEventListener("click", () => {
             AudioHub.playOne(AudioHub.GAME_START);
-        })
+        });
     }
 
-    static restartAudio(){
-        Ref.btnRestart.addEventListener("click",() => {
+    static restartAudio() {
+        Ref.btnRestart.addEventListener("click", () => {
             AudioHub.playOne(AudioHub.GAME_START);
-        })
+        });
     }
 
-    static playBackgrMusic(){
+    static playBackgrMusic() {
         AudioHub.BACKGROUND_MUSIC.file.addEventListener("ended", () => {
             AudioHub.playOne(AudioHub.BACKGROUND_MUSIC);
-        })
+        });
     }
     //#endregion
 
-    static disableCntxtMenu(){
-        Ref.mobileBtns.addEventListener("contextmenu", e => e.preventDefault());
+    //#region fit-device
+    // konttext menü bei mobile btns deaktivieren
+    static disableCntxtMenu() {
+        Ref.mobileBtns.addEventListener("contextmenu", (e) => e.preventDefault());
     }
+
+    // zeigt je nach gerät und ausrichtung entweder canvas oder aufforderung Gerät zu drehen um zu spielen
+    static checkDevice() {
+        const orientationType = window.screen.orientation.type;
+        if (!this.isMobile()) {
+            // desktop
+            Ref.wrprCanvas.classList.remove("hide");
+            Ref.footer.classList.remove("hide");
+            Ref.header.classList.remove("hide");
+        } else if (Listener.isMobile() && (orientationType == "portrait-primary" || orientationType == "portrait-secondary")) {
+            Listener.mobilePortrait();
+        } else if ((this.isMobile() && orientationType == "landscape-primary") || orientationType == "landscape-secondary") {
+            Listener.mobileLandscape();
+        }
+    }
+
+    // checkt ob sich die ausrichtung des gräts ändert und zeigt je nach ausrichtung canvas, footer, meldung zum drehen des geräts
+    static checkOrientation() {
+        screen.orientation.addEventListener("change", (e) => {
+            if (this.isMobile()) {
+                const type = e.target.type;
+                if (type == "portrait-primary" || type == "portrait-secondary") {
+                    // hochkant
+                    Listener.mobilePortrait();
+                } else if (type == "landscape-primary" || type == "landscape-secondary") {
+                    Listener.mobileLandscape();
+                }
+            }
+        });
+    }
+
+    static mobileLandscape() {
+        Ref.rotateMsg.classList.add("hide"); // aufforderung zum drehen des geräts verbergen
+        Ref.wrprCanvas.classList.remove("hide"); // mobile quer
+        Ref.header.classList.add("hide"); // überschrift verbergen
+        document.body.classList.add("positionCenter"); // canvas zentral positionieren 
+        if (window.screen.height < 600) { // footer zeigen falls genug platz
+            Ref.footer.classList.add("hide");
+        }
+    }
+
+    static mobilePortrait() {
+        Ref.rotateMsg.classList.remove("hide"); // mobile hochkant
+        Ref.header.classList.add("hide"); // überschrift verbergen
+        document.body.classList.add("positionCenter"); // canvas zentral positionieren
+        Ref.wrprCanvas.classList.add("hide"); // canvas verbergen
+        Ref.footer.classList.remove("hide"); // footer zeigen
+    }
+    //#endregion
 }

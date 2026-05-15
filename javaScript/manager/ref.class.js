@@ -1,5 +1,9 @@
 export class Ref {
+    static body = document.getElementsByTagName("body")
+    static header = document.getElementById("header")
     static canvas = document.getElementById("canvas");
+    static rotateMsg = document.getElementById("rotateMessage");
+    static wrprCanvas = document.getElementById("wrprCanvas");
     static btnMute = document.getElementById("btnMute");
     static btnStart = document.getElementById("btnStartGame");
     static btnHome = document.getElementById("btnHome");
@@ -12,6 +16,8 @@ export class Ref {
     static btnRightMobile = document.getElementById("btnRight");
     static btnJumpMobile = document.getElementById("btnJump");
     static btnThrowMobile = document.getElementById("btnThrow");
+
+    static footer = document.getElementById("footer");
 
     static hideButton(refBtn) {
         refBtn.classList.add("hide");

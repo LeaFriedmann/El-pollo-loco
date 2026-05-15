@@ -42,6 +42,8 @@ export class AudioHub {
 
     static BOTTLE_BREAK = new MyAudio("./sounds/throwable/bottleBreak.mp3", 1, 0);
 
+    static BACKGROUND_MUSIC = new MyAudio("./sounds/background-music/background-music.mp3", 1, -0.15);
+
     static allSounds = [
         AudioHub.CHARACTER.DAMAGE,
         AudioHub.CHARACTER.DEAD,
@@ -55,6 +57,7 @@ export class AudioHub {
         AudioHub.ENDBOSS_APPROACH,
         AudioHub.GAME_START,
         AudioHub.BOTTLE_BREAK,
+        this.BACKGROUND_MUSIC,
     ];
     //#endregion
     //#endregion
@@ -92,12 +95,17 @@ export class AudioHub {
         AudioHub.TOGGLE_SOUND = !AudioHub.TOGGLE_SOUND;
         if (AudioHub.TOGGLE_SOUND) {
             AudioHub.VOLUME = 0.2;
+
+            AudioHub.allSounds.forEach((sound) => {
+                sound.file.volume = AudioHub.VOLUME + sound.changeVol;
+            });
         } else {
             AudioHub.VOLUME = 0;
+            
+            AudioHub.allSounds.forEach((sound) => {
+                sound.file.volume = AudioHub.VOLUME;
+            });
         }
-        AudioHub.allSounds.forEach((sound) => {
-            sound.file.volume = AudioHub.VOLUME;
-        });
         AudioHub.toLoclStrg();
     }
     //#endregion

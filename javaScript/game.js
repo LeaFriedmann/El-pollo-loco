@@ -20,6 +20,7 @@ export class StartGame {
         Listener.startGameAudio();
         Listener.restartAudio();
         Listener.disableCntxtMenu();
+        Listener.playBackgrMusic();
     }
 }
 

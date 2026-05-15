@@ -123,6 +123,12 @@ export class Listener {
             AudioHub.playOne(AudioHub.GAME_START);
         })
     }
+
+    static playBackgrMusic(){
+        AudioHub.BACKGROUND_MUSIC.file.addEventListener("ended", () => {
+            AudioHub.playOne(AudioHub.BACKGROUND_MUSIC);
+        })
+    }
     //#endregion
 
     static disableCntxtMenu(){

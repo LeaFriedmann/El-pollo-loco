@@ -1,4 +1,5 @@
 import { world } from "../game.js";
+import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Ref } from "../manager/ref.class.js";
@@ -72,6 +73,7 @@ export class GameState extends DrawableObject {
             Ref.showBtns();
         }
         GameState.GAME_ONGOING = false;
+        AudioHub.stopAll();
     }
 
     static nextLvl(){
@@ -81,6 +83,7 @@ export class GameState extends DrawableObject {
     static startLevel() {
         GameState.startscreen = false;
         GameState.gameReset();
+        AudioHub.playOne(AudioHub.BACKGROUND_MUSIC);
         world.push(new World(Ref.canvas, new Level(Level.currentLevel)));
         GameState.GAME_ONGOING = true;
         console.log(Level.currentLevel);

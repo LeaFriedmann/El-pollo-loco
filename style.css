@@ -104,16 +104,21 @@ h1 {
             height: fit-content;
             padding: 8px;
             display: flex;
-            align-items: flex-end;
             justify-content: center;
             flex-direction: column;
 
-            .btnMuteStyle {
-                font-size: 0;
-                width: clamp(35px, 6vw, 50px);
-                aspect-ratio: 1 / 1;
-                img {
-                    width: 100%;
+            #wrprTopBtns{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                
+                .btnMuteStyle {
+                    font-size: 0;
+                    width: clamp(35px, 6vw, 50px);
+                    aspect-ratio: 1 / 1;
+                    img {
+                        width: 100%;
+                    }
                 }
             }
 

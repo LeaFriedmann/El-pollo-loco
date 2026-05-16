@@ -3,6 +3,7 @@ import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Ref } from "../manager/ref.class.js";
+import { Render } from "../manager/render.class.js";
 import { BackgroundObject } from "./background-object.class.js";
 import { Cloud } from "./cloud.class.js";
 import { Coin } from "./coin.class.js";
@@ -89,6 +90,7 @@ export class GameState extends DrawableObject {
         AudioHub.toggleSound();
         AudioHub.toggleSound();
         world.push(new World(Ref.canvas, new Level(Level.currentLevel)));
+        Render.currentLvl();
         GameState.GAME_ONGOING = true;
         console.log(Level.currentLevel);
     }

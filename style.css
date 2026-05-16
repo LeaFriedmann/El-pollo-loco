@@ -112,6 +112,7 @@ h1 {
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
 
                 .btnMuteStyle {
                     font-size: 0;
@@ -120,6 +121,18 @@ h1 {
                     img {
                         width: 100%;
                     }
+                }
+
+                .levelStyle {
+                    background: none;
+                    backdrop-filter: blur(2px);
+                    color: black;
+                    border: #93CBDF 1px solid;
+                    border-radius: 15px;
+                    padding: 4px;
+                    font-size: clamp(0.9rem, 2vw, 1.1rem);
+                    text-shadow: 1px 1px 2px #93CBDF;
+                    box-shadow: 1px 1px 5px;
                 }
             }
 

@@ -1,3 +1,4 @@
+import { Level } from "../models/level.class.js";
 import { AudioHub } from "./audio-hub.clas.js";
 import { Ref } from "./ref.class.js";
 import { Template } from "./template.class.js";
@@ -13,5 +14,9 @@ export class Render {
             Ref.btnMute.innerHTML = "";
             Ref.btnMute.innerHTML = Template.btnMute();
         }
+    }
+
+    static currentLvl(){
+        Ref.levelInfo.innerText = "Level: " + Level.currentLevel;
     }
 }

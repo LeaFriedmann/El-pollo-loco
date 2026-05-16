@@ -3,6 +3,7 @@ export class Ref {
     static canvas = document.getElementById("canvas");
     static rotateMsg = document.getElementById("rotateMessage");
     static wrprCanvas = document.getElementById("wrprCanvas");
+    static levelInfo = document.getElementById("level");
     static btnInfo = document.getElementById("btnInfo")
     static btnMute = document.getElementById("btnMute");
     static btnStart = document.getElementById("btnStartGame");
@@ -11,7 +12,7 @@ export class Ref {
     static btnNextLvl = document.getElementById("btnNextLvl");
     static wrprBtns = document.getElementById("btnsPostGame");
 
-    static mobileBtns = document.getElementById("mobileBtns")
+    static mobileBtns = document.getElementById("mobileBtns");
     static btnLeftMobile = document.getElementById("btnLeft");
     static btnRightMobile = document.getElementById("btnRight");
     static btnJumpMobile = document.getElementById("btnJump");

@@ -17,6 +17,8 @@ export class StartGame {
         Listener.clickNextLvl();
         Listener.clickRestart();
         Listener.addMobileBtn();
+        Listener.btnsToucend();
+        Listener.btnsTouchstart();
         Listener.endSnoring();
         Listener.muteAudio();
         Listener.startGameAudio();

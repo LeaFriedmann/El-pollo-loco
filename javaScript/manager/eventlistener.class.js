@@ -54,6 +54,42 @@ export class Listener {
             }
         });
     }
+
+    static btnsTouchstart(){
+        Ref.btnLeftMobile.addEventListener("touchstart", () => {
+            Keyboard.LEFT = true;
+        });
+
+        Ref.btnRightMobile.addEventListener("touchstart", () => {
+            Keyboard.RIGHT = true;
+        });
+
+        Ref.btnJumpMobile.addEventListener("touchstart", () => {
+            Keyboard.UP = true;
+        })
+
+        Ref.btnThrowMobile.addEventListener("touchstart", () => {
+            Keyboard.D = true;
+        })
+    }
+
+    static btnsToucend(){
+        Ref.btnLeftMobile.addEventListener("touchend", () => {
+            Keyboard.LEFT = false;
+        });
+
+        Ref.btnRightMobile.addEventListener("touchend", () => {
+            Keyboard.RIGHT = false;
+        });
+
+        Ref.btnJumpMobile.addEventListener("touchend", () => {
+            Keyboard.UP = false;
+        })
+
+        Ref.btnThrowMobile.addEventListener("touchend", () => {
+            Keyboard.D = false;
+        })
+    }
     //#endregion
 
     //#region buttons

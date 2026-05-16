@@ -9,7 +9,7 @@ export class CollectableObject extends MovableObject {
     static gap = 0;
     static xPos = 300;
     static arrAll = [];
-    static collected = 0;
+    static collected = 0;    
     //#endregion
 
     constructor(x_, y_, height_, width_, animation_) {

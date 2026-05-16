@@ -183,6 +183,13 @@ export class Level {
         }
     }
 
+    static bottleRespawn(){
+        CollectableBottle.gap = (Level.END_X - 400) / 10;
+        for (let index = 0; index < 10; index++) {
+            CollectableObject.arrAll.push(new CollectableBottle())
+        }
+    }
+
     addCollectables() {
         this.addCoins();
         this.addBottles();

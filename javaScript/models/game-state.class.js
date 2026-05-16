@@ -59,6 +59,7 @@ export class GameState extends DrawableObject {
         Level.endboss = "";
         Level.ThrowableObjects = [];
         CollectableObject.arrAll = [];
+        CollectableBottle.availableBottles = 0;
         World.CAMERA_X = 0;
         world.splice(0);                
     }

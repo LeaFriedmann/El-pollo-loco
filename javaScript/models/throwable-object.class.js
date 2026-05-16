@@ -2,6 +2,7 @@ import { AudioHub } from "../manager/audio-hub.clas.js";
 import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
+import { CollectableBottle } from "./collectable-bottle.class.js";
 import { Entity } from "./entity.class.js";
 import { Level } from "./level.class.js";
 import { World } from "./world.class.js";
@@ -21,7 +22,7 @@ export class ThrowableObject extends Entity {
     constructor(x_, y_, direction_) {
         super(x_, y_, 70, 70, 10, 100, 100, ImgHub.BOTTLE.ROTATION, ImgHub.BOTTLE.SPLASH);
         this.throwDirection = direction_;
-        
+
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
         IntervalHub.startInterval(this.movement, 25);
         IntervalHub.startInterval(this.animate, 50);
@@ -50,11 +51,11 @@ export class ThrowableObject extends Entity {
         }
     };
 
-    inAir(){
-        return (this.isAboveGround() && !this.isDead());
+    inAir() {
+        return this.isAboveGround() && !this.isDead();
     }
 
-    splashed(){
+    splashed() {
         return !this.isAboveGround() || this.isDead();
     }
 
@@ -64,6 +65,13 @@ export class ThrowableObject extends Entity {
             this.nextSplashImg(this.animationDead);
             if (!this.audioPlayed) {
                 AudioHub.playOne(AudioHub.BOTTLE_BREAK);
+                // für bottle respawn falls nötig
+                CollectableBottle.availableBottles--;
+                if (CollectableBottle.availableBottles == 0) {
+                    CollectableBottle.xPos = 300;
+                    Level.bottleRespawn();
+                }
+
                 this.audioPlayed = true;
             }
         } else {

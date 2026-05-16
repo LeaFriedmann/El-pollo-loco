@@ -9,9 +9,11 @@ export class CollectableBottle extends CollectableObject {
         bottom: 10,
         left: 30,
     };
+    static availableBottles = 0;
 
     constructor(){
         super(CollectableBottle.xPos + Math.random() * CollectableBottle.gap, 350, 70, 70, ImgHub.BOTTLE.ON_GROUND)
         CollectableBottle.xPos += CollectableBottle.gap;
+        CollectableBottle.availableBottles ++;
     }
 }

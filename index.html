@@ -13,47 +13,79 @@
         <title>El pollo loco</title>
     </head>
     <body>
-        <h1 id="header" class="hide">El pollo loco</h1>
-        <p id="rotateMessage" class="hide">Please rotate your device to play.</p>
-        <div id="wrprCanvas" class="wrprCanvasStyle hide">
-            <canvas id="canvas" width="720" height="480"></canvas>
-            <section id="overlay" class="overlayStyle">
-                <div id="btnsTop" class="btnsTopStyle">
-                    <div id="wrprTopBtns">
-                        <button id="btnInfo" class="btnsStyle">Info</button>
-                        <button id="btnMute" class="btnMuteStyle btnsStyle"></button>
-                    </div>
-                    <div id="btnStartWrpr" class="btnStartWrprStyle">
-                        <button id="btnStartGame" class="btnStartGameStyle btnsStyle">Start Game</button>
-                    </div>
-                </div>
-                <div id="btnsBottom" class="btnsBottomStyle">
-                    <section id="btnsPostGame" class="btnsPostGameStyle hide">
-                        <button id="btnRestart" class="btnRestartStyle btnsStyle">Restart</button>
-                        <button id="btnNextLvl" class="btnNextLvlStyle btnsStyle">Next Level</button>
-                        <button id="btnHome" class="btnHomeStyle btnsStyle">Homescreen</button>
-                    </section>
-                    <section id="mobileBtns" class="mobileBtnsStyle hide">
-                        <div class="btnSect">
-                            <button id="btnLeft" class="btnLeftStyle btnsStyle">
-                                <img src="./img/icons/arrow-left.png" alt="Button left" />
-                            </button>
-                            <button id="btnRight" class="btnRightStyle btnsStyle">
-                                <img src="./img/icons/arrow-right.png" alt="Button right" />
-                            </button>
+        <main>
+            <h1 id="header" class="hide">El pollo loco</h1>
+            <p id="rotateMessage" class="hide">Please rotate your device to play.</p>
+            <div id="wrprCanvas" class="wrprCanvasStyle hide">
+                <!-- canvas -->
+                <canvas id="canvas" width="720" height="480"></canvas>
+                <!-- overlay -->
+                <section id="overlay" class="overlayStyle">
+                    <!-- btns top -->
+                    <div id="btnsTop" class="btnsTopStyle">
+                        <div id="wrprTopBtns">
+                            <button id="btnInfo" class="btnsStyle">Info</button>
+                            <button id="btnMute" class="btnMuteStyle btnsStyle"></button>
                         </div>
-                        <div class="btnSect">
-                            <button id="btnJump" class="btnJumpStyle btnsStyle">
-                                <img src="./img/icons/arrow-up.png" alt="button jump" />
-                            </button>
-                            <button id="btnThrow" class="btnThrowStyle btnsStyle">
-                                <img src="./img/6_salsa_bottle/salsa_bottle.png" alt="button throw" />
-                            </button>
+                        <div id="btnStartWrpr" class="btnStartWrprStyle">
+                            <button id="btnStartGame" class="btnStartGameStyle btnsStyle">Start Game</button>
                         </div>
+                    </div>
+                    <!-- btns bottom -->
+                    <div id="btnsBottom" class="btnsBottomStyle">
+                        <section id="btnsPostGame" class="btnsPostGameStyle hide">
+                            <button id="btnRestart" class="btnRestartStyle btnsStyle">Restart</button>
+                            <button id="btnNextLvl" class="btnNextLvlStyle btnsStyle">Next Level</button>
+                            <button id="btnHome" class="btnHomeStyle btnsStyle">Homescreen</button>
+                        </section>
+                        <!-- btns mobile -->
+                        <section id="mobileBtns" class="mobileBtnsStyle hide">
+                            <div class="btnSect">
+                                <button id="btnLeft" class="btnLeftStyle btnsStyle">
+                                    <img src="./img/icons/arrow-left.png" alt="Button left" />
+                                </button>
+                                <button id="btnRight" class="btnRightStyle btnsStyle">
+                                    <img src="./img/icons/arrow-right.png" alt="Button right" />
+                                </button>
+                            </div>
+                            <div class="btnSect">
+                                <button id="btnJump" class="btnJumpStyle btnsStyle">
+                                    <img src="./img/icons/arrow-up.png" alt="button jump" />
+                                </button>
+                                <button id="btnThrow" class="btnThrowStyle btnsStyle">
+                                    <img src="./img/6_salsa_bottle/salsa_bottle.png" alt="button throw" />
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+            <dialog id="gameInfo" closedby="any">
+                <div class="wrprDialog">
+                    <section id="wrprBtnClose">
+                        <button id="btnClose"><img src="./img/icons/close-btn.png" alt="button close dialog"></button>
+                    </section>
+                    <section>
+                        <h2>How to play:</h2>
+                        <p>
+                            Collect bottles throughout the level. <br />
+                            You can throw bottles at chickens to defeat them. Chickens can also be defeated by jumping on them. <br />
+                            Be careful not to waste all your bottles — you will need them later to defeat the final boss. The boss can only
+                            be defeated by throwing bottles at him.
+                        </p>
+                    </section>
+                    <section id="infoControls">
+                        <h2>Controls:</h2>
+                        <p>
+                            Arrow Up: Jump <br />
+                            Arrow Left: Move left <br />
+                            Arrow Right: Move right <br />
+                            Press D to throw bottles.
+                        </p>
                     </section>
                 </div>
-            </section>
-        </div>
+            </dialog>
+        </main>
         <footer id="footer" class="hide"><a href="./impressum.html" target="_blank">Impressum</a></footer>
     </body>
 </html>

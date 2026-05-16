@@ -23,6 +23,8 @@ export class StartGame {
         Listener.restartAudio();
         Listener.disableCntxtMenu();
         Listener.playBackgrMusic();
+        Listener.openInfo();
+        Listener.closeInfo();
     }
 }
 

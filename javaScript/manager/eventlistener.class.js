@@ -57,6 +57,20 @@ export class Listener {
     //#endregion
 
     //#region buttons
+    static openInfo(){
+        Ref.btnInfo.addEventListener("click", () => {
+            Ref.infoDialog.showModal();
+            console.log("yes");
+            
+        })
+    }
+
+    static closeInfo(){
+        Ref.btnClose.addEventListener("click", () => {
+            Ref.infoDialog.close();
+        })
+    }
+
     static clickStartGame() {
         Ref.btnStart.addEventListener("click", () => {
             Ref.hideButton(Ref.btnStart);
@@ -160,8 +174,10 @@ export class Listener {
             Ref.header.classList.remove("hide");
         } else if (Listener.isMobile() && (orientationType == "portrait-primary" || orientationType == "portrait-secondary")) {
             Listener.mobilePortrait();
+            Ref.infoKeys.classList.add("hide");
         } else if ((this.isMobile() && orientationType == "landscape-primary") || orientationType == "landscape-secondary") {
             Listener.mobileLandscape();
+            Ref.infoKeys.classList.add("hide");
         }
     }
 

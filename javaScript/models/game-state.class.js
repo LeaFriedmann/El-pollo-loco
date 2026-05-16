@@ -59,7 +59,7 @@ export class GameState extends DrawableObject {
         Level.ThrowableObjects = [];
         CollectableObject.arrAll = [];
         World.CAMERA_X = 0;
-        world.splice(0);
+        world.splice(0);                
     }
 
     static showOutro() {
@@ -67,11 +67,11 @@ export class GameState extends DrawableObject {
         // zeigt benötigte buttons 
         if (GameState.WON) {
             GameState.outro = GameState.wonOutro();
-            Ref.showBtns();
         } else if (GameState.LOST) {
             GameState.outro = GameState.lostOutro();
-            Ref.showBtns();
         }
+        Ref.showBtns();
+        Ref.btnVisible(Ref.btnInfo);
         GameState.GAME_ONGOING = false;
         AudioHub.stopAll();
     }
@@ -83,7 +83,10 @@ export class GameState extends DrawableObject {
     static startLevel() {
         GameState.startscreen = false;
         GameState.gameReset();
+        Ref.btnInvisible(Ref.btnInfo)
         AudioHub.playOne(AudioHub.BACKGROUND_MUSIC);
+        AudioHub.toggleSound();
+        AudioHub.toggleSound();
         world.push(new World(Ref.canvas, new Level(Level.currentLevel)));
         GameState.GAME_ONGOING = true;
         console.log(Level.currentLevel);

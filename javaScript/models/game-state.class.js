@@ -70,6 +70,7 @@ export class GameState extends DrawableObject {
         } else if (GameState.LOST) {
             GameState.outro = GameState.lostOutro();
         }
+        Ref.hideMobileBtn();
         Ref.showBtns();
         Ref.btnVisible(Ref.btnInfo);
         GameState.GAME_ONGOING = false;

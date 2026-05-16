@@ -30,12 +30,16 @@ export class Endboss extends Entity {
         this.loadImages(this.animationAtack);
 
         IntervalHub.startInterval(this.animate, 100);
+        IntervalHub.startInterval(this.resetAudio, 1000 / 60);
     }
 
     // animation endboss für interval
     animate = () => {
         if (this.isHurt()) {
             this.playAnimation(this.animationHurt);
+            if (!AudioHub.ENDBOSS_HURT.isPlaying) {
+                AudioHub.playOne(AudioHub.ENDBOSS_HURT);
+            }
         } else if (Endboss.attack) {
             this.playAnimation(this.animationAtack);
         } else if (this.isDead()) {
@@ -45,7 +49,6 @@ export class Endboss extends Entity {
                 IntervalHub.stopAllIntervals();
                 GameState.WON = true;
                 GameState.showOutro();
-                Ref.hideMobileBtn();
             }
         } else if (Endboss.isAlert) {
             this.playAnimation(this.animationAlert);
@@ -55,6 +58,13 @@ export class Endboss extends Entity {
         } else if (Endboss.startWalking) {
             this.playAnimation(this.animationWalk);
             this.moveLeft();
+        }
+    };
+
+    // damit hurt audio wieder abgespielt wird bei nächstem reffer
+    resetAudio = () => {
+        if (!this.isHurt()) {
+            AudioHub.stopOne(AudioHub.ENDBOSS_HURT);
         }
     };
 }

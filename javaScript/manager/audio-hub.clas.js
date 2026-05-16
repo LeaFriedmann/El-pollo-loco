@@ -37,6 +37,7 @@ export class AudioHub {
     };
 
     static ENDBOSS_APPROACH = new MyAudio("./sounds/endboss/endbossApproach.wav", 1, 0.8);
+    static ENDBOSS_HURT = new MyAudio("./sounds/chicken/chickenDead2.mp3", 1, 0)
 
     static GAME_START = new MyAudio("./sounds/game/gameStart.mp3", 1, 0);
 

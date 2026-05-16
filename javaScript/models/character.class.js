@@ -86,7 +86,6 @@ export class Character extends Entity {
                 IntervalHub.stopAllIntervals();
                 GameState.LOST = true;
                 GameState.showOutro();
-                Ref.hideMobileBtn();
             }
         } else if (this.isHurt()) {
             // hurt animation wenn letzter hit mehl als 0.5 sec her war

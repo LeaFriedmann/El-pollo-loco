@@ -18,7 +18,7 @@ export class Level {
             background: 0,
             clouds: 0,
             coins: 10,
-            collectableBottle: 0,
+            collectableBottle: 10,
         },
         health: {
             chicken: 0,
@@ -56,19 +56,19 @@ export class Level {
 
     //#region methods
 
+    //#region level config
     setLevelConfig() {
         this.levelConfig.repetition.chicken = this.levelNumber + 4;
         this.levelConfig.repetition.smallChicken = this.levelNumber + 5;
         this.levelConfig.repetition.background = this.getBackgrRepeat(this.levelNumber);
         this.levelConfig.repetition.clouds = 6;
-        this.levelConfig.repetition.collectableBottle = this.collectBottleNr(this.levelNumber);
 
         this.levelConfig.health.chicken = 20;
         this.levelConfig.health.character = this.levelNumber + 100;
 
-        this.levelConfig.speed.chicken = this.levelNumber / 10 + Math.random();
-        this.levelConfig.speed.smallChicken = this.levelNumber / 5 + Math.random();
-        this.levelConfig.speed.endboss = this.levelNumber / 10 + Math.random();
+        this.levelConfig.speed.chicken = this.levelNumber / 10 + Math.random() * this.levelNumber;
+        this.levelConfig.speed.smallChicken = this.levelNumber / 5 + Math.random() * this.levelNumber;
+        this.levelConfig.speed.endboss = this.levelNumber / 10 + Math.random() * this.levelNumber;
 
         this.levelConfig.healthReduction.endboss = this.healthReductEndboss(this.levelNumber);
     }
@@ -91,20 +91,6 @@ export class Level {
         }
     }
 
-    collectBottleNr(levelNr) {
-        if (levelNr < 6) {
-            return 11 - levelNr;
-        } else if (levelNr < 11) {
-            return 22 - levelNr;
-        } else if (levelNr < 16) {
-            return 26 - levelNr;
-        } else if (levelNr < 21) {
-            return 30 - levelNr;
-        } else {
-            return 10;
-        }
-    }
-
     healthReductEndboss(levelNr) {
         if (levelNr < 6) {
             return 20;
@@ -117,7 +103,9 @@ export class Level {
     getLevelEnd() {
         Level.END_X = this.levelConfig.repetition.background * 719 * 2 - 719 - 650;
     }
+    //#endregion
 
+    //#region spawn objects
     // iteriert durch arr mit allen hintergrund layern und pusht instanzen von BackgroundObject
     // in property backgroundObjects
     addBackground() {
@@ -204,5 +192,6 @@ export class Level {
         return new Coin();
     }
 
+    //#endregion
     //#endregion
 }

@@ -56,37 +56,37 @@ export class Listener {
     }
 
     static btnsTouchstart(){
-        Ref.btnLeftMobile.addEventListener("touchstart", () => {
+        Ref.btnLeftMobile.addEventListener("pointerdown", () => {
             Keyboard.LEFT = true;
         });
 
-        Ref.btnRightMobile.addEventListener("touchstart", () => {
+        Ref.btnRightMobile.addEventListener("pointerdown", () => {
             Keyboard.RIGHT = true;
         });
 
-        Ref.btnJumpMobile.addEventListener("touchstart", () => {
+        Ref.btnJumpMobile.addEventListener("pointerdown", () => {
             Keyboard.UP = true;
         })
 
-        Ref.btnThrowMobile.addEventListener("touchstart", () => {
+        Ref.btnThrowMobile.addEventListener("pointerdown", () => {
             Keyboard.D = true;
         })
     }
 
     static btnsToucend(){
-        Ref.btnLeftMobile.addEventListener("touchend", () => {
+        Ref.btnLeftMobile.addEventListener("pointerup", () => {
             Keyboard.LEFT = false;
         });
 
-        Ref.btnRightMobile.addEventListener("touchend", () => {
+        Ref.btnRightMobile.addEventListener("pointerup", () => {
             Keyboard.RIGHT = false;
         });
 
-        Ref.btnJumpMobile.addEventListener("touchend", () => {
+        Ref.btnJumpMobile.addEventListener("pointerup", () => {
             Keyboard.UP = false;
         })
 
-        Ref.btnThrowMobile.addEventListener("touchend", () => {
+        Ref.btnThrowMobile.addEventListener("pointerup", () => {
             Keyboard.D = false;
         })
     }

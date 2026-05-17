@@ -9,6 +9,7 @@ export class StartGame {
         Listener.checkDevice();
         Listener.checkOrientation();
         AudioHub.getFromLocl();
+        Render.currentLvl();
         Render.btnSound();
         Listener.clickKeyDown();
         Listener.clickKeyUp();

@@ -17,6 +17,7 @@ export class Render {
     }
 
     static currentLvl(){
+        Ref.levelInfo.innerText = "";
         Ref.levelInfo.innerText = "Level: " + Level.currentLevel;
     }
 }

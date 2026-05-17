@@ -37,6 +37,4 @@ export class Chicken extends Entity {
             this.playAnimation(this.animationWalk);
         }
     };
-
-    resetAudio = () => {};
 }

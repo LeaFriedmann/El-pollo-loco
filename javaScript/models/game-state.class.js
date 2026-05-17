@@ -28,6 +28,7 @@ export class GameState extends DrawableObject {
         this.loadImage(img_);
     }
 
+    //#region methods
     // lädt img won
     static wonOutro() {
         return new GameState(206, 90, 300, 308, ImgHub.RESULT.W0N[0]);
@@ -93,6 +94,6 @@ export class GameState extends DrawableObject {
         world.push(new World(Ref.canvas, new Level(Level.currentLevel)));
         Render.currentLvl();
         GameState.GAME_ONGOING = true;
-        console.log(Level.currentLevel);
     }
+    //#endregion
 }

@@ -1,4 +1,5 @@
 export class Ref {
+    //#region properties
     static header = document.getElementById("header")
     static canvas = document.getElementById("canvas");
     static rotateMsg = document.getElementById("rotateMessage");
@@ -24,6 +25,9 @@ export class Ref {
 
     static footer = document.getElementById("footer");
 
+    //#endregion
+
+    //#region methods
     static btnInvisible(refBtn){
         refBtn.classList.add("invisible")
     }
@@ -55,4 +59,5 @@ export class Ref {
     static showMobileBtn(){
         Ref.showButton(Ref.mobileBtns);
     }
+    //#endregion
 }

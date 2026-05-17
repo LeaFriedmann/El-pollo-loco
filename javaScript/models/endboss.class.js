@@ -8,6 +8,8 @@ import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
 
 export class Endboss extends Entity {
+
+    //#region properties
     animationHurt = ImgHub.ENEMIES.ENDBOSS.HURT;
     animationAlert = ImgHub.ENEMIES.ENDBOSS.ALERT;
     animationAtack = ImgHub.ENEMIES.ENDBOSS.ATTACK;
@@ -20,6 +22,7 @@ export class Endboss extends Entity {
     static isAlert = false;
     static startWalking = false;
     static attack = false;
+    //#endregion
 
     constructor(x_, speed_, healthReduction_) {
         super(x_, 50, 400, 250, speed_, 100, healthReduction_, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
@@ -33,6 +36,7 @@ export class Endboss extends Entity {
         IntervalHub.startInterval(this.resetAudio, 1000 / 60);
     }
 
+    //#region methods
     // animation endboss für interval
     animate = () => {
         if (this.isHurt()) {
@@ -67,4 +71,5 @@ export class Endboss extends Entity {
             AudioHub.stopOne(AudioHub.ENDBOSS_HURT);
         }
     };
+    //#endregion
 }

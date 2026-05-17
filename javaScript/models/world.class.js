@@ -85,7 +85,6 @@ export class World {
                         Endboss.attack = false;
                     }, 1000);
                 }
-                console.log(this.character.energy);
             }
         });
     }
@@ -209,11 +208,6 @@ export class World {
 
         // gemeint ist draw methode in drawable object class
         mo.draw(this.ctx);
-
-        // if (mo instanceof Entity) {
-        //     mo.drawFrame(this.ctx);
-        //     mo.drawRealFrame(this.ctx);
-        // }
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

@@ -8,6 +8,7 @@ import { Level } from "./level.class.js";
 import { World } from "./world.class.js";
 
 export class ThrowableObject extends Entity {
+    //#region properties
     offset = {
         top: 10,
         right: 30,
@@ -18,6 +19,7 @@ export class ThrowableObject extends Entity {
     currentSplashImg = 0;
     throwDirection;
     audioPlayed;
+    //#endregion
 
     constructor(x_, y_, direction_) {
         super(x_, y_, 70, 70, 10, 100, 100, ImgHub.BOTTLE.ROTATION, ImgHub.BOTTLE.SPLASH);

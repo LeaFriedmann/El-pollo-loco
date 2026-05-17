@@ -124,10 +124,8 @@ export class AudioHub {
 
         if (backFrLocal != null) {
             AudioHub.TOGGLE_SOUND = backFrLocal;
-            console.log("from local");
         } else {
             AudioHub.TOGGLE_SOUND = AudioHub.TOGGLE_SOUND;
-            console.log("not");
         }
     }
     //#endregion

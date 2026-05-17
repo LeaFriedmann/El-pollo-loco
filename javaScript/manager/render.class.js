@@ -4,7 +4,6 @@ import { Ref } from "./ref.class.js";
 import { Template } from "./template.class.js";
 
 export class Render {
-    // static btnMute() {}
 
     static btnSound() {
         if (AudioHub.TOGGLE_SOUND) {

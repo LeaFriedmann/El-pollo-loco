@@ -206,8 +206,7 @@ h1 {
 
 /* #region dialog */
 .wrprDialog {
-    /* background-color: blanchedalmond; */
-    background-color: #cc7f51;
+    background-color: blanchedalmond;
     border: #702a0a solid 1px;
     border-radius: 20px;
     height: fit-content;

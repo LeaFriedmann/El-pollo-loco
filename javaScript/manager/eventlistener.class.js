@@ -96,8 +96,6 @@ export class Listener {
     static openInfo(){
         Ref.btnInfo.addEventListener("click", () => {
             Ref.infoDialog.showModal();
-            console.log("yes");
-            
         })
     }
 

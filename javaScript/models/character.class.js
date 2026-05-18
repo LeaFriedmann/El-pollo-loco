@@ -16,7 +16,6 @@ export class Character extends Entity {
     animationIdle = ImgHub.PEPE.IDLE;
     animationSleep = ImgHub.PEPE.SLEEPING;
     animationHurt = ImgHub.PEPE.HURT;
-    currentJumpImg = 0;
     offset = {
         top: 130,
         right: 30,
@@ -36,17 +35,14 @@ export class Character extends Entity {
         this.loadImages(this.animationSleep);
 
         IntervalHub.startInterval(this.movement, 1000 / 25);
-        IntervalHub.startInterval(this.animate, 1000 / 14); // laufanimation
+        IntervalHub.startInterval(this.animate, 1000 / 60); // laufanimation
         IntervalHub.startInterval(this.applyGravity, 1000 / 25); // fall animation
         IntervalHub.startInterval(this.resetValues, 1000 / 60);
     }
 
     //#region methods
 
-    // TODO geschwindigkeit animation anpassen
-
     movement = () => {
-
         // bewegt objekt wenn pfeiltaste rechts gedrückt
         // und objekt noch nicht am ende der Level.END_X koordinate angekommen
         if (Keyboard.RIGHT && this.x < Level.END_X && this.endbossNotPassed() && !this.isDead() && !Level.endboss.isDead()) {
@@ -64,23 +60,23 @@ export class Character extends Entity {
         // sprung wird nur ausgeführt wenn character auf boden
         if (Keyboard.UP && !this.isAboveGround()) {
             this.jump();
-            AudioHub.playOne(AudioHub.CHARACTER.JUMP)
+            AudioHub.playOne(AudioHub.CHARACTER.JUMP);
         }
 
         World.CAMERA_X = -this.x + 100;
     };
 
-    endbossNotPassed(){
+    endbossNotPassed() {
         return Level.endboss.rX > this.rX + this.rW;
     }
 
     animate = () => {
         if (this.isDead()) {
-            // deat animation wenn health = 0
-            if (!this.deadAnimationStop()) {
-                this.playAnimation(this.animationDead);
+            // if abfrage damit nach ein paar sekunden animation stoppt und outro angezeigt wird
+            if (!this.deadAnimationStop) {
+                this.playAnimation("dead", this.animationDead, 14);
                 if (!AudioHub.CHARACTER.DEAD.isPlaying) {
-                    AudioHub.playOne(AudioHub.CHARACTER.DEAD)
+                    AudioHub.playOne(AudioHub.CHARACTER.DEAD);
                 }
             } else {
                 IntervalHub.stopAllIntervals();
@@ -88,41 +84,37 @@ export class Character extends Entity {
                 GameState.showOutro();
             }
         } else if (this.isHurt()) {
-            // hurt animation wenn letzter hit mehl als 0.5 sec her war
-            this.playAnimation(this.animationHurt);
+            this.playAnimation("hurt", this.animationHurt, 14);
             if (!AudioHub.CHARACTER.DAMAGE.isPlaying) {
-                AudioHub.playOne(AudioHub.CHARACTER.DAMAGE)
+                AudioHub.playOne(AudioHub.CHARACTER.DAMAGE);
             }
         } else if (this.isAboveGround()) {
-            // jump animation bei sprung
-            this.playJumpAnimation(this.animationJump);
+            this.playAnimation("jump", this.animationJump, 14);
         } else if ((Keyboard.RIGHT || Keyboard.LEFT) && !Level.endboss.isDead()) {
-            // laufanimation wenn pfeil rechts oder links gedrückt
-            this.playAnimation(this.animationWalk);
+            this.playAnimation("walk", this.animationWalk, 14);
             if (!AudioHub.CHARACTER.RUN.isPlaying) {
                 AudioHub.playOne(AudioHub.CHARACTER.RUN);
             }
+        } else if (this.sleepTime() && !this.idleCounter == 0) {
+            // wenn idle counter über 8 sleep animation
+            this.playAnimation("sleep", this.animationSleep, 10);
+            if (!AudioHub.CHARACTER.SNORING.isPlaying) {
+                AudioHub.playOne(AudioHub.CHARACTER.SNORING);
+            }
         } else {
             // idle animation wenn keine tasten gedrückt
-            this.playAnimation(this.animationIdle);
+            this.playAnimation("idle", this.animationIdle, 10);
             if (this.idleCounter == 0) {
                 // idle counter starten, wird  auf 0 gesetzt wenn character sich bewegt
                 this.startIdleCounter();
             }
-            if (this.sleepTime()) {
-                // wenn idle counter über 8 sleep animation
-                this.playAnimation(this.animationSleep);
-                if (!AudioHub.CHARACTER.SNORING.isPlaying) {
-                    AudioHub.playOne(AudioHub.CHARACTER.SNORING)
-                }
-            }
         }
     };
 
-    resetValues = () =>{
+    resetValues = () => {
         if (this.isAboveGround() || Keyboard.LEFT || Keyboard.RIGHT || Keyboard.D || this.isHurt()) {
             this.resetIdleCounter();
-            AudioHub.stopOne(AudioHub.CHARACTER.SNORING)
+            AudioHub.stopOne(AudioHub.CHARACTER.SNORING);
         }
         if (Level.END_X - this.x < 600 && !Endboss.startWalking) {
             Endboss.isAlert = true;
@@ -131,23 +123,23 @@ export class Character extends Entity {
             Endboss.isAlert = false;
             Endboss.startWalking = true;
         }
-        if (!this.isAboveGround()) {
-            // jump img auf index 0 wenn sprung vorbei
-            this.resetJumpAnimation();
-        }
         if (!this.isHurt()) {
-            AudioHub.stopOne(AudioHub.CHARACTER.DAMAGE)
+            AudioHub.stopOne(AudioHub.CHARACTER.DAMAGE);
         }
-        if ((!Keyboard.LEFT && !Keyboard.RIGHT) || this.isHurt() || this.isDead() || this.isAboveGround()){
+        if ((!Keyboard.LEFT && !Keyboard.RIGHT) || this.isHurt() || this.isDead() || this.isAboveGround()) {
             AudioHub.stopOne(AudioHub.CHARACTER.RUN);
         }
-    }
+    };
 
     jumpsDown() {
         return this.speedY < 0;
     }
 
-    //#region methods idle/sleepdd
+    jump() {
+        this.speedY = 25;
+    }
+
+    //#region methods idle/sleep
     // berechnet wie lange schon idle, true wenn länger als 8 sec
     sleepTime() {
         let timePassed = new Date().getTime() - this.idleCounter;
@@ -161,33 +153,6 @@ export class Character extends Entity {
 
     resetIdleCounter() {
         this.idleCounter = 0;
-    }
-    //#endregion
-
-    //#region methods jump animation
-    // speilt jump animation ein mal pro sprung
-    playJumpAnimation(images) {
-        if (this.currentJumpImg < images.length) {
-            this.nextJumpImg(images);
-        }
-        if (!this.isAboveGround()) {
-            this.resetJumpAnimation();
-        }
-    }
-
-    nextJumpImg(images) {
-        const i = this.currentJumpImg;
-        const path = images[i];
-        this.img = this.imgCache[path];
-        this.currentJumpImg++;
-    }
-
-    resetJumpAnimation() {
-        this.currentJumpImg = 0;
-    }
-
-    jump() {
-        this.speedY = 25;
     }
     //#endregion
 

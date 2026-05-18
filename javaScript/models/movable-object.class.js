@@ -11,6 +11,9 @@ export class MovableObject extends DrawableObject {
     rW;
     rH;
     speed;
+    currentAnimation = null;
+    currentImage = 0;
+    lastFrameChange = 0;
     //#endregion
 
     constructor(x_, y_, height_, width_, speed_) {
@@ -59,12 +62,31 @@ export class MovableObject extends DrawableObject {
         }
     }
 
-    // vorlage für animation des jeweiligen objects. arr mit images muss übergeben werden
-    playAnimation(images) {
-        const i = this.currentImg % images.length;
-        const path = images[i];
-        this.img = this.imgCache[path];
-        this.currentImg++;
+    playAnimation(name, images, fps){
+
+        // checkt animations wechsel
+        if (this.currentAnimation !==name) {
+            this.currentAnimation = name;
+            this.currentImage = 0;
+            this.lastFrameChange = 0;
+        }
+
+        const now = Date.now();
+        const interval = 1000 / fps;
+
+        // ändert img in individuellem interval
+        if (now - this.lastFrameChange > interval) {
+            this.img = this.imgCache[images[this.currentImage]];
+            this.currentImage++;
+
+            // falls animation durchgelaufen index auf 0
+            if (this.currentImage == images.length) {
+                this.currentImage = 0;
+            }
+
+            // last frame change aktualisieren
+            this.lastFrameChange = now;
+        }
     }
 
     moveRight() {

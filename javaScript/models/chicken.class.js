@@ -18,13 +18,14 @@ export class Chicken extends Entity {
     constructor(x_, y_, width_, height_, speed_, animationWalk_, animationDead_) {
         super(x_, y_, height_, width_, speed_, 100, 100, animationWalk_, animationDead_);
 
-        IntervalHub.startInterval(this.animate, 50);
+        IntervalHub.startInterval(this.animate, 1000/ 60);
+        IntervalHub.startInterval(this.move, 1000 / 25)
     }
 
     // für interval, laufanimation + laufen nach links
     animate = () => {
         if (this.isDead()) {
-            this.playAnimation(this.animationDead);
+            this.playAnimation("dead", this.animationDead, 15);
             if (this.isDead && !this.audioPlayed) {
                 AudioHub.playOne(AudioHub.CHICKEN.DEAD);
                 this.audioPlayed = true;
@@ -33,8 +34,13 @@ export class Chicken extends Entity {
                 this.removeObj(Level.enemies);
             }, 2000);
         } else {
-            this.moveLeft();
-            this.playAnimation(this.animationWalk);
+            this.playAnimation("walk", this.animationWalk, 15);
         }
     };
+
+    move = () => {
+        if (!this.isDead()) {
+            this.moveLeft();            
+        }
+    }
 }

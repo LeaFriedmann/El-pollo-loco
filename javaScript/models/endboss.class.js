@@ -32,36 +32,43 @@ export class Endboss extends Entity {
         this.loadImages(this.animationWalk);
         this.loadImages(this.animationAtack);
 
-        IntervalHub.startInterval(this.animate, 100);
+        IntervalHub.startInterval(this.move, 1000 / 15)
+        IntervalHub.startInterval(this.animate, 1000 / 60);
         IntervalHub.startInterval(this.resetAudio, 1000 / 60);
     }
 
     //#region methods
     // animation endboss für interval
+
+    move = () => {
+        if (Endboss.startWalking && !Endboss.attack && !this.isDead() & !this.isHurt()) {
+            this.moveLeft();            
+        }
+    }
+
     animate = () => {
         if (this.isHurt()) {
-            this.playAnimation(this.animationHurt);
+            this.playAnimation("hurt", this.animationHurt, 10);
             if (!AudioHub.ENDBOSS_HURT.isPlaying) {
                 AudioHub.playOne(AudioHub.ENDBOSS_HURT);
             }
         } else if (Endboss.attack) {
-            this.playAnimation(this.animationAtack);
+            this.playAnimation("attack", this.animationAtack, 10);
         } else if (this.isDead()) {
             if (!this.deadAnimationStop()) {
-                this.playAnimation(this.animationDead);
+                this.playAnimation("dead", this.animationDead, 10);
             } else {
                 IntervalHub.stopAllIntervals();
                 GameState.WON = true;
                 GameState.showOutro();
             }
         } else if (Endboss.isAlert) {
-            this.playAnimation(this.animationAlert);
+            this.playAnimation("alert", this.animationAlert, 10);
             if (!AudioHub.ENDBOSS_APPROACH.isPlaying) {
                 AudioHub.playOne(AudioHub.ENDBOSS_APPROACH);
             }
         } else if (Endboss.startWalking) {
-            this.playAnimation(this.animationWalk);
-            this.moveLeft();
+            this.playAnimation("walk", this.animationWalk, 7);
         }
     };
 

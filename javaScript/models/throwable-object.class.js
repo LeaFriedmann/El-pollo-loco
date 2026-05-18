@@ -27,7 +27,7 @@ export class ThrowableObject extends Entity {
 
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
         IntervalHub.startInterval(this.movement, 25);
-        IntervalHub.startInterval(this.animate, 50);
+        IntervalHub.startInterval(this.animate, 1000 / 60);
     }
 
     //#region methods
@@ -47,7 +47,7 @@ export class ThrowableObject extends Entity {
     // dann splash animation
     animate = () => {
         if (this.inAir()) {
-            this.playAnimation(this.animationWalk);
+            this.playAnimation("throw", this.animationWalk, 20);
         } else if (this.splashed()) {
             this.playSplashAnimation();
         }
@@ -63,10 +63,13 @@ export class ThrowableObject extends Entity {
 
     // spielt splash animation ein mal und entfernt object aus array mit throwableObjects
     playSplashAnimation() {
-        if (this.animationFirstRound()) {
-            this.nextSplashImg(this.animationDead);
+
+        if (!this.animationEnd()) {
+            this.playAnimation("splash", this.animationDead, 20);
+
             if (!this.audioPlayed) {
                 AudioHub.playOne(AudioHub.BOTTLE_BREAK);
+
                 // für bottle respawn falls nötig
                 CollectableBottle.availableBottles--;
                 if (CollectableBottle.availableBottles == 0) {
@@ -81,15 +84,9 @@ export class ThrowableObject extends Entity {
         }
     }
 
-    animationFirstRound() {
-        return this.currentSplashImg < ImgHub.BOTTLE.SPLASH.length;
-    }
-
-    nextSplashImg(images) {
-        const i = this.currentSplashImg;
-        const path = images[i];
-        this.img = this.imgCache[path];
-        this.currentSplashImg++;
+    animationEnd() {
+        return (this.currentImage + 1) == ImgHub.BOTTLE.SPLASH.length;
+        
     }
 
     //#endregion

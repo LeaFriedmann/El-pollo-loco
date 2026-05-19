@@ -27,44 +27,44 @@ export class Ref {
     //#endregion
 
     //#region methods
-    static btnInvisible(refBtn){
-        refBtn.classList.add("invisible")
+    static btnInvisible(refElement){
+        refElement.classList.add("invisible")
     }
 
-    static btnVisible(refBtn){
-        refBtn.classList.remove("invisible")
+    static btnVisible(refElement){
+        refElement.classList.remove("invisible")
     }
 
-    static hideButton(refBtn) {
-        refBtn.classList.add("hide");
+    static hideElement(refElement) {
+        refElement.classList.add("hide");
     }
 
-    static showButton(refBtn) {
-        refBtn.classList.remove("hide");
+    static showElement(refElement) {
+        refElement.classList.remove("hide");
     }
 
     static hideBtns() {
-        Ref.hideButton(Ref.wrprBtns);
+        Ref.hideElement(Ref.wrprBtns);
     }
 
     static showBtns(){
-        Ref.showButton(Ref.wrprBtns);
+        Ref.showElement(Ref.wrprBtns);
     }
 
     static hideMobileBtn(){
-        Ref.hideButton(Ref.mobileBtns);
+        Ref.hideElement(Ref.mobileBtns);
     }
 
     static showMobileBtn(){
-        Ref.showButton(Ref.mobileBtns);
+        Ref.showElement(Ref.mobileBtns);
     }
 
     static hideImpressum(){
-        Ref.hideButton(Ref.impressum);
+        Ref.hideElement(Ref.impressum);
     }
 
     static showImpressum(){
-        Ref.showButton(Ref.impressum);
+        Ref.showElement(Ref.impressum);
     }
     //#endregion
 }

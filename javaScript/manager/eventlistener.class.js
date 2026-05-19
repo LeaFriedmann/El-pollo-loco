@@ -107,7 +107,7 @@ export class Listener {
 
     static clickStartGame() {
         Ref.btnStart.addEventListener("click", () => {
-            Ref.hideButton(Ref.btnStart);
+            Ref.hideElement(Ref.btnStart);
             Ref.hideImpressum();
             GameState.startLevel();
         });
@@ -132,7 +132,7 @@ export class Listener {
         Ref.btnHome.addEventListener("click", () => {
             GameState.startscreen = true;
             GameState.gameReset();
-            Ref.showButton(Ref.btnStart);
+            Ref.showElement(Ref.btnStart);
             Ref.showImpressum();
             Ref.hideBtns();
         });
@@ -205,14 +205,14 @@ export class Listener {
         const orientationType = window.screen.orientation.type;
         if (!this.isMobile()) {
             // desktop
-            Ref.wrprCanvas.classList.remove("hide");
-            Ref.header.classList.remove("hide");
+            Ref.showElement(Ref.wrprCanvas);
+            Ref.showElement(Ref.header);
         } else if (Listener.isMobile() && (orientationType == "portrait-primary" || orientationType == "portrait-secondary")) {
             Listener.mobilePortrait();
-            Ref.infoKeys.classList.add("hide");
+            Ref.hideElement(Ref.infoKeys);
         } else if ((this.isMobile() && orientationType == "landscape-primary") || orientationType == "landscape-secondary") {
             Listener.mobileLandscape();
-            Ref.infoKeys.classList.add("hide");
+            Ref.hideElement(Ref.infoKeys);
         }
     }
 
@@ -232,17 +232,17 @@ export class Listener {
     }
 
     static mobileLandscape() {
-        Ref.rotateMsg.classList.add("hide"); // aufforderung zum drehen des geräts verbergen
-        Ref.wrprCanvas.classList.remove("hide"); // mobile quer
-        Ref.header.classList.add("hide"); // überschrift verbergen
+        Ref.hideElement(Ref.rotateMsg);
+        Ref.showElement(Ref.wrprCanvas);
+        Ref.hideElement(Ref.header);
         document.body.classList.add("positionCenter"); // canvas zentral positionieren 
     }
 
     static mobilePortrait() {
-        Ref.rotateMsg.classList.remove("hide"); // mobile hochkant
-        Ref.header.classList.add("hide"); // überschrift verbergen
+        Ref.showElement(Ref.rotateMsg);
+        Ref.hideElement(Ref.header);
         document.body.classList.add("positionCenter"); // canvas zentral positionieren
-        Ref.wrprCanvas.classList.add("hide"); // canvas verbergen
+        Ref.hideElement(Ref.wrprCanvas);
     }
     //#endregion
 }

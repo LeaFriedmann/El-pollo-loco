@@ -22,9 +22,9 @@ export class World {
     canvas;
     ctx;
     statusbarHealth = new StatusBar(30, 0, ImgHub.STATUSBAR.HEALTH, 100);
-    statusbarEndboss = new StatusBar(30, 60, ImgHub.STATUSBAR.ENEMY, 100);
-    statusbarBottle = new StatusBar(450, 0, ImgHub.STATUSBAR.BOTTLE, 0);
-    statusbarCoin = new StatusBar(450, 60, ImgHub.STATUSBAR.COIN, 0)
+    statusbarEndboss;
+    statusbarBottle = new StatusBar(30, 45, ImgHub.STATUSBAR.BOTTLE, 0);
+    statusbarCoin = new StatusBar(30, 90, ImgHub.STATUSBAR.COIN, 0)
     static CAMERA_X = 0;
     static level;
 
@@ -171,11 +171,17 @@ export class World {
 
     // während spiel läuft
     drawGameObjects() {
+        if (!this.statusbarEndboss && Endboss.isAlert) {
+            this.statusbarEndboss = new StatusBar(450, 0, ImgHub.STATUSBAR.ENEMY, 100);
+        }
         this.ctx.translate(-World.CAMERA_X, 0);
         this.addToMap(this.statusbarHealth);
-        this.addToMap(this.statusbarEndboss);
         this.addToMap(this.statusbarBottle);
         this.addToMap(this.statusbarCoin);
+        if (this.statusbarEndboss) {
+        this.addToMap(this.statusbarEndboss);
+            
+        };
         this.ctx.translate(World.CAMERA_X, 0);
 
         this.addToMap(this.character);

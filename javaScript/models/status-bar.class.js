@@ -9,7 +9,7 @@ export class StatusBar extends DrawableObject {
     //#endregion
 
     constructor(x_, y_, imgStatusbar_, percentage_){
-        super(x_, y_, 60, 200);
+        super(x_, y_, 45, 170);
         this.imgStatusbar = imgStatusbar_;
         this.percentage = percentage_;
         this.loadImages(imgStatusbar_);

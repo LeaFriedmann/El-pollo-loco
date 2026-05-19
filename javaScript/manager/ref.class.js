@@ -7,6 +7,7 @@ export class Ref {
     static levelInfo = document.getElementById("level");
     static btnInfo = document.getElementById("btnInfo")
     static btnMute = document.getElementById("btnMute");
+    static impressum = document.getElementById("sectImpressum");
     static btnStart = document.getElementById("btnStartGame");
     static btnHome = document.getElementById("btnHome");
     static btnRestart = document.getElementById("btnRestart");
@@ -22,8 +23,6 @@ export class Ref {
     static infoDialog = document.getElementById("gameInfo");
     static btnClose = document.getElementById("btnClose");
     static infoKeys = document.getElementById("infoControls"); // p der nur bei desktop version gebraucht wird
-
-    static footer = document.getElementById("footer");
 
     //#endregion
 
@@ -58,6 +57,14 @@ export class Ref {
 
     static showMobileBtn(){
         Ref.showButton(Ref.mobileBtns);
+    }
+
+    static hideImpressum(){
+        Ref.hideButton(Ref.impressum);
+    }
+
+    static showImpressum(){
+        Ref.showButton(Ref.impressum);
     }
     //#endregion
 }

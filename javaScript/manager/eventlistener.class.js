@@ -108,6 +108,7 @@ export class Listener {
     static clickStartGame() {
         Ref.btnStart.addEventListener("click", () => {
             Ref.hideButton(Ref.btnStart);
+            Ref.hideImpressum();
             GameState.startLevel();
         });
     }
@@ -132,6 +133,7 @@ export class Listener {
             GameState.startscreen = true;
             GameState.gameReset();
             Ref.showButton(Ref.btnStart);
+            Ref.showImpressum();
             Ref.hideBtns();
         });
     }
@@ -204,7 +206,6 @@ export class Listener {
         if (!this.isMobile()) {
             // desktop
             Ref.wrprCanvas.classList.remove("hide");
-            Ref.footer.classList.remove("hide");
             Ref.header.classList.remove("hide");
         } else if (Listener.isMobile() && (orientationType == "portrait-primary" || orientationType == "portrait-secondary")) {
             Listener.mobilePortrait();
@@ -235,9 +236,6 @@ export class Listener {
         Ref.wrprCanvas.classList.remove("hide"); // mobile quer
         Ref.header.classList.add("hide"); // überschrift verbergen
         document.body.classList.add("positionCenter"); // canvas zentral positionieren 
-        if (window.screen.height < 600) { // footer zeigen falls genug platz
-            Ref.footer.classList.add("hide");
-        }
     }
 
     static mobilePortrait() {
@@ -245,7 +243,6 @@ export class Listener {
         Ref.header.classList.add("hide"); // überschrift verbergen
         document.body.classList.add("positionCenter"); // canvas zentral positionieren
         Ref.wrprCanvas.classList.add("hide"); // canvas verbergen
-        Ref.footer.classList.remove("hide"); // footer zeigen
     }
     //#endregion
 }

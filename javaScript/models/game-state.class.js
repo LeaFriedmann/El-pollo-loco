@@ -70,8 +70,10 @@ export class GameState extends DrawableObject {
         // zeigt benötigte buttons 
         if (GameState.WON) {
             GameState.outro = GameState.wonOutro();
+            Ref.showElement(Ref.btnNextLvl);
         } else if (GameState.LOST) {
             GameState.outro = GameState.lostOutro();
+            Ref.hideElement(Ref.btnNextLvl);
         }
         Ref.hideMobileBtn();
         Ref.showBtns();

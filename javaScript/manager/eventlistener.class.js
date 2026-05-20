@@ -8,6 +8,7 @@ import { Ref } from "./ref.class.js";
 import { Render } from "./render.class.js";
 
 export class Listener {
+    //#region methods
     //#region tastatur
     static clickKeyDown() {
         window.addEventListener("keydown", (e) => {
@@ -284,5 +285,6 @@ export class Listener {
         document.body.classList.add("positionCenter"); // canvas zentral positionieren
         Ref.hideElement(Ref.wrprCanvas);
     }
+    //#endregion
     //#endregion
 }

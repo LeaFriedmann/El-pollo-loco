@@ -162,12 +162,11 @@ h1 {
             justify-content: space-around;
         }
 
-        .wrprImpressum{
+        .wrprImpressum {
             padding-bottom: 10px;
 
-            .btnImpessum{
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-
+            .btnImpessum {
+                font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             }
         }
 
@@ -191,6 +190,9 @@ h1 {
                 border-radius: 10px;
                 width: clamp(35px, 6vw, 50px);
                 aspect-ratio: 1 / 1;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                user-select: none;
 
                 img {
                     width: 100%;
@@ -264,6 +266,6 @@ h1 {
 
 /* #endregion */
 
-#impressum{
+#impressum {
     font-family: Arial, Helvetica, sans-serif;
 }

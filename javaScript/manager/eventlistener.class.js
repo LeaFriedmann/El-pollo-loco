@@ -55,25 +55,29 @@ export class Listener {
         });
     }
 
-    static btnsTouchstart(){
-        Ref.btnLeftMobile.addEventListener("pointerdown", () => {
+    static btnsTouchstart() {
+        Ref.btnLeftMobile.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
             Keyboard.LEFT = true;
         });
 
-        Ref.btnRightMobile.addEventListener("pointerdown", () => {
+        Ref.btnRightMobile.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
             Keyboard.RIGHT = true;
         });
 
-        Ref.btnJumpMobile.addEventListener("pointerdown", () => {
+        Ref.btnJumpMobile.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
             Keyboard.UP = true;
-        })
+        });
 
-        Ref.btnThrowMobile.addEventListener("pointerdown", () => {
+        Ref.btnThrowMobile.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
             Keyboard.D = true;
-        })
+        });
     }
 
-    static btnsToucend(){
+    static btnsToucend() {
         Ref.btnLeftMobile.addEventListener("pointerup", () => {
             Keyboard.LEFT = false;
         });
@@ -84,33 +88,52 @@ export class Listener {
 
         Ref.btnJumpMobile.addEventListener("pointerup", () => {
             Keyboard.UP = false;
-        })
+        });
 
         Ref.btnThrowMobile.addEventListener("pointerup", () => {
             Keyboard.D = false;
-        })
+        });
     }
     //#endregion
 
     //#region buttons
-    static openInfo(){
+    static openInfo() {
         Ref.btnInfo.addEventListener("click", () => {
             Ref.infoDialog.showModal();
-        })
+        });
     }
 
-    static closeInfo(){
+    static closeInfo() {
         Ref.btnClose.addEventListener("click", () => {
             Ref.infoDialog.close();
-        })
+        });
     }
 
     static clickStartGame() {
         Ref.btnStart.addEventListener("click", () => {
+            // fullscreen falls mobile
+            if (Listener.isMobile()) {
+                Listener.toFullscreen();
+            }
+
             Ref.hideElement(Ref.btnStart);
             Ref.hideImpressum();
             GameState.startLevel();
         });
+    }
+
+    static toFullscreen() {
+        const elem = document.documentElement;
+        /* View in fullscreen */
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            /* IE11 */
+            elem.msRequestFullscreen();
+        }
     }
 
     static clickRestart() {
@@ -130,12 +153,29 @@ export class Listener {
 
     static clickHome() {
         Ref.btnHome.addEventListener("click", () => {
+            // fulscreen beenden
+            if (Listener.isMobile()) {
+                Listener.endFullscreen();
+            }
+
             GameState.startscreen = true;
             GameState.gameReset();
             Ref.showElement(Ref.btnStart);
             Ref.showImpressum();
             Ref.hideBtns();
         });
+    }
+
+    static endFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            /* IE11 */
+            document.msExitFullscreen();
+        }
     }
 
     static isMobile() {
@@ -235,7 +275,7 @@ export class Listener {
         Ref.hideElement(Ref.rotateMsg);
         Ref.showElement(Ref.wrprCanvas);
         Ref.hideElement(Ref.header);
-        document.body.classList.add("positionCenter"); // canvas zentral positionieren 
+        document.body.classList.add("positionCenter"); // canvas zentral positionieren
     }
 
     static mobilePortrait() {

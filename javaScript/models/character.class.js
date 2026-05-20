@@ -73,7 +73,7 @@ export class Character extends Entity {
     animate = () => {
         if (this.isDead()) {
             // if abfrage damit nach ein paar sekunden animation stoppt und outro angezeigt wird
-            if (!this.deadAnimationStop) {
+            if (!this.deadAnimationStop()) {
                 this.playAnimation("dead", this.animationDead, 14);
                 if (!AudioHub.CHARACTER.DEAD.isPlaying) {
                     AudioHub.playOne(AudioHub.CHARACTER.DEAD);

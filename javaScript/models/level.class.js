@@ -68,7 +68,7 @@ export class Level {
 
         this.levelConfig.speed.chicken = this.levelNumber / 10 + Math.random() * this.levelNumber;
         this.levelConfig.speed.smallChicken = this.levelNumber / 5 + Math.random() * this.levelNumber;
-        this.levelConfig.speed.endboss = this.levelNumber / 10 + Math.random() * this.levelNumber;
+        this.levelConfig.speed.endboss = this.speedEndboss();
 
         this.levelConfig.healthReduction.endboss = this.healthReductEndboss(this.levelNumber);
     }
@@ -94,6 +94,15 @@ export class Level {
     healthReductEndboss(levelNr) {
         if (levelNr < 6) {
             return 20;
+        } else {
+            return 10;
+        }
+    }
+
+    // geschwindigkeit endboss berechnen, kann nicht schneller welden als character
+    speedEndboss(){
+        if ((this.levelNumber / 10 + Math.random() * this.levelNumber) < 10) {
+            return this.levelNumber / 10 + Math.random() * this.levelNumber;
         } else {
             return 10;
         }

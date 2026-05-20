@@ -3,7 +3,9 @@ import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { Keyboard } from "../manager/keyboard.class.js";
 import { CollectableBottle } from "./collectable-bottle.class.js";
+import { Endboss } from "./endboss.class.js";
 import { Entity } from "./entity.class.js";
+import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
 import { World } from "./world.class.js";
 
@@ -72,7 +74,7 @@ export class ThrowableObject extends Entity {
 
                 // für bottle respawn falls nötig
                 CollectableBottle.availableBottles--;
-                if (CollectableBottle.availableBottles == 0) {
+                if (CollectableBottle.availableBottles == 0 && (!GameState.WON || !GameState.LOST)) {
                     CollectableBottle.xPos = 300;
                     Level.bottleRespawn();
                 }

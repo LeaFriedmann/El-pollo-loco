@@ -16,25 +16,41 @@ import { SmallChicken } from "./small-chicken.class.js";
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 
+/**
+ * Represents the main game world.
+ * Handles rendering, collision detection, game state updates,
+ * collectible management, and throwable object interactions.
+ */
 export class World {
     //#region properties
+
     character = new Character();
     canvas;
     ctx;
+
     statusbarHealth = new StatusBar(30, 0, ImgHub.STATUSBAR.HEALTH, 100);
     statusbarEndboss;
     statusbarBottle = new StatusBar(30, 45, ImgHub.STATUSBAR.BOTTLE, 0);
-    statusbarCoin = new StatusBar(30, 90, ImgHub.STATUSBAR.COIN, 0)
+    statusbarCoin = new StatusBar(30, 90, ImgHub.STATUSBAR.COIN, 0);
+
     static CAMERA_X = 0;
     static level;
 
     //#endregion
 
+    /**
+     * Creates a new game world instance.
+     *
+     * @param {HTMLCanvasElement} canvas - The canvas used for rendering.
+     * @param {Level} level - The current game level.
+     */
     constructor(canvas, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         World.level = level;
+
         this.draw();
+
         IntervalHub.startInterval(this.checkCollisions, 1000 / 60);
         IntervalHub.startInterval(this.checkThrowObjects, 1000 / 25);
     }
@@ -42,6 +58,10 @@ export class World {
     //#region methods
 
     //#region methods collision
+
+    /**
+     * Executes all collision checks in the game world.
+     */
     checkCollisions = () => {
         this.collisionTop();
         this.collisionCharacter();
@@ -49,21 +69,27 @@ export class World {
         this.checkCollecktables();
     };
 
-    // checkt für jede bottle kollision mit jedem enemy
+    /**
+     * Checks collisions between throwable bottles and enemies.
+     */
     collisionBottle() {
         Level.ThrowableObjects.forEach((bottle) => {
             this.collisionEnemies(bottle);
         });
     }
 
-    // checkt für jeden enemy collision mit bottle
-    // bei kollision wird enemy schaden abgezogen, flasche auch (chicken, smallChicken und bottle direkt energy auf 0)
+    /**
+     * Checks whether a bottle collides with enemies and applies damage.
+     *
+     * @param {ThrowableObject} bottle - The thrown bottle object.
+     */
     collisionEnemies(bottle) {
         Level.enemies.forEach((enemy) => {
             if (bottle.isColliding(enemy)) {
                 if (!bottle.isDead()) {
                     enemy.hit();
                     bottle.hit();
+
                     if (enemy instanceof Endboss) {
                         this.statusbarEndboss.setPercentage(enemy.energy);
                     }
@@ -72,15 +98,25 @@ export class World {
         });
     }
 
-    // checkt für jeden enemy collision mit character
-    // wenn enemy lebt wird character energy abgezogen
+    /**
+     * Checks collisions between the character and enemies.
+     * Applies damage to the character if necessary.
+     */
     collisionCharacter() {
         Level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !this.character.jumpsDown() && !enemy.isDead() && !this.character.isHurt() && !Level.endboss.isDead()) {
+            if (
+                this.character.isColliding(enemy) &&
+                !this.character.jumpsDown() &&
+                !enemy.isDead() &&
+                !this.character.isHurt() &&
+                !Level.endboss.isDead()
+            ) {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
+
                 if (enemy instanceof Endboss) {
                     Endboss.attack = true;
+
                     setTimeout(() => {
                         Endboss.attack = false;
                     }, 1000);
@@ -89,8 +125,10 @@ export class World {
         });
     }
 
-    // prüft für jeden enemy, ob character kollidiert, wenn er vom sprung runter kommt
-    // tötet enemy bei collision (außer endboss)
+    /**
+     * Checks whether the character jumps onto enemies
+     * and defeats them from above.
+     */
     collisionTop() {
         Level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.killableByJump(enemy) && this.character.jumpsDown()) {
@@ -99,23 +137,37 @@ export class World {
         });
     }
 
+    /**
+     * Determines whether an enemy can be defeated by jumping on it.
+     *
+     * @param {Entity} enemy - The enemy to check.
+     * @returns {boolean} True if the enemy can be defeated by jumping.
+     */
     killableByJump(enemy) {
         return enemy instanceof NormalChicken || enemy instanceof SmallChicken;
     }
 
+    /**
+     * Checks collisions between the character and collectable objects.
+     * Updates counters and status bars accordingly.
+     */
     checkCollecktables() {
         CollectableObject.arrAll.forEach((collectable) => {
             if (this.character.isColliding(collectable)) {
                 if (collectable instanceof CollectableBottle) {
-                    AudioHub.playOne(AudioHub.COLLECT.BOTTLE)
+                    AudioHub.playOne(AudioHub.COLLECT.BOTTLE);
+
                     CollectableBottle.collected++;
                     collectable.removeCollectable();
+
                     this.statusbarBottle.setPercentage(CollectableBottle.collected * 10);
                 } else {
-                    AudioHub.playOne(AudioHub.COLLECT.COIN)
+                    AudioHub.playOne(AudioHub.COLLECT.COIN);
+
                     Coin.collected++;
                     collectable.removeCollectable();
-                    this.statusbarCoin.setPercentage(Coin.collected * 10)
+
+                    this.statusbarCoin.setPercentage(Coin.collected * 10);
                 }
             }
         });
@@ -123,8 +175,10 @@ export class World {
 
     //#endregion
 
-    // instanziert flasche bei klick auf taste D
-    // flasche wird bei instanzierung geworfen
+    /**
+     * Checks whether the player can throw a bottle
+     * and creates a throwable object if possible.
+     */
     checkThrowObjects = () => {
         if (Keyboard.D && this.bottleAvailable()) {
             if (this.character.otherDirection) {
@@ -132,26 +186,40 @@ export class World {
             } else {
                 this.addThrowableObject("right");
             }
+
             CollectableBottle.collected--;
+
             this.statusbarBottle.setPercentage(CollectableBottle.collected * 10);
         }
     };
 
+    /**
+     * Determines whether a throwable bottle is currently available.
+     *
+     * @returns {boolean} True if a bottle can be thrown.
+     */
     bottleAvailable() {
         return Level.ThrowableObjects.length < 1 && CollectableBottle.collected > 0 && !Level.endboss.isDead();
     }
 
+    /**
+     * Creates and adds a new throwable object to the level.
+     *
+     * @param {"left"|"right"} direction - The throw direction.
+     */
     addThrowableObject(direction) {
         Level.ThrowableObjects.push(new ThrowableObject(this.character.rX, this.character.rY, direction));
     }
 
     //#region methods draw
 
+    /**
+     * Renders the complete game world onto the canvas.
+     * Continuously updates using requestAnimationFrame.
+     */
     draw() {
-        // canvas leeren
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // erster wert x achse, zweiter wert y achse
         this.ctx.translate(World.CAMERA_X, 0);
 
         this.addObjectsToMap(World.level.backgroundObjects);
@@ -159,29 +227,35 @@ export class World {
 
         if (GameState.GAME_ONGOING) {
             this.drawGameObjects();
-        } else if(GameState.LOST || GameState.WON){
+        } else if (GameState.LOST || GameState.WON) {
             this.drawOutro();
         } else if (GameState.startscreen) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
 
         this.ctx.translate(-World.CAMERA_X, 0);
-        requestAnimationFrame(() => this.draw()); // draw wird immer wieder aufgerufen
+
+        requestAnimationFrame(() => this.draw());
     }
 
-    // während spiel läuft
+    /**
+     * Draws all active game objects while the game is running.
+     */
     drawGameObjects() {
         if (!this.statusbarEndboss && Endboss.isAlert) {
             this.statusbarEndboss = new StatusBar(450, 0, ImgHub.STATUSBAR.ENEMY, 100);
         }
+
         this.ctx.translate(-World.CAMERA_X, 0);
+
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarBottle);
         this.addToMap(this.statusbarCoin);
-        if (this.statusbarEndboss) {
-        this.addToMap(this.statusbarEndboss);
 
-        };
+        if (this.statusbarEndboss) {
+            this.addToMap(this.statusbarEndboss);
+        }
+
         this.ctx.translate(World.CAMERA_X, 0);
 
         this.addToMap(this.character);
@@ -191,28 +265,39 @@ export class World {
         this.addObjectsToMap(Level.ThrowableObjects);
     }
 
-    // wenn spiel vorbei endscreen
+    /**
+     * Draws the outro or end screen.
+     */
     drawOutro() {
         this.ctx.translate(-World.CAMERA_X, 0);
+
         this.addToMap(GameState.outro);
+
         this.ctx.translate(World.CAMERA_X, 0);
     }
 
-    // for each durch array von img der objekte
+    /**
+     * Draws multiple objects onto the canvas.
+     *
+     * @param {Array<Entity>} objects - The objects to render.
+     */
     addObjectsToMap(objects) {
         objects.forEach((o) => {
             this.addToMap(o);
         });
     }
 
-    // zeigt objekte auf canvas an
-    // dreht objekt bei laufen in andere richtung
+    /**
+     * Draws a single object onto the canvas.
+     * Flips the image if the object changes direction.
+     *
+     * @param {Entity} mo - The drawable object.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
 
-        // gemeint ist draw methode in drawable object class
         mo.draw(this.ctx);
 
         if (mo.otherDirection) {
@@ -220,17 +305,30 @@ export class World {
         }
     }
 
+    /**
+     * Flips an object horizontally before rendering.
+     *
+     * @param {Entity} mo - The object to flip.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
         this.ctx.scale(-1, 1);
+
         mo.x = mo.x * -1;
     }
 
+    /**
+     * Restores the original orientation after rendering.
+     *
+     * @param {Entity} mo - The flipped object.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
+
         this.ctx.restore();
     }
+
     //#endregion
     //#endregion
 }

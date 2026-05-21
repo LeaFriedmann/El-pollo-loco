@@ -110,7 +110,7 @@ export class World {
                     AudioHub.playOne(AudioHub.COLLECT.BOTTLE)
                     CollectableBottle.collected++;
                     collectable.removeCollectable();
-                    this.statusbarBottle.setPercentage(CollectableBottle.collected * 10);                    
+                    this.statusbarBottle.setPercentage(CollectableBottle.collected * 10);
                 } else {
                     AudioHub.playOne(AudioHub.COLLECT.COIN)
                     Coin.collected++;
@@ -180,7 +180,7 @@ export class World {
         this.addToMap(this.statusbarCoin);
         if (this.statusbarEndboss) {
         this.addToMap(this.statusbarEndboss);
-            
+
         };
         this.ctx.translate(World.CAMERA_X, 0);
 

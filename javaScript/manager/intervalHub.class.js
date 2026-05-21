@@ -1,16 +1,26 @@
+/**
+ * Utility class for centralized management of multiple intervals.
+ * Provides methods to start and stop all registered intervals.
+ */
 export class IntervalHub {
 
-    // array für alle Interval-IDs
     static allIntervals = [];
 
-    // startet neues Interval und fügt id in arr allIntervals hinzu
-    static startInterval(funct, timer){
+    /**
+     * Starts a new interval and stores its ID in the internal registry.
+     *
+     * @param {Function} funct - The function to execute on each interval tick.
+     * @param {number} timer - Interval duration.
+     */
+    static startInterval(funct, timer) {
         const newInterval = setInterval(funct, timer);
         IntervalHub.allIntervals.push(newInterval);
     }
 
-    // stopt alle intervalle in allIntervals arr und leert es
-    static stopAllIntervals(){
+    /**
+     * Stops all currently running intervals and clears the internal registry.
+     */
+    static stopAllIntervals() {
         IntervalHub.allIntervals.forEach(clearInterval);
         IntervalHub.allIntervals = [];
     }

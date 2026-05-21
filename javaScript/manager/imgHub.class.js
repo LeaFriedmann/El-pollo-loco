@@ -1,3 +1,6 @@
+/**
+ * Provides a centralized registry of all image asset paths used in the game.
+ */
 export class ImgHub {
     static PEPE = {
         IDLE: [

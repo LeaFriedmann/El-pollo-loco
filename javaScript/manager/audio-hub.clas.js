@@ -1,9 +1,18 @@
+/**
+ * Wrapper class for handling Audio playback with additional metadata.
+ */
 class MyAudio {
     file;
     isLoaded = false;
     isPlaying = false;
     changeVol = 0;
 
+    /**
+     * Creates a MyAudio instance.
+     * @param {string} file_ - Path to the audio file.
+     * @param {number} playbackRate_ - Playback speed of the audio.
+     * @param {number} changeVol_ - Additional volume offset for this sound.
+     */
     constructor(file_, playbackRate_, changeVol_) {
         this.file = new Audio(file_);
         this.file.playbackRate = playbackRate_;
@@ -11,10 +20,12 @@ class MyAudio {
     }
 }
 
+/**
+ * Central audio management hub for playing, stopping, and controlling game sounds.
+ */
 export class AudioHub {
     //#region properties
     static VOLUME = 0.2;
-
     static TOGGLE_SOUND = true;
 
     //#region audios
@@ -37,12 +48,10 @@ export class AudioHub {
     };
 
     static ENDBOSS_APPROACH = new MyAudio("./sounds/endboss/endbossApproach.wav", 1, 0.8);
-    static ENDBOSS_HURT = new MyAudio("./sounds/chicken/chickenDead2.mp3", 1, 0)
+    static ENDBOSS_HURT = new MyAudio("./sounds/chicken/chickenDead2.mp3", 1, 0);
 
     static GAME_START = new MyAudio("./sounds/game/gameStart.mp3", 1, 0);
-
     static BOTTLE_BREAK = new MyAudio("./sounds/throwable/bottleBreak.mp3", 1, 0);
-
     static BACKGROUND_MUSIC = new MyAudio("./sounds/background-music/background-music.mp3", 1, -0.15);
 
     static allSounds = [
@@ -65,38 +74,51 @@ export class AudioHub {
 
     //#region methods
 
-    //#region play and stop
-    // spielt eine sounddatei ab
+    /**
+     * Plays a given sound from the beginning.
+     * @param {MyAudio} sound - The sound instance to play.
+     */
     static playOne(sound) {
         sound.isPlaying = true;
-        sound.file.currentTime = 0; // Startet ab bestimmter stelle (0= anfang, 5 = 5 sec)
+        sound.file.currentTime = 0;
 
         if (AudioHub.TOGGLE_SOUND) {
-            sound.file.volume = AudioHub.VOLUME + sound.changeVol; // setzt Lautstärke auf static wert + extra Lautstärke je nach sound
-        } else if (!AudioHub.TOGGLE_SOUND) {
+            sound.file.volume = AudioHub.VOLUME + sound.changeVol;
+        } else {
             sound.file.volume = AudioHub.VOLUME;
         }
 
         if (sound.file.readyState > 0 || sound.isLoaded) {
-            sound.isLoaded = true; // für safari notwendeg, daher auch die klasse MyAudio
-            sound.file.play(); // spielt übergebenes sound-objekt ab
+            sound.isLoaded = true;
+            sound.file.play();
         }
     }
 
+    /**
+     * Stops all registered sounds.
+     */
     static stopAll() {
         AudioHub.allSounds.forEach((sound) => {
-            sound.file.pause(); // pausiert alle audios in arrray
+            sound.file.pause();
             sound.isPlaying = false;
         });
     }
 
+    /**
+     * Stops a specific sound.
+     * @param {MyAudio} sound - The sound instance to stop.
+     */
     static stopOne(sound) {
-        sound.file.pause(); // Pausiert das übergebene Audio
+        sound.file.pause();
         sound.isPlaying = false;
     }
 
+    /**
+     * Toggles global sound on or off and updates all volumes accordingly.
+     */
     static toggleSound() {
         AudioHub.TOGGLE_SOUND = !AudioHub.TOGGLE_SOUND;
+
         if (AudioHub.TOGGLE_SOUND) {
             AudioHub.VOLUME = 0.2;
 
@@ -110,24 +132,30 @@ export class AudioHub {
                 sound.file.volume = AudioHub.VOLUME;
             });
         }
+
         AudioHub.toLoclStrg();
     }
-    //#endregion
 
     //#region local storage
+
+    /**
+     * Saves the current sound toggle state to localStorage.
+     */
     static toLoclStrg() {
         localStorage.setItem("TOGGLE_SOUND", JSON.stringify(AudioHub.TOGGLE_SOUND));
     }
 
+    /**
+     * Loads the sound toggle state from localStorage.
+     */
     static getFromLocl() {
         const backFrLocal = JSON.parse(localStorage.getItem("TOGGLE_SOUND"));
 
         if (backFrLocal != null) {
             AudioHub.TOGGLE_SOUND = backFrLocal;
-        } else {
-            AudioHub.TOGGLE_SOUND = AudioHub.TOGGLE_SOUND;
         }
     }
+
     //#endregion
     //#endregion
 }

@@ -9,6 +9,10 @@ import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
 import { World } from "./world.class.js";
 
+/**
+ * Represents a throwable bottle object that can move, rotate,
+ * splash on impact, and interact with the game world.
+ */
 export class ThrowableObject extends Entity {
     //#region properties
     offset = {
@@ -17,14 +21,23 @@ export class ThrowableObject extends Entity {
         bottom: 10,
         left: 30,
     };
+
     speedY = 27;
     currentSplashImg = 0;
     throwDirection;
     audioPlayed;
     //#endregion
 
+    /**
+     * Creates a new throwable object instance.
+     *
+     * @param {number} x_ - Initial x position.
+     * @param {number} y_ - Initial y position.
+     * @param {"left"|"right"} direction_ - Direction in which the object is thrown.
+     */
     constructor(x_, y_, direction_) {
         super(x_, y_, 70, 70, 10, 100, 100, ImgHub.BOTTLE.ROTATION, ImgHub.BOTTLE.SPLASH);
+
         this.throwDirection = direction_;
 
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
@@ -34,7 +47,10 @@ export class ThrowableObject extends Entity {
 
     //#region methods
 
-    // bewegt sich je nach instanzierung nach rechts oder links wenn es über dem boden und noch nicht kollidiert ist
+    /**
+     * Moves the object horizontally while it is airborne.
+     * The movement direction depends on the throw direction.
+     */
     movement = () => {
         if (this.inAir()) {
             if (this.throwDirection == "right") {
@@ -45,8 +61,10 @@ export class ThrowableObject extends Entity {
         }
     };
 
-    // spielt rotation animation, bis es mit mo oder boden kollidiert
-    // dann splash animation
+    /**
+     * Plays the rotation animation while the object is in the air.
+     * Switches to the splash animation once the object collides.
+     */
     animate = () => {
         if (this.inAir()) {
             this.playAnimation("throw", this.animationWalk, 20);
@@ -55,25 +73,37 @@ export class ThrowableObject extends Entity {
         }
     };
 
+    /**
+     * Checks whether the object is currently airborne.
+     *
+     * @returns {boolean} True if the object is above the ground and not destroyed.
+     */
     inAir() {
         return this.isAboveGround() && !this.isDead();
     }
 
+    /**
+     * Checks whether the object has splashed.
+     *
+     * @returns {boolean} True if the object hit the ground or an enemy.
+     */
     splashed() {
         return !this.isAboveGround() || this.isDead();
     }
 
-    // spielt splash animation ein mal und entfernt object aus array mit throwableObjects
+    /**
+     * Plays the splash animation once and removes the object afterward.
+     * Also handles sound playback and bottle respawn logic.
+     */
     playSplashAnimation() {
-
         if (!this.animationEnd()) {
             this.playAnimation("splash", this.animationDead, 20);
 
             if (!this.audioPlayed) {
                 AudioHub.playOne(AudioHub.BOTTLE_BREAK);
 
-                // für bottle respawn falls nötig
                 CollectableBottle.availableBottles--;
+
                 if (CollectableBottle.availableBottles == 0 && (!GameState.WON || !GameState.LOST)) {
                     CollectableBottle.xPos = 300;
                     Level.bottleRespawn();
@@ -86,9 +116,13 @@ export class ThrowableObject extends Entity {
         }
     }
 
+    /**
+     * Determines whether the splash animation has finished.
+     *
+     * @returns {boolean} True if the last splash frame has been reached.
+     */
     animationEnd() {
         return (this.currentImage + 1) == ImgHub.BOTTLE.SPLASH.length;
-        
     }
 
     //#endregion

@@ -1,11 +1,17 @@
+/**
+ * Central reference and UI utility class.
+ *
+ * Provides static access to frequently used DOM elements
+ * and helper methods for toggling their visibility and state.
+ */
 export class Ref {
     //#region properties
-    static header = document.getElementById("header")
+    static header = document.getElementById("header");
     static canvas = document.getElementById("canvas");
     static rotateMsg = document.getElementById("rotateMessage");
     static wrprCanvas = document.getElementById("wrprCanvas");
     static levelInfo = document.getElementById("level");
-    static btnInfo = document.getElementById("btnInfo")
+    static btnInfo = document.getElementById("btnInfo");
     static btnMute = document.getElementById("btnMute");
     static impressum = document.getElementById("sectImpressum");
     static btnStart = document.getElementById("btnStartGame");
@@ -22,49 +28,85 @@ export class Ref {
 
     static infoDialog = document.getElementById("gameInfo");
     static btnClose = document.getElementById("btnClose");
-    static infoKeys = document.getElementById("infoControls"); // p der nur bei desktop version gebraucht wird
+    static infoKeys = document.getElementById("infoControls");
 
     //#endregion
 
     //#region methods
-    static btnInvisible(refElement){
-        refElement.classList.add("invisible")
+
+    /**
+     * Adds the "invisible" CSS class to the given element.
+     * @param {HTMLElement} refElement - The element to hide visually without affecting layout.
+     */
+    static btnInvisible(refElement) {
+        refElement.classList.add("invisible");
     }
 
-    static btnVisible(refElement){
-        refElement.classList.remove("invisible")
+    /**
+     * Removes the "invisible" CSS class from the given element.
+     * @param {HTMLElement} refElement - The element to make visible.
+     */
+    static btnVisible(refElement) {
+        refElement.classList.remove("invisible");
     }
 
+    /**
+     * Adds the "hide" CSS class to the given element.
+     * @param {HTMLElement} refElement - The element to hide from layout flow.
+     */
     static hideElement(refElement) {
         refElement.classList.add("hide");
     }
 
+    /**
+     * Removes the "hide" CSS class from the given element.
+     * @param {HTMLElement} refElement - The element to show.
+     */
     static showElement(refElement) {
         refElement.classList.remove("hide");
     }
 
+    /**
+     * Hides the post-game buttons.
+     */
     static hideBtns() {
         Ref.hideElement(Ref.wrprBtns);
     }
 
-    static showBtns(){
+    /**
+     * Shows the post-game buttons.
+     */
+    static showBtns() {
         Ref.showElement(Ref.wrprBtns);
     }
 
-    static hideMobileBtn(){
+    /**
+     * Hides the mobile control buttons.
+     */
+    static hideMobileBtn() {
         Ref.hideElement(Ref.mobileBtns);
     }
 
-    static showMobileBtn(){
+    /**
+     * Shows the mobile control buttons.
+     */
+    static showMobileBtn() {
         Ref.showElement(Ref.mobileBtns);
     }
 
-    static hideImpressum(){
+    /**
+     * Hides the impressum button.
+     */
+    static hideImpressum() {
         Ref.hideElement(Ref.impressum);
     }
 
-    static showImpressum(){
+    /**
+     * Shows the impressum button.
+     */
+    static showImpressum() {
         Ref.showElement(Ref.impressum);
     }
+
     //#endregion
 }

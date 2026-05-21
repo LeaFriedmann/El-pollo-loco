@@ -7,23 +7,36 @@ import { Entity } from "./entity.class.js";
 import { GameState } from "./game-state.class.js";
 import { Level } from "./level.class.js";
 
+/**
+ * Represents the endboss enemy
+ * Controls its own movement, animations, and audio reactions.
+ */
 export class Endboss extends Entity {
-
     //#region properties
+
     animationHurt = ImgHub.ENEMIES.ENDBOSS.HURT;
     animationAlert = ImgHub.ENEMIES.ENDBOSS.ALERT;
     animationAtack = ImgHub.ENEMIES.ENDBOSS.ATTACK;
+
     offset = {
         top: 80,
         right: 20,
         bottom: 105,
         left: 65,
     };
+
     static isAlert = false;
     static startWalking = false;
     static attack = false;
+
     //#endregion
 
+    /**
+     * Creates an Endboss instance with animations, movement, and audio setup.
+     * @param {number} x_ - Initial x position.
+     * @param {number} speed_ - Movement speed.
+     * @param {number} healthReduction_ - Damage received per hit.
+     */
     constructor(x_, speed_, healthReduction_) {
         super(x_, 50, 400, 250, speed_, 100, healthReduction_, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
 
@@ -32,23 +45,29 @@ export class Endboss extends Entity {
         this.loadImages(this.animationWalk);
         this.loadImages(this.animationAtack);
 
-        IntervalHub.startInterval(this.move, 1000 / 15)
+        IntervalHub.startInterval(this.move, 1000 / 15);
         IntervalHub.startInterval(this.animate, 1000 / 60);
         IntervalHub.startInterval(this.resetAudio, 1000 / 60);
     }
 
     //#region methods
-    // animation endboss für interval
 
+    /**
+     * Handles endboss movement logic.
+     */
     move = () => {
-        if (Endboss.startWalking && !Endboss.attack && !this.isDead() & !this.isHurt()) {
-            this.moveLeft();            
+        if (Endboss.startWalking && !Endboss.attack && !this.isDead() && !this.isHurt()) {
+            this.moveLeft();
         }
-    }
+    };
 
+    /**
+     * Controls animation state switching based on current behavior.
+     */
     animate = () => {
         if (this.isHurt()) {
             this.playAnimation("hurt", this.animationHurt, 10);
+
             if (!AudioHub.ENDBOSS_HURT.isPlaying) {
                 AudioHub.playOne(AudioHub.ENDBOSS_HURT);
             }
@@ -64,6 +83,7 @@ export class Endboss extends Entity {
             }
         } else if (Endboss.isAlert) {
             this.playAnimation("alert", this.animationAlert, 10);
+
             if (!AudioHub.ENDBOSS_APPROACH.isPlaying) {
                 AudioHub.playOne(AudioHub.ENDBOSS_APPROACH);
             }
@@ -72,11 +92,14 @@ export class Endboss extends Entity {
         }
     };
 
-    // damit hurt audio wieder abgespielt wird bei nächstem reffer
+    /**
+     * Resets hurt audio state when the endboss is no longer hurt.
+     */
     resetAudio = () => {
         if (!this.isHurt()) {
             AudioHub.stopOne(AudioHub.ENDBOSS_HURT);
         }
     };
+
     //#endregion
 }

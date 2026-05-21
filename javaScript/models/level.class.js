@@ -9,8 +9,16 @@ import { Endboss } from "./endboss.class.js";
 import { NormalChicken } from "./normal-chicken.class.js";
 import { SmallChicken } from "./small-chicken.class.js";
 
+/**
+ * Represents a game level configuration including enemies, collectibles, and environment objects.
+ */
 export class Level {
+
     //#region properties
+
+    /**
+     * Configuration values that define level difficulty and spawn behavior.
+     */
     levelConfig = {
         repetition: {
             chicken: 0,
@@ -33,9 +41,12 @@ export class Level {
             endboss: 0,
         },
     };
+
     levelNumber;
+
     clouds = [];
     backgroundObjects = [];
+
     static enemies = [];
     static endboss;
     static END_X;
@@ -44,6 +55,10 @@ export class Level {
 
     //#endregion
 
+    /**
+     * Creates a Level instance and initializes all level objects.
+     * @param {number} levelNumber_ - The number of the level to generate.
+     */
     constructor(levelNumber_) {
         this.levelNumber = levelNumber_;
         this.setLevelConfig();
@@ -57,6 +72,10 @@ export class Level {
     //#region methods
 
     //#region level config
+
+    /**
+     * Initializes configuration values based on the current level number.
+     */
     setLevelConfig() {
         this.levelConfig.repetition.chicken = this.levelNumber + 4;
         this.levelConfig.repetition.smallChicken = this.levelNumber + 5;
@@ -73,7 +92,11 @@ export class Level {
         this.levelConfig.healthReduction.endboss = this.healthReductEndboss(this.levelNumber);
     }
 
-    // länge hintergrund anpassung nach level
+    /**
+     * Determines how often background tiles should repeat based on level number.
+     * @param {number} levelNr - Level number.
+     * @returns {number} Number of background repetitions.
+     */
     getBackgrRepeat(levelNr) {
         if (levelNr < 6) {
             return 2;
@@ -91,6 +114,11 @@ export class Level {
         }
     }
 
+    /**
+     * Determines how much health reduction the endboss receives.
+     * @param {number} levelNr - Level number.
+     * @returns {number} Health reduction value.
+     */
     healthReductEndboss(levelNr) {
         if (levelNr < 6) {
             return 20;
@@ -99,24 +127,34 @@ export class Level {
         }
     }
 
-    // geschwindigkeit endboss berechnen, kann nicht schneller welden als character
-    speedEndboss(){
-        if ((this.levelNumber / 10 + Math.random() * this.levelNumber) < 10) {
-            return this.levelNumber / 10 + Math.random() * this.levelNumber;
+    /**
+     * Calculates the movement speed of the endboss, capped at a maximum value.
+     * @returns {number} Endboss speed.
+     */
+    speedEndboss() {
+        const calculated = this.levelNumber / 10 + Math.random() * this.levelNumber;
+
+        if (calculated < 10) {
+            return calculated;
         } else {
             return 10;
         }
     }
 
-    // weist x koordinate zu, bis zu welcher character laufen kann
+    /**
+     * Calculates the maximum X position of the level.
+     */
     getLevelEnd() {
         Level.END_X = this.levelConfig.repetition.background * 719 * 2 - 719 - 650;
     }
+
     //#endregion
 
     //#region spawn objects
-    // iteriert durch arr mit allen hintergrund layern und pusht instanzen von BackgroundObject
-    // in property backgroundObjects
+
+    /**
+     * Creates and adds all background layers for the level.
+     */
     addBackground() {
         for (let index = 0; index < this.levelConfig.repetition.background; index++) {
             ImgHub.BACKGROUND.ALL_LAYERS.forEach((part) => {
@@ -125,78 +163,129 @@ export class Level {
         }
     }
 
-    // gibt instanz von Backgroundobject zurück, welcher ein teil des Hintergrunds übergeben wird
+    /**
+     * Creates a background object for a specific layer part.
+     * @param {string} part - Background layer part identifier.
+     * @returns {BackgroundObject} Background object instance.
+     */
     addBackgrPart(part) {
         return new BackgroundObject(part);
     }
 
-    // pusht je nach level andere anzahl an instanzen von Chicken in property enemies
-    // instanziert Endboss und weist instanz property endboss zu
+    /**
+     * Creates and adds all enemy objects including chickens and the endboss.
+     */
     addEnemies() {
         for (let i = 0; i < this.levelConfig.repetition.chicken; i++) {
             Level.enemies.push(this.createChicken());
         }
+
         for (let i = 0; i < this.levelConfig.repetition.smallChicken; i++) {
             Level.enemies.push(this.createSmallChicken());
         }
-        const endboss = new Endboss(Level.END_X, this.levelConfig.speed.endboss, this.levelConfig.healthReduction.endboss);
+
+        const endboss = new Endboss(
+            Level.END_X,
+            this.levelConfig.speed.endboss,
+            this.levelConfig.healthReduction.endboss
+        );
+
         Level.endboss = endboss;
         Level.enemies.push(endboss);
     }
 
-    // gibt instanz von Chicken zurück
+    /**
+     * Creates a normal chicken enemy instance.
+     * @returns {NormalChicken} Chicken instance.
+     */
     createChicken() {
-        // speed und x koordinate übergeben
-        return new NormalChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.chicken);
+        return new NormalChicken(
+            300 + Math.random() * Level.END_X,
+            this.levelConfig.speed.chicken
+        );
     }
 
+    /**
+     * Creates a small chicken enemy instance.
+     * @returns {SmallChicken} Small chicken instance.
+     */
     createSmallChicken() {
-        return new SmallChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.smallChicken);
+        return new SmallChicken(
+            300 + Math.random() * Level.END_X,
+            this.levelConfig.speed.smallChicken
+        );
     }
 
-    // pusht je nach level andere anzahl an instanzen von Cloud in property clouds
+    /**
+     * Creates and adds all cloud objects.
+     */
     addClouds() {
         for (let i = 0; i < this.levelConfig.repetition.clouds; i++) {
             this.clouds.push(this.createCloud());
         }
     }
 
-    // gibt instanz von Cloud zurück
+    /**
+     * Creates a cloud instance.
+     * @returns {Cloud} Cloud instance.
+     */
     createCloud() {
         return new Cloud();
     }
 
-    addCoins() {
-        Coin.gap = (Level.END_X - 400) / this.levelConfig.repetition.coins;
-        for (let index = 0; index < this.levelConfig.repetition.coins; index++) {
-            CollectableObject.arrAll.push(this.coin());
-        }
-    }
-
-    addBottles() {
-        CollectableBottle.gap = (Level.END_X - 400) / this.levelConfig.repetition.collectableBottle;
-        for (let index = 0; index < this.levelConfig.repetition.collectableBottle; index++) {
-            CollectableObject.arrAll.push(this.bottle());
-        }
-    }
-
-    static bottleRespawn(){
-        CollectableBottle.gap = (Level.END_X - 400) / 10;
-        for (let index = 0; index < 10; index++) {
-            CollectableObject.arrAll.push(new CollectableBottle())
-        }
-    }
-
+    /**
+     * Creates and adds all coin and bottle collectibles.
+     */
     addCollectables() {
         this.addCoins();
         this.addBottles();
     }
 
-    // gibt instanz von CollectableObject zurück, in dem fall für Flaschen
+    /**
+     * Creates and distributes coin collectibles across the level.
+     */
+    addCoins() {
+        Coin.gap = (Level.END_X - 400) / this.levelConfig.repetition.coins;
+
+        for (let index = 0; index < this.levelConfig.repetition.coins; index++) {
+            CollectableObject.arrAll.push(this.coin());
+        }
+    }
+
+    /**
+     * Creates and distributes bottle collectibles across the level.
+     */
+    addBottles() {
+        CollectableBottle.gap = (Level.END_X - 400) / this.levelConfig.repetition.collectableBottle;
+
+        for (let index = 0; index < this.levelConfig.repetition.collectableBottle; index++) {
+            CollectableObject.arrAll.push(this.bottle());
+        }
+    }
+
+    /**
+     * Respawns bottles after all are used.
+     */
+    static bottleRespawn() {
+        CollectableBottle.gap = (Level.END_X - 400) / 10;
+
+        for (let index = 0; index < 10; index++) {
+            CollectableObject.arrAll.push(new CollectableBottle());
+        }
+    }
+
+    /**
+     * Creates a bottle collectible.
+     * @returns {CollectableBottle} Bottle instance.
+     */
     bottle() {
         return new CollectableBottle();
     }
 
+    /**
+     * Creates a coin collectible.
+     * @returns {Coin} Coin instance.
+     */
     coin() {
         return new Coin();
     }

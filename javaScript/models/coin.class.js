@@ -2,8 +2,12 @@ import { ImgHub } from "../manager/imgHub.class.js";
 import { IntervalHub } from "../manager/intervalHub.class.js";
 import { CollectableObject } from "./collectable-object.class.js";
 
-export class Coin extends CollectableObject{
-
+/**
+ * Represents a collectible coin object in the game.
+ * Handles animation and positioning of coin collectibles.
+ * Extends CollectableObject.
+ */
+export class Coin extends CollectableObject {
     offset = {
         top: 30,
         right: 30,
@@ -11,13 +15,19 @@ export class Coin extends CollectableObject{
         left: 30,
     };
 
-    constructor(){
+    /**
+     * Creates a new Coin instance at a randomized position and starts its animation loop.
+     */
+    constructor() {
         super(Coin.xPos + Math.random() * Coin.gap, 100 + Math.random() * 200, 80, 80, ImgHub.COIN);
         Coin.xPos += Coin.gap;
-        IntervalHub.startInterval(this.animate, 1000 / 60)
+        IntervalHub.startInterval(this.animate, 1000 / 60);
     }
 
+    /**
+     * Runs the coin animation
+     */
     animate = () => {
-        this.playAnimation("coin", this.animation, 7)
-    }
+        this.playAnimation("coin", this.animation, 7);
+    };
 }

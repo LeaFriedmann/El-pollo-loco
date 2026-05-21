@@ -3,8 +3,13 @@ import { AudioHub } from "./audio-hub.clas.js";
 import { Ref } from "./ref.class.js";
 import { Template } from "./template.class.js";
 
+/**
+ * Handles rendering updates for UI components.
+ */
 export class Render {
-
+    /**
+     * Updates the mute/unmute button UI based on the current audio state.
+     */
     static btnSound() {
         if (AudioHub.TOGGLE_SOUND) {
             Ref.btnMute.innerHTML = "";
@@ -15,7 +20,11 @@ export class Render {
         }
     }
 
-    static currentLvl(){
+    /**
+     * Updates the displayed current level information in the UI.
+     * Sets the text content of the level info element to the current level.
+     */
+    static currentLvl() {
         Ref.levelInfo.innerText = "";
         Ref.levelInfo.innerText = "Level: " + Level.currentLevel;
     }

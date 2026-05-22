@@ -1,8 +1,0 @@
-{
-    "source": {
-        "include": ["./javaScript"]
-    },
-    "opts": {
-        "destination": "./out"
-    }
-}

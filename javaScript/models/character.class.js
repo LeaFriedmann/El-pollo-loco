@@ -22,10 +22,10 @@ export class Character extends Entity {
     animationHurt = ImgHub.PEPE.HURT;
 
     offset = {
-        top: 130,
-        right: 30,
-        bottom: 20,
-        left: 30,
+        top: 90,
+        right: 60,
+        bottom: 40,
+        left: 60,
     };
 
     idleCounter = 0;

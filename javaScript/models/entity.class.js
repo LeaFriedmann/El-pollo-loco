@@ -111,7 +111,7 @@ export class Entity extends MovableObject {
      * @returns {boolean} True if entity is in the air.
      */
     isAboveGround() {
-        return this.y < 430 - this.height;
+        return this.y < 440 - this.height;
     }
 
     //#endregion

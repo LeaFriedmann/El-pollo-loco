@@ -13,7 +13,6 @@ import { SmallChicken } from "./small-chicken.class.js";
  * Represents a game level configuration including enemies, collectibles, and environment objects.
  */
 export class Level {
-
     //#region properties
 
     /**
@@ -51,7 +50,7 @@ export class Level {
     static endboss;
     static END_X;
     static ThrowableObjects = [];
-    static currentLevel = 1;
+    static currentLevel = 16;
 
     //#endregion
 
@@ -99,18 +98,18 @@ export class Level {
      */
     getBackgrRepeat(levelNr) {
         if (levelNr < 6) {
-            return 2;
-        }
-        if (levelNr < 11) {
-            return 3;
-        }
-        if (levelNr < 16) {
             return 4;
         }
-        if (levelNr < 21) {
-            return 5;
-        } else {
+        if (levelNr < 11) {
             return 6;
+        }
+        if (levelNr < 16) {
+            return 8;
+        }
+        if (levelNr < 21) {
+            return 10;
+        } else {
+            return 12;
         }
     }
 
@@ -145,7 +144,7 @@ export class Level {
      * Calculates the maximum X position of the level.
      */
     getLevelEnd() {
-        Level.END_X = this.levelConfig.repetition.background * 719 * 2 - 719 - 650;
+        Level.END_X = this.levelConfig.repetition.background * 719 - 719 - 650;
     }
 
     //#endregion
@@ -153,19 +152,27 @@ export class Level {
     //#region spawn objects
 
     /**
-     * Creates and adds all background layers for the level.
+     * Creates and adds all background parts for the level.
      */
     addBackground() {
         for (let index = 0; index < this.levelConfig.repetition.background; index++) {
-            ImgHub.BACKGROUND.ALL_LAYERS.forEach((part) => {
-                this.backgroundObjects.push(this.addBackgrPart(part));
-            });
+            if (index < ImgHub.BACKGROUND.START.length) {
+                this.backgroundObjects.push(this.addBackgrPart(ImgHub.BACKGROUND.START[index]));
+            } else {
+                this.backgroundObjects.push(
+                    this.addBackgrPart(
+                        ImgHub.BACKGROUND.EXTENSION[
+                            index - ImgHub.BACKGROUND.START.length - ImgHub.BACKGROUND.EXTENSION.length * BackgroundObject.EXTENSION_TURN
+                        ],
+                    ),
+                );
+            }
         }
     }
 
     /**
-     * Creates a background object for a specific layer part.
-     * @param {string} part - Background layer part identifier.
+     * Creates a background object for a specific background part.
+     * @param {string} part - Background part identifier.
      * @returns {BackgroundObject} Background object instance.
      */
     addBackgrPart(part) {
@@ -184,11 +191,7 @@ export class Level {
             Level.enemies.push(this.createSmallChicken());
         }
 
-        const endboss = new Endboss(
-            Level.END_X,
-            this.levelConfig.speed.endboss,
-            this.levelConfig.healthReduction.endboss
-        );
+        const endboss = new Endboss(Level.END_X, this.levelConfig.speed.endboss, this.levelConfig.healthReduction.endboss);
 
         Level.endboss = endboss;
         Level.enemies.push(endboss);
@@ -199,10 +202,7 @@ export class Level {
      * @returns {NormalChicken} Chicken instance.
      */
     createChicken() {
-        return new NormalChicken(
-            300 + Math.random() * Level.END_X,
-            this.levelConfig.speed.chicken
-        );
+        return new NormalChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.chicken);
     }
 
     /**
@@ -210,10 +210,7 @@ export class Level {
      * @returns {SmallChicken} Small chicken instance.
      */
     createSmallChicken() {
-        return new SmallChicken(
-            300 + Math.random() * Level.END_X,
-            this.levelConfig.speed.smallChicken
-        );
+        return new SmallChicken(300 + Math.random() * Level.END_X, this.levelConfig.speed.smallChicken);
     }
 
     /**

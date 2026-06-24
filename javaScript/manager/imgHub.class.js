@@ -135,6 +135,24 @@ export class ImgHub {
             "./img/5_background/layers/2_second_layer/1.png",
             "./img/5_background/layers/1_first_layer/1.png",
         ],
+        START: [
+            "./img/background/start/background-1.png",
+            "./img/background/start/background-2.png",
+            "./img/background/start/background-3.png",
+            "./img/background/start/background-4.png",
+            "./img/background/start/background-5.png",
+            "./img/background/start/background-6.png",
+            "./img/background/start/background-7.png",
+            "./img/background/start/background-8.png"
+        ],
+        EXTENSION:[
+            "./img/background/extension/backgr-extension-1.png",
+            "./img/background/extension/backgr-extension-2.png",
+            "./img/background/extension/backgr-extension-3.png",
+            "./img/background/extension/backgr-extension-4.png",
+            "./img/background/extension/backgr-extension-5.png",
+            "./img/background/extension/backgr-extension-6.png"
+        ]
     };
 
     static BOTTLE = {

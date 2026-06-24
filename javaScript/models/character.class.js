@@ -23,9 +23,9 @@ export class Character extends Entity {
 
     offset = {
         top: 90,
-        right: 60,
+        right: 70,
         bottom: 40,
-        left: 60,
+        left: 70,
     };
 
     idleCounter = 0;

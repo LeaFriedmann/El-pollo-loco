@@ -58,9 +58,9 @@ export class ImgHub {
             "./img/character-fox/jump/Jump 9.png"
         ],
         HURT: [
-            "./img/2_character_pepe/4_hurt/H-41.png",
-            "./img/2_character_pepe/4_hurt/H-42.png",
-            "./img/2_character_pepe/4_hurt/H-43.png",
+            "./img/character-fox/hurt/hurt 1.png",
+            "./img/character-fox/hurt/hurt 2.png",
+            "./img/character-fox/hurt/hurt 3.png"
         ],
         DEAD: [
             "./img/2_character_pepe/5_dead/D-51.png",

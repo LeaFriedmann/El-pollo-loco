@@ -89,8 +89,7 @@ export class Entity extends MovableObject {
      */
     deadAnimationStop() {
         let timePassed = new Date().getTime() - this.lastHit;
-        timePassed = timePassed / 1000;
-        return timePassed > 2;
+        return timePassed > 800;
     }
 
     /**

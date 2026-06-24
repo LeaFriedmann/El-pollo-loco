@@ -63,13 +63,12 @@ export class ImgHub {
             "./img/character-fox/hurt/hurt 3.png"
         ],
         DEAD: [
-            "./img/2_character_pepe/5_dead/D-51.png",
-            "./img/2_character_pepe/5_dead/D-52.png",
-            "./img/2_character_pepe/5_dead/D-53.png",
-            "./img/2_character_pepe/5_dead/D-54.png",
-            "./img/2_character_pepe/5_dead/D-55.png",
-            "./img/2_character_pepe/5_dead/D-56.png",
-            "./img/2_character_pepe/5_dead/D-57.png",
+        "./img/character-fox/dead/dead 1.png",
+        "./img/character-fox/dead/dead 2.png",
+        "./img/character-fox/dead/dead 3.png",
+        "./img/character-fox/dead/dead 4.png",
+        "./img/character-fox/dead/dead 5.png",
+        "./img/character-fox/dead/dead 6.png"
         ],
     };
 

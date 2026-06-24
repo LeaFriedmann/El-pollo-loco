@@ -86,7 +86,7 @@ export class Character extends Entity {
     animate = () => {
         if (this.isDead()) {
             if (!this.deadAnimationStop()) {
-                this.playAnimation("dead", this.animationDead, 14);
+                this.playAnimation("dead", this.animationDead, 7);
                 if (!AudioHub.CHARACTER.DEAD.isPlaying) {
                     AudioHub.playOne(AudioHub.CHARACTER.DEAD);
                 }

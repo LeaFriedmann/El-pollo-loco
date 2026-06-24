@@ -16,16 +16,16 @@ export class ImgHub {
             "./img/character-fox/idle/idle 10.png"
         ],
         SLEEPING: [
-            "./img/2_character_pepe/1_idle/long_idle/I-11.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-12.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-13.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-14.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-15.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-16.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-17.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-18.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-19.png",
-            "./img/2_character_pepe/1_idle/long_idle/I-20.png",
+            "./img/character-fox/sleep/sleep 1.png",
+            "./img/character-fox/sleep/sleep 2.png",
+            "./img/character-fox/sleep/sleep 3.png",
+            "./img/character-fox/sleep/sleep 4.png",
+            "./img/character-fox/sleep/sleep 5.png",
+            "./img/character-fox/sleep/sleep 6.png",
+            "./img/character-fox/sleep/sleep 7.png",
+            "./img/character-fox/sleep/sleep 8.png",
+            "./img/character-fox/sleep/sleep 9.png",
+            "./img/character-fox/sleep/sleep 10.png"
         ],
         WALK: [
             "./img/character-fox/walk/Run 1.png",

@@ -8,10 +8,10 @@ import { CollectableObject } from "./collectable-object.class.js";
 export class CollectableBottle extends CollectableObject {
     //#region properties
     offset = {
-        top: 10,
-        right: 20,
-        bottom: 10,
-        left: 30,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
     };
     static availableBottles = 0;
     //#endregion
@@ -21,7 +21,7 @@ export class CollectableBottle extends CollectableObject {
      * Increases the global bottle counter and updates the x-position for next instance.
      */
     constructor() {
-        super(CollectableBottle.xPos + Math.random() * CollectableBottle.gap, 350, 70, 70, ImgHub.BOTTLE.ON_GROUND);
+        super(CollectableBottle.xPos + Math.random() * CollectableBottle.gap, 390, 30, 30, ImgHub.BOTTLE.ON_GROUND);
         CollectableBottle.xPos += CollectableBottle.gap;
         CollectableBottle.availableBottles++;
     }

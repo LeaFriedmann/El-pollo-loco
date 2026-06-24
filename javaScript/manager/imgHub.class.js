@@ -179,7 +179,7 @@ export class ImgHub {
             "./img/acorn/explosion/explode 5.png",
             "./img/acorn/explosion/explode 6.png"
         ],
-        ON_GROUND: ["./img/6_salsa_bottle/1_salsa_bottle_on_ground.png", "./img/6_salsa_bottle/2_salsa_bottle_on_ground.png"],
+        ON_GROUND: ["./img/acorn/acorn.png"],
         NORMAL: ["./img/6_salsa_bottle/salsa_bottle.png"],
     };
 

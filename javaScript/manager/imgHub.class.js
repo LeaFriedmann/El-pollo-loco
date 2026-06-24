@@ -86,7 +86,7 @@ export class ImgHub {
                 "./img/enemies_mushrooms/mushroom/walk/mushroom-walk-1.png",
                 "./img/enemies_mushrooms/mushroom/walk/mushroom-walk-2.png",
             ],
-            DEAD: ["./img/3_enemies_chicken/chicken_small/2_dead/dead.png"],
+            DEAD: ["./img/enemies_mushrooms/dead/dead 1.png", "./img/enemies_mushrooms/dead/dead 2.png"],
         },
         ENDBOSS: {
             WALK: [

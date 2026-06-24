@@ -42,14 +42,14 @@ export class Chicken extends Entity {
      */
     animate = () => {
         if (this.isDead()) {
-            this.playAnimation("dead", this.animationDead, 15);
+            this.playAnimation("dead", this.animationDead, 4);
             if (this.isDead && !this.audioPlayed) {
                 AudioHub.playOne(AudioHub.CHICKEN.DEAD);
                 this.audioPlayed = true;
             }
             setTimeout(() => {
                 this.removeObj(Level.enemies);
-            }, 2000);
+            }, 450);
         } else {
             this.playAnimation("walk", this.animationWalk, 7);
         }

@@ -299,10 +299,10 @@ export class World {
         }
 
         mo.draw(this.ctx);
-        if (mo instanceof Entity) {
-            mo.drawFrame(this.ctx);
-            mo.drawRealFrame(this.ctx);
-        }
+        // if (mo instanceof Entity) {
+        //     mo.drawFrame(this.ctx);
+        //     mo.drawRealFrame(this.ctx);
+        // }
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

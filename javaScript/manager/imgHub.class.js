@@ -73,9 +73,8 @@ export class ImgHub {
         },
         CHICKEN_SMALL: {
             WALK: [
-                "./img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
-                "./img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
-                "./img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
+                "./img/enemies_mushrooms/mushroom/walk/mushroom-walk-1.png",
+                "./img/enemies_mushrooms/mushroom/walk/mushroom-walk-2.png",
             ],
             DEAD: ["./img/3_enemies_chicken/chicken_small/2_dead/dead.png"],
         },
@@ -143,16 +142,16 @@ export class ImgHub {
             "./img/background/start/background-5.png",
             "./img/background/start/background-6.png",
             "./img/background/start/background-7.png",
-            "./img/background/start/background-8.png"
+            "./img/background/start/background-8.png",
         ],
-        EXTENSION:[
+        EXTENSION: [
             "./img/background/extension/backgr-extension-1.png",
             "./img/background/extension/backgr-extension-2.png",
             "./img/background/extension/backgr-extension-3.png",
             "./img/background/extension/backgr-extension-4.png",
             "./img/background/extension/backgr-extension-5.png",
-            "./img/background/extension/backgr-extension-6.png"
-        ]
+            "./img/background/extension/backgr-extension-6.png",
+        ],
     };
 
     static BOTTLE = {

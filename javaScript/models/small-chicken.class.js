@@ -11,6 +11,6 @@ export class SmallChicken extends Chicken {
      * @param {number} speed_ - Movement speed of the chicken.
      */
     constructor(x_, speed_) {
-        super(x_, 384, 30, 30, speed_, ImgHub.ENEMIES.CHICKEN_SMALL.WALK, ImgHub.ENEMIES.CHICKEN_SMALL.DEAD);
+        super(x_, 372, 40, 50, speed_, ImgHub.ENEMIES.CHICKEN_SMALL.WALK, ImgHub.ENEMIES.CHICKEN_SMALL.DEAD);
     }
 }

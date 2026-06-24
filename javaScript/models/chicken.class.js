@@ -51,7 +51,7 @@ export class Chicken extends Entity {
                 this.removeObj(Level.enemies);
             }, 2000);
         } else {
-            this.playAnimation("walk", this.animationWalk, 15);
+            this.playAnimation("walk", this.animationWalk, 7);
         }
     };
 

@@ -50,7 +50,7 @@ export class Level {
     static endboss;
     static END_X;
     static ThrowableObjects = [];
-    static currentLevel = 16;
+    static currentLevel = 1;
 
     //#endregion
 

@@ -35,7 +35,7 @@ export class Character extends Entity {
      * Creates a new Character instance and initializes animations and game loops.
      */
     constructor() {
-        super(120, 150, 280, 120, 10, 100, 10, ImgHub.PEPE.WALK, ImgHub.PEPE.DEAD);
+        super(120, 150, 242, 180, 10, 100, 10, ImgHub.PEPE.WALK, ImgHub.PEPE.DEAD);
 
         this.loadImages(this.animationJump);
         this.loadImages(this.animationHurt);

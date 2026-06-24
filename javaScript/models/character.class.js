@@ -101,7 +101,7 @@ export class Character extends Entity {
                 AudioHub.playOne(AudioHub.CHARACTER.DAMAGE);
             }
         } else if (this.isAboveGround()) {
-            this.playAnimation("jump", this.animationJump, 14);
+            this.playAnimation("jump", this.animationJump, 10);
         } else if ((Keyboard.RIGHT || Keyboard.LEFT) && !Level.endboss.isDead()) {
             this.playAnimation("walk", this.animationWalk, 14);
             if (!AudioHub.CHARACTER.RUN.isPlaying) {

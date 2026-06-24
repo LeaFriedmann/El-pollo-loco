@@ -59,7 +59,7 @@ export class Character extends Entity {
             this.otherDirection = false;
         }
 
-        if (Keyboard.LEFT && this.x > 0 && !this.isDead() && !Level.endboss.isDead()) {
+        if (Keyboard.LEFT && this.x > 50 && !this.isDead() && !Level.endboss.isDead()) {
             this.moveLeft();
             this.otherDirection = true;
         }

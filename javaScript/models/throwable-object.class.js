@@ -16,10 +16,10 @@ import { World } from "./world.class.js";
 export class ThrowableObject extends Entity {
     //#region properties
     offset = {
-        top: 10,
-        right: 30,
-        bottom: 10,
-        left: 30,
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20,
     };
 
     speedY = 27;

@@ -9,17 +9,17 @@ import { CollectableObject } from "./collectable-object.class.js";
  */
 export class Coin extends CollectableObject {
     offset = {
-        top: 30,
-        right: 30,
-        bottom: 30,
-        left: 30,
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10,
     };
 
     /**
      * Creates a new Coin instance at a randomized position and starts its animation loop.
      */
     constructor() {
-        super(Coin.xPos + Math.random() * Coin.gap, 100 + Math.random() * 200, 80, 80, ImgHub.COIN);
+        super(Coin.xPos + Math.random() * Coin.gap, 130 + Math.random() * 200, 50, 50, ImgHub.COIN);
         Coin.xPos += Coin.gap;
         IntervalHub.startInterval(this.animate, 1000 / 60);
     }
@@ -28,6 +28,6 @@ export class Coin extends CollectableObject {
      * Runs the coin animation
      */
     animate = () => {
-        this.playAnimation("coin", this.animation, 7);
+        this.playAnimation("coin", this.animation, 9);
     };
 }

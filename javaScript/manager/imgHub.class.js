@@ -13,7 +13,7 @@ export class ImgHub {
             "./img/character-fox/idle/idle 7.png",
             "./img/character-fox/idle/idle 8.png",
             "./img/character-fox/idle/idle 9.png",
-            "./img/character-fox/idle/idle 10.png"
+            "./img/character-fox/idle/idle 10.png",
         ],
         SLEEPING: [
             "./img/character-fox/sleep/sleep 1.png",
@@ -25,7 +25,7 @@ export class ImgHub {
             "./img/character-fox/sleep/sleep 7.png",
             "./img/character-fox/sleep/sleep 8.png",
             "./img/character-fox/sleep/sleep 9.png",
-            "./img/character-fox/sleep/sleep 10.png"
+            "./img/character-fox/sleep/sleep 10.png",
         ],
         WALK: [
             "./img/character-fox/walk/Run 1.png",
@@ -44,7 +44,6 @@ export class ImgHub {
             "./img/character-fox/walk/Run 14.png",
             "./img/character-fox/walk/Run 15.png",
             "./img/character-fox/walk/Run 16.png",
-
         ],
         JUMP: [
             "./img/character-fox/jump/Jump 1.png",
@@ -55,20 +54,16 @@ export class ImgHub {
             "./img/character-fox/jump/Jump 6.png",
             "./img/character-fox/jump/Jump 7.png",
             "./img/character-fox/jump/Jump 8.png",
-            "./img/character-fox/jump/Jump 9.png"
+            "./img/character-fox/jump/Jump 9.png",
         ],
-        HURT: [
-            "./img/character-fox/hurt/hurt 1.png",
-            "./img/character-fox/hurt/hurt 2.png",
-            "./img/character-fox/hurt/hurt 3.png"
-        ],
+        HURT: ["./img/character-fox/hurt/hurt 1.png", "./img/character-fox/hurt/hurt 2.png", "./img/character-fox/hurt/hurt 3.png"],
         DEAD: [
-        "./img/character-fox/dead/dead 1.png",
-        "./img/character-fox/dead/dead 2.png",
-        "./img/character-fox/dead/dead 3.png",
-        "./img/character-fox/dead/dead 4.png",
-        "./img/character-fox/dead/dead 5.png",
-        "./img/character-fox/dead/dead 6.png"
+            "./img/character-fox/dead/dead 1.png",
+            "./img/character-fox/dead/dead 2.png",
+            "./img/character-fox/dead/dead 3.png",
+            "./img/character-fox/dead/dead 4.png",
+            "./img/character-fox/dead/dead 5.png",
+            "./img/character-fox/dead/dead 6.png",
         ],
     };
 
@@ -169,7 +164,7 @@ export class ImgHub {
             "./img/acorn/rotation/rotate 1.png",
             "./img/acorn/rotation/rotate 2.png",
             "./img/acorn/rotation/rotate 3.png",
-            "./img/acorn/rotation/rotate 4.png"
+            "./img/acorn/rotation/rotate 4.png",
         ],
         SPLASH: [
             "./img/acorn/explosion/explode 1.png",
@@ -177,7 +172,7 @@ export class ImgHub {
             "./img/acorn/explosion/explode 3.png",
             "./img/acorn/explosion/explode 4.png",
             "./img/acorn/explosion/explode 5.png",
-            "./img/acorn/explosion/explode 6.png"
+            "./img/acorn/explosion/explode 6.png",
         ],
         ON_GROUND: ["./img/acorn/acorn.png"],
         NORMAL: ["./img/6_salsa_bottle/salsa_bottle.png"],
@@ -238,7 +233,19 @@ export class ImgHub {
         ],
     };
 
-    static COIN = ["./img/8_coin/coin_1.png", "./img/8_coin/coin_2.png"];
+    static COIN = [
+        "./img/firefly/firefly 1.png",
+        "./img/firefly/firefly 2.png",
+        "./img/firefly/firefly 3.png",
+        "./img/firefly/firefly 4.png",
+        "./img/firefly/firefly 5.png",
+        "./img/firefly/firefly 6.png",
+        "./img/firefly/firefly 7.png",
+        "./img/firefly/firefly 8.png",
+        "./img/firefly/firefly 9.png",
+        "./img/firefly/firefly 10.png",
+        "./img/firefly/firefly 11.png",
+    ];
 
     static STARTSCREEN = ["./img/9_intro_outro_screens/start/startscreen_1.png"];
 

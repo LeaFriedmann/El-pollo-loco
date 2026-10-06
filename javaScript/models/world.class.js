@@ -86,6 +86,9 @@ export class World {
     collisionEnemies(bottle) {
         Level.enemies.forEach((enemy) => {
             if (bottle.isColliding(enemy)) {
+                if (enemy instanceof Endboss && !Endboss.startWalking) {
+                    return;
+                }
                 if (!bottle.isDead()) {
                     enemy.hit();
                     bottle.hit();

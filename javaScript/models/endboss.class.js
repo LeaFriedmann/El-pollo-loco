@@ -19,10 +19,10 @@ export class Endboss extends Entity {
     animationAtack = ImgHub.ENEMIES.ENDBOSS.ATTACK;
 
     offset = {
-        top: 80,
-        right: 20,
-        bottom: 105,
-        left: 65,
+        top: 90,
+        right: 220,
+        bottom: 50,
+        left: 180,
     };
 
     static isAlert = false;
@@ -38,7 +38,7 @@ export class Endboss extends Entity {
      * @param {number} healthReduction_ - Damage received per hit.
      */
     constructor(x_, speed_, healthReduction_) {
-        super(x_, 50, 400, 250, speed_, 100, healthReduction_, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
+        super(x_, 60, 400, 558, speed_, 100, healthReduction_, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
 
         this.loadImages(this.animationAlert);
         this.loadImages(this.animationHurt);
@@ -88,7 +88,7 @@ export class Endboss extends Entity {
                 AudioHub.playOne(AudioHub.ENDBOSS_APPROACH);
             }
         } else if (Endboss.startWalking) {
-            this.playAnimation("walk", this.animationWalk, 7);
+            this.playAnimation("walk", this.animationWalk, 5);
         }
     };
 

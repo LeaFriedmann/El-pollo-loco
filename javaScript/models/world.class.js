@@ -258,9 +258,9 @@ export class World {
 
         this.ctx.translate(World.CAMERA_X, 0);
 
+        // this.addToMap(Level.endboss);
         this.addToMap(this.character);
         this.addObjectsToMap(Level.enemies);
-        this.addToMap(Level.endboss);
         this.addObjectsToMap(CollectableObject.arrAll);
         this.addObjectsToMap(Level.ThrowableObjects);
     }

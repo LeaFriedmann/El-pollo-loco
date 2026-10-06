@@ -96,7 +96,7 @@ export class ThrowableObject extends Entity {
      * Also handles sound playback and bottle respawn logic.
      */
     playSplashAnimation() {
-        if (!this.animationEnd()) {
+        if (!this.animationEnd(ImgHub.BOTTLE.SPLASH)) {
             this.playAnimation("splash", this.animationDead, 20);
 
             if (!this.audioPlayed) {
@@ -114,15 +114,6 @@ export class ThrowableObject extends Entity {
         } else {
             this.removeObj(Level.ThrowableObjects);
         }
-    }
-
-    /**
-     * Determines whether the splash animation has finished.
-     *
-     * @returns {boolean} True if the last splash frame has been reached.
-     */
-    animationEnd() {
-        return (this.currentImage + 1) == ImgHub.BOTTLE.SPLASH.length;
     }
 
     //#endregion

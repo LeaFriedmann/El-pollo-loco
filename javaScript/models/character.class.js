@@ -85,7 +85,7 @@ export class Character extends Entity {
      */
     animate = () => {
         if (this.isDead()) {
-            if (!this.deadAnimationStop()) {
+            if (!this.deadAnimationStop(800)) {
                 this.playAnimation("dead", this.animationDead, 7);
                 if (!AudioHub.CHARACTER.DEAD.isPlaying) {
                     AudioHub.playOne(AudioHub.CHARACTER.DEAD);
@@ -129,13 +129,8 @@ export class Character extends Entity {
             AudioHub.stopOne(AudioHub.CHARACTER.SNORING);
         }
 
-        if (Level.END_X - this.x < 600 && !Endboss.startWalking) {
+        if (Level.END_X - this.x < 200 && !Endboss.startWalking) {
             Endboss.isAlert = true;
-        }
-
-        if (Level.END_X - this.x < 400) {
-            Endboss.isAlert = false;
-            Endboss.startWalking = true;
         }
 
         if (!this.isHurt()) {

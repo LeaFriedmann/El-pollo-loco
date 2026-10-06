@@ -87,9 +87,9 @@ export class Entity extends MovableObject {
      * Checks if death animation delay has passed.
      * @returns {boolean} True if dead animation should stop.
      */
-    deadAnimationStop() {
+    deadAnimationStop(afterTime) {
         let timePassed = new Date().getTime() - this.lastHit;
-        return timePassed > 800;
+        return timePassed > afterTime;
     }
 
     /**
@@ -113,6 +113,10 @@ export class Entity extends MovableObject {
     isAboveGround() {
         return this.y < 440 - this.height;
     }
+
+    animationEnd(imgArr) {
+            return this.currentImage + 1 == imgArr.length;
+        }
 
     //#endregion
 }

@@ -40,6 +40,7 @@ export class Endboss extends Entity {
     constructor(x_, speed_, healthReduction_) {
         super(x_, 60, 400, 558, speed_, 100, healthReduction_, ImgHub.ENEMIES.ENDBOSS.WALK, ImgHub.ENEMIES.ENDBOSS.DEAD);
 
+        this.loadImage(this.animationAlert[0])
         this.loadImages(this.animationAlert);
         this.loadImages(this.animationHurt);
         this.loadImages(this.animationWalk);
@@ -74,7 +75,7 @@ export class Endboss extends Entity {
         } else if (Endboss.attack) {
             this.playAnimation("attack", this.animationAtack, 10);
         } else if (this.isDead()) {
-            if (!this.deadAnimationStop()) {
+            if (!this.deadAnimationStop(1250)) {
                 this.playAnimation("dead", this.animationDead, 10);
             } else {
                 IntervalHub.stopAllIntervals();
@@ -82,7 +83,11 @@ export class Endboss extends Entity {
                 GameState.showOutro();
             }
         } else if (Endboss.isAlert) {
-            this.playAnimation("alert", this.animationAlert, 10);
+            if (this.animationEnd(this.animationAlert)) {
+                Endboss.isAlert = false;
+                Endboss.startWalking = true;
+            }
+            this.playAnimation("alert", this.animationAlert, 4);
 
             if (!AudioHub.ENDBOSS_APPROACH.isPlaying) {
                 AudioHub.playOne(AudioHub.ENDBOSS_APPROACH);
